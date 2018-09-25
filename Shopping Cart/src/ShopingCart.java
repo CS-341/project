@@ -8,9 +8,12 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
 public class ShopingCart extends JFrame {
 
@@ -89,11 +92,24 @@ public class ShopingCart extends JFrame {
 		contentPane.add(bbtLogIn, gbc_bbtLogIn);
 		// Continue as guest button
 		JButton btnContinueAsGuest = new JButton("Continue as guest");
+		btnContinueAsGuest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GuestWindow guest = new GuestWindow();
+				guest.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_btnContinueAsGuest = new GridBagConstraints();
 		gbc_btnContinueAsGuest.insets = new Insets(0, 0, 5, 0);
 		gbc_btnContinueAsGuest.gridx = 4;
 		gbc_btnContinueAsGuest.gridy = 5;
 		contentPane.add(btnContinueAsGuest, gbc_btnContinueAsGuest);
+		
 	}
+	 public void actionPerformed(ActionEvent e) {
+		 if(e.getActionCommand().equals("Continue as guest")) {
+				
+				
+			} 
+	 }
 
 }
