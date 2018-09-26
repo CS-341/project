@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -56,7 +55,7 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(192, 192, 192));
+		panel.setBackground(new Color(119, 136, 153));
 		panel.setBounds(0, -15, 683, 131);
 		contentPane.add(panel);
 		panel.setLayout(null);
