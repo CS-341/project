@@ -16,6 +16,7 @@ import java.awt.Insets;
 import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
+import javax.swing.JButton;
 
 public class GuestWindow extends JFrame {
 
@@ -64,6 +65,11 @@ public class GuestWindow extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblItems);
 		sl_contentPane.putConstraint(SpringLayout.EAST, comboBox, 165, SpringLayout.WEST, contentPane);
 		contentPane.add(comboBox);
+		
+		JLabel Register = new JLabel("register");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, Register, 0, SpringLayout.NORTH, lblWelomeUest);
+		sl_contentPane.putConstraint(SpringLayout.EAST, Register, -10, SpringLayout.EAST, contentPane);
+		contentPane.add(Register);
 	
 		
 	}
