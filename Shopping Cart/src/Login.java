@@ -17,6 +17,10 @@ import javax.swing.border.EmptyBorder;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -50,7 +54,7 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(119, 136, 153));
+		panel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		panel.setBounds(0, -15, 683, 131);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -94,7 +98,7 @@ public class Login extends JFrame {
 		Button bttGuest = new Button("Continue as Guest");
 		bttGuest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GuestWindow guest = new GuestWindow();
+				ShopWindow guest = new ShopWindow(0);
 				guest.setVisible(true);
 				dispose();
 			}
@@ -103,8 +107,6 @@ public class Login extends JFrame {
 		bttGuest.setBackground(new Color(47, 79, 79));
 		bttGuest.setBounds(516, 373, 139, 39);
 		contentPane.add(bttGuest);
-		ImageIcon lowerLogo = new ImageIcon("images/simple.va.jpg");
-		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(Login.class.getResource("/images/iPhone.jpeg")));
 		lblNewLabel_3.setBounds(0, 114, 266, 177);
