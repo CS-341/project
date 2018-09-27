@@ -69,9 +69,10 @@ public class Login extends JFrame {
 		lblWelcomeToThe.setBounds(315, 28, 321, 15);
 		panel.add(lblWelcomeToThe);
 		
-		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Buy one iPhone get the 2nd half off!");
-		lblNewJgoodiesLabel.setBounds(325, 56, 321, 15);
-		panel.add(lblNewJgoodiesLabel);
+		JLabel lblBuyOneIphone = new JLabel("Buy one iPhone get the 2nd one free!");
+		lblBuyOneIphone.setBounds(321, 68, 332, 15);
+		panel.add(lblBuyOneIphone);
+	
 		
 		Button buttSignIn = new Button("Sign In");
 		buttSignIn.setForeground(Color.WHITE);
@@ -128,7 +129,7 @@ public class Login extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setIcon(new ImageIcon("/home/alex/project/Shopping Cart/pics/simple.v1.jpg"));
-		lblNewLabel_1.setBounds(-216, 111, 989, 352);
+		lblNewLabel_1.setBounds(0, 108, 683, 331);
 		contentPane.add(lblNewLabel_1);
 	}
 }
