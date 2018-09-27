@@ -1,28 +1,23 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
 import java.awt.Button;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import java.awt.Label;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtSignIn;
-	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -61,13 +56,18 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 291, 131);
-		lblNewLabel.setIcon(new ImageIcon("/home/alex/project/Shopping Cart/pics/iphone.jpeg"));
+		lblNewLabel.setBounds(0, 0, 260, 131);
+		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/images/iphone.jpeg")));
 		panel.add(lblNewLabel);
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the team4 electroincs store!");
 		lblWelcomeToThe.setBounds(315, 28, 321, 15);
 		panel.add(lblWelcomeToThe);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(0, 0, 212, 109);
+		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setIcon(new ImageIcon(Login.class.getResource("/images/iPhone.jpeg")));
 		
 		JLabel lblBuyOneIphone = new JLabel("Buy one iPhone get the 2nd one free!");
 		lblBuyOneIphone.setBounds(321, 68, 332, 15);
@@ -78,31 +78,8 @@ public class Login extends JFrame {
 		buttSignIn.setForeground(Color.WHITE);
 		buttSignIn.setFont(UIManager.getFont("MenuBar.font"));
 		buttSignIn.setBackground(new Color(47, 79, 79));
-		buttSignIn.setBounds(281, 302, 170, 46);
+		buttSignIn.setBounds(516, 298, 139, 39);
 		contentPane.add(buttSignIn);
-		
-		txtSignIn = new JTextField();
-		txtSignIn.setBounds(281, 219, 170, 19);
-		contentPane.add(txtSignIn);
-		txtSignIn.setColumns(10);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(281, 261, 170, 19);
-		contentPane.add(passwordField);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Kalimati", Font.PLAIN, 12));
-		lblPassword.setBounds(190, 263, 70, 15);
-		contentPane.add(lblPassword);
-		
-		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setFont(new Font("Kalimati", Font.PLAIN, 12));
-		lblUserName.setBounds(190, 221, 98, 15);
-		contentPane.add(lblUserName);
-		
-		JLabel lblNewToOur = new JLabel("New to our Store?");
-		lblNewToOur.setBounds(12, 344, 139, 15);
-		contentPane.add(lblNewToOur);
 		
 		Button bttRegister = new Button("Register");
 		bttRegister.addActionListener(new ActionListener() {
@@ -111,7 +88,7 @@ public class Login extends JFrame {
 		});
 		bttRegister.setBackground(new Color(47, 79, 79));
 		bttRegister.setForeground(Color.WHITE);
-		bttRegister.setBounds(12, 373, 139, 39);
+		bttRegister.setBounds(516, 228, 139, 39);
 		contentPane.add(bttRegister);
 		
 		Button bttGuest = new Button("Continue as Guest");
@@ -126,10 +103,21 @@ public class Login extends JFrame {
 		bttGuest.setBackground(new Color(47, 79, 79));
 		bttGuest.setBounds(516, 373, 139, 39);
 		contentPane.add(bttGuest);
+		ImageIcon lowerLogo = new ImageIcon("images/simple.va.jpg");
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setIcon(new ImageIcon(Login.class.getResource("/images/iPhone.jpeg")));
+		lblNewLabel_3.setBounds(0, 114, 266, 177);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setIcon(new ImageIcon(Login.class.getResource("/images/laptop.jpeg")));
+		lblNewLabel_4.setBounds(0, 283, 258, 172);
+		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("/home/alex/project/Shopping Cart/pics/simple.v1.jpg"));
-		lblNewLabel_1.setBounds(0, 108, 683, 331);
+		lblNewLabel_1.setIcon(new ImageIcon(Login.class.getResource("/images/simple.v1.jpg")));
+		lblNewLabel_1.setBounds(-31, 99, 714, 356);
 		contentPane.add(lblNewLabel_1);
 	}
 }
