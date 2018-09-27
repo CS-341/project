@@ -66,8 +66,11 @@ public class ShopWindow extends JFrame {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
-		} else if (userType > 0) {
-			JLabel lblWelomeUest = new JLabel("Welome User!");
+			
+		}
+		// TODO: insert user name
+		else if (userType > 0) {
+			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 
@@ -89,7 +92,7 @@ public class ShopWindow extends JFrame {
 		JLabel label = new JLabel("");
 		label.setBounds(0, 0, 0, 0);
 		contentPane.add(label);
-		// Sign in if user is guest
+		// TODO: sign in page
 		if (userType == 0) {
 			JButton btnSignIn = new JButton("Sign In");
 			btnSignIn.setBounds(0, 420, 95, 25);
@@ -130,6 +133,7 @@ public class ShopWindow extends JFrame {
 		btnEnter.setBounds(459, 17, 117, 25);
 		contentPane.add(btnEnter);
 		// register if user is guest
+		// TODO: insert register page
 		if (userType == 0) {
 			JButton button = new JButton("Regsiter");
 			button.setBounds(0, 385, 95, 25);

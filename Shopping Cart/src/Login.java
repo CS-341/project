@@ -77,14 +77,14 @@ public class Login extends JFrame {
 		lblBuyOneIphone.setBounds(321, 68, 332, 15);
 		panel.add(lblBuyOneIphone);
 	
-		
+		// TODO: sign in page
 		Button buttSignIn = new Button("Sign In");
 		buttSignIn.setForeground(Color.WHITE);
 		buttSignIn.setFont(UIManager.getFont("MenuBar.font"));
 		buttSignIn.setBackground(new Color(47, 79, 79));
 		buttSignIn.setBounds(516, 298, 139, 39);
 		contentPane.add(buttSignIn);
-		
+		// TODO: register page link
 		Button bttRegister = new Button("Register");
 		bttRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
