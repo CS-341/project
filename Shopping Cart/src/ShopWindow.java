@@ -38,7 +38,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.sun.javafx.tk.Toolkit;
 
 import java.awt.GridLayout;
-import net.miginfocom.swing.MigLayout;
+//import net.miginfocom.swing.MigLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -63,6 +63,10 @@ public class ShopWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+
+
+
+
 					
 					ShopWindow frame = new ShopWindow(new User());
 					frame.setVisible(true);
@@ -124,9 +128,14 @@ public class ShopWindow extends JFrame {
 		}
 		// TODO: insert user name
 		else if (newUser.userType > 0) {
+
 			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
-			contentPane.add(lblWelomeUest);
+
+			JLabel lblWelomeUest1 = new JLabel("Welome " + newUser.userName + "!");
+			lblWelomeUest1.setBounds(5, 0, 200, 15);
+
+			contentPane.add(lblWelomeUest1);
 
 		}
 		

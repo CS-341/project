@@ -125,6 +125,8 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Login cancelled = new Login();
+				cancelled.setVisible(true);
 				dispose();
 			}
 		});
@@ -220,9 +222,11 @@ public class RegisterWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean errorExists = false;
 //				if(User name is already in database) {
-//					ToDO
+					JdbcSQLiteConnection j = new JdbcSQLiteConnection();
+					// Search the data base
+					// If something is returned then throw error 'Username already exists'
 //				}
-				// If there is no username enterd show message
+				// If there is no username entered show message
 				if(userName.getText().length() == 0) {
 					lblpleaseEnterA.setVisible(true);
 					errorExists =  true;
@@ -320,7 +324,6 @@ public class RegisterWindow extends JFrame {
 					lblPleaseEnter_6.setVisible(!allDigits);
 				}
 				else{
-					lblPleaseEnter_5.setVisible(true);
 					lblPleaseEnter_6.setVisible(false);
 					errorExists = true;
 				}
@@ -329,7 +332,7 @@ public class RegisterWindow extends JFrame {
 					//add user to data base!!!!!!!!!!!!!!!
 					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 					User newUser = new User(userName.getText(), password.getText(), city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
-					dataBase.addUserToDatabase(newUser);
+					//dataBase.addUserToDatabase(newUser);
 					ShopWindow user = new ShopWindow(newUser);
 					user.setVisible(true);
 					dispose();

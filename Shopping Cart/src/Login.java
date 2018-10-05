@@ -84,14 +84,27 @@ public class Login extends JFrame {
 		buttSignIn.setBackground(new Color(47, 79, 79));
 		buttSignIn.setBounds(516, 298, 139, 39);
 		contentPane.add(buttSignIn);
+		buttSignIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterWindow signIn = new RegisterWindow();
+				signIn.setVisible(true);
+				dispose();
+			}
+		});
+		
 		// TODO: register page link
 		Button bttRegister = new Button("Register");
 		bttRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bttRegister.setVisible(false);
+
 				RegisterWindow guest = new RegisterWindow();
 				guest.setVisible(true);
 				dispose();
+
+				RegisterWindow newRegister = new RegisterWindow();
+				newRegister.setVisible(true);
+
 			}
 		});
 		bttRegister.setBackground(new Color(47, 79, 79));
