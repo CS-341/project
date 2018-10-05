@@ -5,10 +5,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class SignInWindow extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -17,7 +20,7 @@ public class SignInWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SignInClass frame = new SignInClass();
+					SignInWindow frame = new SignInWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +32,7 @@ public class SignInWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SignInClass() {
+	public SignInWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -37,8 +40,22 @@ public class SignInWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(100, 75, 93, 15);
+		JLabel lblNewLabel = new JLabel("Username: ");
+		lblNewLabel.setBounds(60, 75, 93, 15);
 		contentPane.add(lblNewLabel);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(60, 140, 82, 15);
+		contentPane.add(lblPassword);
+		
+		textField = new JTextField();
+		textField.setBounds(140, 73, 223, 19);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(140, 138, 223, 19);
+		contentPane.add(textField_1);
 	}
 }

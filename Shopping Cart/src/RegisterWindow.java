@@ -222,9 +222,11 @@ public class RegisterWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean errorExists = false;
 //				if(User name is already in database) {
-//					ToDO
+					JdbcSQLiteConnection j = new JdbcSQLiteConnection();
+					// Search the data base
+					// If something is returned then throw error 'Username already exists'
 //				}
-				// If there is no username enterd show message
+				// If there is no username entered show message
 				if(userName.getText().length() == 0) {
 					lblpleaseEnterA.setVisible(true);
 					errorExists =  true;
