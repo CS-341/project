@@ -41,8 +41,7 @@ public class ShopWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					int defualtType = 0;
-					ShopWindow frame = new ShopWindow(defualtType);
+					ShopWindow frame = new ShopWindow(new User());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +53,7 @@ public class ShopWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShopWindow(int userType) {
+	public ShopWindow(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 660, 475);
 		contentPane = new JPanel();
@@ -62,15 +61,15 @@ public class ShopWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		// Give welcome mesg if guest
-		if (userType == 0) {
+		if (user.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 			
 		}
 		// TODO: insert user name
-		else if (userType > 0) {
-			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
+		else if (user.userType > 0) {
+			JLabel lblWelomeUest = new JLabel("Welome " + user.userName + "!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 
@@ -93,7 +92,7 @@ public class ShopWindow extends JFrame {
 		label.setBounds(0, 0, 0, 0);
 		contentPane.add(label);
 		// TODO: sign in page
-		if (userType == 0) {
+		if (user.userType == 0) {
 			JButton btnSignIn = new JButton("Sign In");
 			btnSignIn.setBounds(0, 420, 95, 25);
 			btnSignIn.addActionListener(new ActionListener() {
@@ -134,11 +133,17 @@ public class ShopWindow extends JFrame {
 		contentPane.add(btnEnter);
 		// register if user is guest
 		// TODO: insert register page
-		if (userType == 0) {
+		if (user.userType == 0) {
 			JButton button = new JButton("Regsiter");
 			button.setBounds(0, 385, 95, 25);
 			//action event to sign in page
 			contentPane.add(button);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					RegisterWindow guest = new RegisterWindow();
+					guest.setVisible(true);
+				}
+			});
 		}
 	}
 }

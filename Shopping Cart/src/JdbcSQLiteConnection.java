@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.*;
  
 /**
  * This program demonstrates making JDBC connection to a SQLite database.
@@ -30,5 +31,8 @@ public class JdbcSQLiteConnection {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    void addUserToDatabase(User newUser) {
+//    	MUST HASH PASSWORD 
     }
 }

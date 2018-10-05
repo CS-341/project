@@ -16,19 +16,19 @@ import java.awt.Color;
 public class RegisterWindow extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField textField_1;
-	private JPasswordField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField userName;
+	private JPasswordField password;
+	private JPasswordField retypePw;
+	private JTextField streetAddress;
+	private JTextField city;
+	private JTextField state;
+	private JTextField zipCode;
+	private JTextField creditCard;
 	private JLabel lblRetypePassword;
 	private JLabel lblShippingAddress;
 	private JLabel lblCreditCardNumber;
 	private JLabel lblPasswordsDo;
 	private JLabel lblPleaseEnter_2;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
 	private JLabel lblPleaseEnter_6;
 	private JLabel lblPleaseOnly;
 	private JLabel lblXxxxxxxxxxxxxxxx;
@@ -60,34 +60,49 @@ public class RegisterWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		textField = new JTextField();
-		textField.setBounds(160, 20, 190, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		userName = new JTextField();
+		userName.setBounds(160, 20, 190, 19);
+		contentPane.add(userName);
+		userName.setColumns(10);
 
-		textField_1 = new JPasswordField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(160, 70, 190, 19);
-		contentPane.add(textField_1);
+		password = new JPasswordField();
+		password.setColumns(10);
+		password.setBounds(160, 70, 190, 19);
+		contentPane.add(password);
 
-		textField_2 = new JPasswordField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(160, 120, 190, 19);
-		contentPane.add(textField_2);
+		retypePw = new JPasswordField();
+		retypePw.setColumns(10);
+		retypePw.setBounds(160, 120, 190, 19);
+		contentPane.add(retypePw);
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(160, 170, 190, 19);
-		contentPane.add(textField_3);
+		streetAddress = new JTextField();
+		streetAddress.setColumns(10);
+		streetAddress.setBounds(160, 170, 190, 19);
+		contentPane.add(streetAddress);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(160, 370, 190, 19);
-		contentPane.add(textField_4);
+		city = new JTextField();
+		city.setColumns(10);
+		city.setBounds(160, 370, 190, 19);
+		contentPane.add(city);
 
-		JLabel lblNewLabel = new JLabel("Username:");
-		lblNewLabel.setBounds(12, 22, 160, 15);
-		contentPane.add(lblNewLabel);
+		state = new JTextField();
+		state.setBounds(160, 220, 190, 19);
+		contentPane.add(state);
+		state.setColumns(10);
+		
+		zipCode = new JTextField();
+		zipCode.setBounds(160, 270, 190, 19);
+		contentPane.add(zipCode);
+		zipCode.setColumns(10);
+		
+		creditCard = new JTextField();
+		creditCard.setBounds(160, 324, 190, 19);
+		contentPane.add(creditCard);
+		creditCard.setColumns(10);
+		
+		JLabel lblUserName = new JLabel("Username:");
+		lblUserName.setBounds(12, 22, 160, 15);
+		contentPane.add(lblUserName);
 
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(12, 72, 149, 15);
@@ -130,11 +145,11 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(lblPleaseEnter);
 		lblPleaseEnter.setVisible(false);
 		
-		JLabel lblNewLabel_1 = new JLabel("* Please retype your password");
-		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(160, 101, 247, 15);
-		contentPane.add(lblNewLabel_1);
-		lblNewLabel_1.setVisible(false);
+		JLabel lblPassword_1 = new JLabel("* Please retype your password");
+		lblPassword_1.setForeground(Color.RED);
+		lblPassword_1.setBounds(160, 101, 247, 15);
+		contentPane.add(lblPassword_1);
+		lblPassword_1.setVisible(false);
 		
 		JLabel lblPleaseEnter_1 = new JLabel("* Please enter your 16-digit number");
 		lblPleaseEnter_1.setForeground(Color.RED);
@@ -153,21 +168,6 @@ public class RegisterWindow extends JFrame {
 		lblPleaseEnter_2.setBounds(160, 151, 258, 15);
 		contentPane.add(lblPleaseEnter_2);
 		lblPleaseEnter_2.setVisible(false);
-		
-		textField_5 = new JTextField();
-		textField_5.setBounds(160, 220, 190, 19);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
-		
-		textField_6 = new JTextField();
-		textField_6.setBounds(160, 270, 190, 19);
-		contentPane.add(textField_6);
-		textField_6.setColumns(10);
-		
-		textField_7 = new JTextField();
-		textField_7.setBounds(160, 324, 190, 19);
-		contentPane.add(textField_7);
-		textField_7.setColumns(10);
 		
 		JLabel lblPleaseEnter_3 = new JLabel("* Please enter your city");
 		lblPleaseEnter_3.setForeground(Color.RED);
@@ -223,7 +223,7 @@ public class RegisterWindow extends JFrame {
 //					ToDO
 //				}
 				// If there is no username enterd show message
-				if(textField.getText().length() == 0) {
+				if(userName.getText().length() == 0) {
 					lblpleaseEnterA.setVisible(true);
 					errorExists =  true;
 
@@ -234,29 +234,29 @@ public class RegisterWindow extends JFrame {
 				}
 				
 				
-				if(textField_1.getText().length() == 0) {
+				if(password.getText().length() == 0) {
 					lblPleaseEnter.setVisible(true);
-					lblNewLabel_1.setVisible(false);
+					lblPassword_1.setVisible(false);
 					lblPasswordsDo.setVisible(false);
 					errorExists = true;
 					
 				}
 				//******************* STILL NEED TO MAKE IT SO ONLY INTEGER VALUES SHOW UP IN CREDIT CARD
-				else if(textField_2.getText().length()==0) {
-					lblNewLabel_1.setVisible(true);
+				else if(retypePw.getText().length()==0) {
+					lblPassword_1.setVisible(true);
 					lblPleaseEnter.setVisible(false);
 					lblPasswordsDo.setVisible(false);
 					errorExists = true;
 				}
-				else if (!textField_1.getText().equals(textField_2.getText())) {
+				else if (!password.getText().equals(retypePw.getText())) {
 					lblPasswordsDo.setVisible(true);	
-					lblNewLabel_1.setVisible(false);
+					lblPassword_1.setVisible(false);
 					lblPleaseEnter.setVisible(false);
 					errorExists = true;
 				}
 				else {
 					lblPasswordsDo.setVisible(false);	
-					lblNewLabel_1.setVisible(false);
+					lblPassword_1.setVisible(false);
 					lblPleaseEnter.setVisible(false);
 				}
 				if(lblShippingAddress.getText().length() == 0) {
@@ -266,7 +266,7 @@ public class RegisterWindow extends JFrame {
 				else {
 					lblPleaseEnter_2.setVisible(false);
 				}
-				String s1 = textField_4.getText().replaceAll("-", "");
+				String s1 = city.getText().replaceAll("-", "");
 				if (s1.length() != 16) {
 					lblPleaseEnter_1.setVisible(true);
 					errorExists = true;
@@ -286,31 +286,31 @@ public class RegisterWindow extends JFrame {
 						errorExists = true;
 					}
 				}
-				if(textField_3.getText().length() == 0) {
+				if(streetAddress.getText().length() == 0) {
 					lblPleaseEnter_2.setVisible(true);
 					errorExists = true;
 				}
 				else {
 					lblPleaseEnter_2.setVisible(false);
 				}
-				if(textField_5.getText().length() == 0) {
+				if(state.getText().length() == 0) {
 					lblPleaseEnter_3.setVisible(true);
 					errorExists = true;
 				}
 				else {
 					lblPleaseEnter_3.setVisible(false);
 				}
-				if(textField_6.getText().length() == 0) {
+				if(zipCode.getText().length() == 0) {
 					lblPleaseEnter_4.setVisible(true);
 					errorExists = true;
 				}
 				else {
 					lblPleaseEnter_4.setVisible(false);
 				}
-				if(textField_7.getText().length() == 5) {
+				if(creditCard.getText().length() == 5) {
 					boolean allDigits = true;
 					for(int i = 0; i < 5; i++) {
-						if(textField_7.getText().charAt(i) - 48 > 9) {
+						if(creditCard.getText().charAt(i) - 48 > 9) {
 							allDigits = false;
 							errorExists = true;
 							break;
@@ -327,11 +327,12 @@ public class RegisterWindow extends JFrame {
 
 				if (!errorExists) {
 					//add user to data base!!!!!!!!!!!!!!!
-					//Hash the password
-
-				ShopWindow user = new ShopWindow(1);
-				user.setVisible(true);
-				dispose();
+					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
+					User newUser = new User(userName.getText(), password.getText(), city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
+					dataBase.addUserToDatabase(newUser);
+					ShopWindow user = new ShopWindow(newUser);
+					user.setVisible(true);
+					dispose();
 				}
 
 

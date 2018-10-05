@@ -88,6 +88,9 @@ public class Login extends JFrame {
 		Button bttRegister = new Button("Register");
 		bttRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				bttRegister.setVisible(false);
+				RegisterWindow guest = new RegisterWindow();
+				guest.setVisible(true);
 			}
 		});
 		bttRegister.setBackground(new Color(47, 79, 79));
@@ -98,7 +101,7 @@ public class Login extends JFrame {
 		Button bttGuest = new Button("Continue as Guest");
 		bttGuest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShopWindow guest = new ShopWindow(0);
+				ShopWindow guest = new ShopWindow(new User());
 				guest.setVisible(true);
 				dispose();
 			}
@@ -121,5 +124,7 @@ public class Login extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon(Login.class.getResource("/images/simple.v1.jpg")));
 		lblNewLabel_1.setBounds(-31, 99, 714, 356);
 		contentPane.add(lblNewLabel_1);
+		
+		
 	}
 }
