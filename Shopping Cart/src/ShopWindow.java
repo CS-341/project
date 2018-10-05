@@ -35,19 +35,24 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import com.sun.javafx.tk.Toolkit;
+
 import java.awt.GridLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.SystemColor;
 
 public class ShopWindow extends JFrame {
 
 	private JPanel contentPane;
 	public static ArrayList<Item> items;
 	private JTextField txtSearch;
-public	JPanel panel = new JPanel();
+	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
 
 	/**
@@ -58,9 +63,8 @@ public	JPanel panel = new JPanel();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
-					int defualtType = 0;
-					ShopWindow frame = new ShopWindow(defualtType);
+					
+					ShopWindow frame = new ShopWindow(new User());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,9 +75,14 @@ public	JPanel panel = new JPanel();
 
 	/**
 	 * Create the frame.
-	 * @param newUser 
+	 * 
+	 * @param newUser
 	 */
 	public ShopWindow(User newUser) {
+	   
+	   
+	      setVisible(true);
+		setBackground(Color.DARK_GRAY);
 		items = new ArrayList();
 		items.add(new Item("iPhone", "/images/rsz_1rsz_iphone-x.jpg"));
 		items.add(new Item("Note 9", "/images/note-9.jpg"));
@@ -102,22 +111,25 @@ public	JPanel panel = new JPanel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 660, 475);
 		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.menu);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
 		// Give welcome mesg if guest
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 
 		}
 		// TODO: insert user name
-		else if (userType > 0) {
+		else if (newUser.userType > 0) {
 			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 
 		}
+		
 		contentPane.setLayout(null);
 
 		JLabel lblItems = new JLabel("Items");
@@ -133,13 +145,13 @@ public	JPanel panel = new JPanel();
 		catList.add("resistor");
 		catList.add("laptop");
 		JList list = new JList(catList.toArray());
-		list.setBounds(5, 35, 152, 345);
+		list.setBounds(5, 35, 152, 173);
 		contentPane.add(list);
 
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		List selectedVals = list.getSelectedValuesList();
 		JButton btnFind = new JButton("Find");
-		btnFind.setBounds(5, 385, 152, 25);
+		btnFind.setBounds(5, 210, 64, 25);
 		btnFind.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List values = list.getSelectedValuesList();
@@ -147,7 +159,7 @@ public	JPanel panel = new JPanel();
 				System.out.println(size);
 			}
 		});
-		showList(items,panel,pane);
+		showList(items, panel, pane);
 		txtSearch = new JTextField();
 		txtSearch.setBounds(229, 10, 245, 19);
 		contentPane.add(txtSearch);
@@ -180,34 +192,34 @@ public	JPanel panel = new JPanel();
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String search = getStringRepresentation(keyListen);
-				
+
 				System.out.println(search);
-				keyListen.clear();				
+				keyListen.clear();
 				ArrayList<Item> newItems = new ArrayList<>();
 				for (int i = 0; i < items.size(); i++) {
 					if (!items.get(i).name.contains(search)) {
 						newItems.add(items.get(i));
 					}
-				}				
+				}
 				items = newItems;
-				
-					panel.removeAll();				
-					pane.removeAll();								
-					showList(items, panel, pane);
-					pane.revalidate();
-					pane.repaint();
-					panel.revalidate();
-					panel.repaint();	
-				
+
+				panel.removeAll();
+				pane.removeAll();
+				showList(items, panel, pane);
+				pane.revalidate();
+				pane.repaint();
+				panel.revalidate();
+				panel.repaint();
+
 			}
-			
+
 		});
 
-		btnEnter.setBounds(497, 5, 111, 25);
+		btnEnter.setBounds(497, 5, 73, 25);
 		contentPane.add(btnEnter);
 
 		// TODO: sign in page
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JButton btnSignIn = new JButton("Sign In");
 			btnSignIn.setBounds(0, 420, 95, 25);
 			btnSignIn.addActionListener(new ActionListener() {
@@ -222,7 +234,7 @@ public	JPanel panel = new JPanel();
 
 		// register if user is guest
 		// TODO: insert register page
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JButton button = new JButton("Regsiter");
 			button.setBounds(0, 385, 95, 25);
 			// action event to sign in page
@@ -232,10 +244,10 @@ public	JPanel panel = new JPanel();
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
 		panel1.removeAll();
-		
-		 panel1 = new JPanel();
-		
-		panel1.setBounds(1, 134, 190, 279);
+
+		panel1 = new JPanel();
+
+		panel1.setBounds(0, 10, 190, 279);
 		contentPane.add(panel1);
 		panel1.setLayout(new GridLayout(items1.size(), 3, 0, 0));
 		panel1.removeAll();
@@ -254,7 +266,7 @@ public	JPanel panel = new JPanel();
 			panel1.add(Jarray.get(i), gbc_btnNewButton);
 			// ADD DISCRIPTION OF ITEM
 			JlablArry.add(items1.get(i).discription);
-			
+
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -272,24 +284,26 @@ public	JPanel panel = new JPanel();
 			panel1.add(picArry.get(i), gbc_lblNewLabel);
 
 		}
-		
-		 pane = new JScrollPane(panel1);
+
+		pane = new JScrollPane(panel1);
 		pane.setLocation(200, 0);
 		pane.setBounds(162, 30, 486, 415);
 		contentPane.add(pane);
 		panel1.revalidate();
 		panel1.repaint();
 		pane.setVisible(true);
+		
 
 	}
+
 	// gets string representatin of keystroke
 	public String getStringRepresentation(ArrayList<Character> list) {
-	    
-	    StringBuilder builder = new StringBuilder(list.size());
-	    for(Character ch: list)
-	    {
-	        builder.append(ch);
-	    }
-	    return builder.toString();
+
+		StringBuilder builder = new StringBuilder(list.size());
+		for (Character ch : list) {
+			builder.append(ch);
+		}
+		return builder.toString();
 	}
+
 }

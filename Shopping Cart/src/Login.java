@@ -91,6 +91,7 @@ public class Login extends JFrame {
 				bttRegister.setVisible(false);
 				RegisterWindow guest = new RegisterWindow();
 				guest.setVisible(true);
+				dispose();
 			}
 		});
 		bttRegister.setBackground(new Color(47, 79, 79));
