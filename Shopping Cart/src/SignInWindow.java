@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-public class SignInClass extends JFrame {
+public class SignInWindow extends JFrame {
 
 	private JPanel contentPane;
 
