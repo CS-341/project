@@ -14,6 +14,7 @@ public class User {
 	}
 	
 	public User(String userName, String password, String city, String state, String zipcode, String creditCard) {
+		// Add cart in future
 		this.userName = userName;
 		this.password = password;
 		this.city = city;

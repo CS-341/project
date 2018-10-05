@@ -70,7 +70,7 @@ public class ShopWindow extends JFrame {
 		// TODO: insert user name
 		else if (user.userType > 0) {
 			JLabel lblWelomeUest = new JLabel("Welome " + user.userName + "!");
-			lblWelomeUest.setBounds(5, 0, 108, 15);
+			lblWelomeUest.setBounds(5, 0, 200, 15);
 			contentPane.add(lblWelomeUest);
 
 		}
