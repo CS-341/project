@@ -71,8 +71,9 @@ public	JPanel panel = new JPanel();
 
 	/**
 	 * Create the frame.
+	 * @param newUser 
 	 */
-	public ShopWindow(int userType) {
+	public ShopWindow(User newUser) {
 		items = new ArrayList();
 		items.add(new Item("iPhone", "/images/rsz_1rsz_iphone-x.jpg"));
 		items.add(new Item("Note 9", "/images/note-9.jpg"));
