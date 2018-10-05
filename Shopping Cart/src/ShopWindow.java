@@ -36,7 +36,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.GridLayout;
-import net.miginfocom.swing.MigLayout;
+//import net.miginfocom.swing.MigLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -59,8 +59,8 @@ public	JPanel panel = new JPanel();
 			public void run() {
 				try {
 
-					int defualtType = 0;
-					ShopWindow frame = new ShopWindow(defualtType);
+					
+					ShopWindow frame = new ShopWindow(new User());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -105,16 +105,16 @@ public	JPanel panel = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		// Give welcome mesg if guest
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 
 		}
 		// TODO: insert user name
-		else if (userType > 0) {
-			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
-			lblWelomeUest.setBounds(5, 0, 108, 15);
+		else if (newUser.userType > 0) {
+			JLabel lblWelomeUest = new JLabel("Welome " + newUser.userName + "!");
+			lblWelomeUest.setBounds(5, 0, 200, 15);
 			contentPane.add(lblWelomeUest);
 
 		}
@@ -207,7 +207,7 @@ public	JPanel panel = new JPanel();
 		contentPane.add(btnEnter);
 
 		// TODO: sign in page
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JButton btnSignIn = new JButton("Sign In");
 			btnSignIn.setBounds(0, 420, 95, 25);
 			btnSignIn.addActionListener(new ActionListener() {
@@ -222,7 +222,7 @@ public	JPanel panel = new JPanel();
 
 		// register if user is guest
 		// TODO: insert register page
-		if (userType == 0) {
+		if (newUser.userType == 0) {
 			JButton button = new JButton("Regsiter");
 			button.setBounds(0, 385, 95, 25);
 			// action event to sign in page

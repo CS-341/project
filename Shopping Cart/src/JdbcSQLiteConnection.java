@@ -33,6 +33,6 @@ public class JdbcSQLiteConnection {
         }
     }
     void addUserToDatabase(User newUser) {
-//    	MUST HASH PASSWORD 
+    	//MUST HASH PASSWORD 
     }
 }
