@@ -324,7 +324,6 @@ public class RegisterWindow extends JFrame {
 					lblPleaseEnter_6.setVisible(!allDigits);
 				}
 				else{
-					lblPleaseEnter_5.setVisible(true);
 					lblPleaseEnter_6.setVisible(false);
 					errorExists = true;
 				}
