@@ -9,9 +9,14 @@ public class Item {
 	public ImageIcon icon;
 	public JButton select;
 	public JLabel discription;
-	Item(String description, String filePath){
-		this.name = description;
+	public JLabel price;
+	Item(String description, String price, String filePath){		
+		this.name = description;		
+		StringBuilder sb = new StringBuilder(description);
+		sb.insert(0, "    ");
+		description = sb.toString();
 		this.discription = new JLabel(description);
+		this.price = new JLabel(price);
 		this.icon = new ImageIcon(Login.class.getResource(filePath));
 		this.select = new JButton("select");
 	}

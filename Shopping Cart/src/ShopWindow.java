@@ -1,51 +1,27 @@
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.JToolBar;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.FlowLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
-import java.awt.Choice;
-import javax.swing.JTextArea;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import com.sun.javafx.tk.Toolkit;
 
-import java.awt.GridLayout;
-//import net.miginfocom.swing.MigLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.SystemColor;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 public class ShopWindow extends JFrame {
 
@@ -64,10 +40,6 @@ public class ShopWindow extends JFrame {
 			public void run() {
 				try {
 
-
-
-
-					
 					ShopWindow frame = new ShopWindow(new User());
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -83,42 +55,45 @@ public class ShopWindow extends JFrame {
 	 * @param newUser
 	 */
 	public ShopWindow(User newUser) {
-	   
-	   
-	      setVisible(true);
+
+		setVisible(true);
 		setBackground(Color.DARK_GRAY);
 		items = new ArrayList();
-		items.add(new Item("iPhone", "/images/rsz_1rsz_iphone-x.jpg"));
-		items.add(new Item("Note 9", "/images/note-9.jpg"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-		items.add(new Item("Laptop", "/images/laptop.png"));
-
+		items.add(new Item("iPhone", "$1000" , "/images/rsz_1rsz_iphone-x.jpg"));
+		items.add(new Item("acer monitor", "$1000" , "/images/acer-monitor_60x60.jpeg"));
+		items.add(new Item("corisair keyboard", "$1000" , "/images/corisair-key_60x60.jpeg"));
+		items.add(new Item("hp mouse", "$1000" , "/images/hp-mouse_60x60.jpeg"));
+		items.add(new Item("ipad", "$1000" , "/images/ipad_60x60.jpeg"));
+		items.add(new Item("kogan keyboard",  "$1000" ,"/images/kogan-key_60x60.jpeg"));
+		items.add(new Item("Logitech headset",  "$1000" ,"/images/logitech-key_60x60.jpeg"));
+		items.add(new Item("Razer Mouse",  "$1000" ,"/images/logitech-mouse_60x60.jpeg"));
+		items.add(new Item("ram", "$1000" , "/images/ram_60x60.jpeg"));
+		items.add(new Item("Razer Headset", "$1000" , "/images/razer-headset_60x60.jpeg"));
+		items.add(new Item("Alexa", "$1000" , "/images/alexa.jpeg"));
+		items.add(new Item("Battery", "$1000" , "/images/bat.jpeg"));
+		items.add(new Item("DMM",  "$1000" ,"/images/dmm.jpeg"));
+		items.add(new Item("Google Home",  "$1000" ,"/images/google-home.jpeg"));
+		items.add(new Item("GPU",  "$1000" ,"/images/gpu.jpeg"));
+		items.add(new Item("JBL Speaker",  "$1000" ,"/images/jbl-speaker.jpeg"));
+		items.add(new Item("PSU",  "$1000" ,"/images/psu.jpeg"));
+		items.add(new Item("TV",  "$1000" ,"/images/tv.jpeg"));
+		items.add(new Item("Flash Drive",  "$1000" ,"/images/flashe-drive.jpeg"));
+		items.add(new Item("Ear Buds",  "$1000" ,"/images/earbuds.jpeg"));
+		items.add(new Item("laser",  "$1000" ,"/images/laser.jpeg"));
+		items.add(new Item("Macbook", "$1000" , "/images/macbook.jpeg"));
+		items.add(new Item("Over Ear Headphones",  "$1000" ,"/images/overear.jpeg"));
+		items.add(new Item("Playstation 4",  "$1000" ,"/images/ps4.jpeg"));
+		items.add(new Item("Subwoofer",  "$1000" ,"/images/sub.jpeg"));
+		items.add(new Item("VR Headset",  "$1000" ,"/images/vr.jpeg"));
+		items.add(new Item("Xbox One",  "$1000" ,"/images/xbox.jpeg"));
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 660, 475);
+		 setBounds(0,0,screenSize.width, screenSize.height);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.menu);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		// Give welcome mesg if guest
 		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
@@ -138,7 +113,7 @@ public class ShopWindow extends JFrame {
 			contentPane.add(lblWelomeUest1);
 
 		}
-		
+
 		contentPane.setLayout(null);
 
 		JLabel lblItems = new JLabel("Items");
@@ -154,7 +129,7 @@ public class ShopWindow extends JFrame {
 		catList.add("resistor");
 		catList.add("laptop");
 		JList list = new JList(catList.toArray());
-		list.setBounds(5, 35, 152, 173);
+		list.setBounds(5, 35, 62, 173);
 		contentPane.add(list);
 
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -223,14 +198,14 @@ public class ShopWindow extends JFrame {
 			}
 
 		});
-
-		btnEnter.setBounds(497, 5, 73, 25);
+		
+		btnEnter.setBounds(497, 5, 100, 25);
 		contentPane.add(btnEnter);
 
 		// TODO: sign in page
 		if (newUser.userType == 0) {
 			JButton btnSignIn = new JButton("Sign In");
-			btnSignIn.setBounds(0, 420, 95, 25);
+			btnSignIn.setBounds(612, 5, 100, 25);
 			btnSignIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Login signOut = new Login();
@@ -245,7 +220,7 @@ public class ShopWindow extends JFrame {
 		// TODO: insert register page
 		if (newUser.userType == 0) {
 			JButton button = new JButton("Regsiter");
-			button.setBounds(0, 385, 95, 25);
+			button.setBounds(727, 5, 100, 25);
 			// action event to sign in page
 			contentPane.add(button);
 		}
@@ -255,15 +230,18 @@ public class ShopWindow extends JFrame {
 		panel1.removeAll();
 
 		panel1 = new JPanel();
-
-		panel1.setBounds(0, 10, 190, 279);
+		panel1.setBackground(SystemColor.menu);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		// setBounds(100,100,screenSize.width, screenSize.height);
+		panel1. setBounds(0,0,screenSize.width +100, screenSize.height-100);
 		contentPane.add(panel1);
-		panel1.setLayout(new GridLayout(items1.size(), 3, 0, 0));
+		panel1.setLayout(new GridLayout(items1.size(), 5, 0, 0));
 		panel1.removeAll();
 		pane.removeAll();
 		ArrayList<JButton> Jarray = new ArrayList();
 		ArrayList<JLabel> JlablArry = new ArrayList();
 		ArrayList<JLabel> picArry = new ArrayList();
+		ArrayList<JLabel> priceArry = new ArrayList();
 		for (int i = 0; i < items1.size(); i++) {
 			// ADD LABEL FOR ITEM
 			Jarray.add(items1.get(i).select);
@@ -275,20 +253,28 @@ public class ShopWindow extends JFrame {
 			panel1.add(Jarray.get(i), gbc_btnNewButton);
 			// ADD DISCRIPTION OF ITEM
 			JlablArry.add(items1.get(i).discription);
-
+			
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNewLabel_1.gridx = 2;
+			gbc_lblNewLabel_1.gridx = 1;
 			gbc_lblNewLabel_1.gridy = i;
 			panel1.add(JlablArry.get(i), gbc_lblNewLabel_1);
-
+			// add price of item
+			priceArry.add(items1.get(i).price);			
+			GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+			gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
+			gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNewLabel_2.gridx = 2;
+			gbc_lblNewLabel_2.gridy = i;
+			panel1.add(priceArry.get(i), gbc_lblNewLabel_2);
+			// add picture of item
 			picArry.add(new JLabel(""));
 			picArry.get(i).setIcon((items1.get(i).icon));
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_lblNewLabel.gridx = 4;
+			gbc_lblNewLabel.gridx = 3;
 			gbc_lblNewLabel.gridy = i;
 			panel1.add(picArry.get(i), gbc_lblNewLabel);
 
@@ -296,12 +282,11 @@ public class ShopWindow extends JFrame {
 
 		pane = new JScrollPane(panel1);
 		pane.setLocation(200, 0);
-		pane.setBounds(162, 30, 486, 415);
+		pane. setBounds(100,40,screenSize.width -200, screenSize.height -100);
 		contentPane.add(pane);
 		panel1.revalidate();
 		panel1.repaint();
 		pane.setVisible(true);
-		
 
 	}
 
