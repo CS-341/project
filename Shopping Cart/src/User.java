@@ -19,7 +19,7 @@ public class User {
 		this.password = password;
 		this.city = city;
 		this.state = state;
-		this.zipCode = zipCode;
+		this.zipCode = zipcode;
 		this.creditCard = creditCard;
 		userType = 1;
 		
