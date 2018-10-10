@@ -66,8 +66,8 @@ public class JdbcSQLiteConnection {
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
             	}
-            	
-            	db.displayInfo();
+            	//calls method to display all info currently held in the database
+            	db.displayInfo("Users");
                 System.out.println("Connected to the database");
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
                 System.out.println("Driver name: " + dm.getDriverName());
@@ -246,7 +246,7 @@ public class JdbcSQLiteConnection {
 		}
     	return password;
     }
-    public void displayInfo(){
+    public void displayInfo(String tableName){
     	ResultSet  rs = null;
     	String userName = "";
         String userPass = "";
@@ -258,7 +258,7 @@ public class JdbcSQLiteConnection {
     		Statement st;
 			try {
 				st = conn.createStatement();
-				rs = st.executeQuery(SEARCH_ALL_ATTRS);
+				rs = st.executeQuery("SELECT * FROM " + tableName);
 				userName = rs.getString(1);
 				userPass = rs.getString(2);
 				city = rs.getString(3);
