@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class SignInWindow extends JFrame {
 
@@ -61,18 +62,42 @@ public class SignInWindow extends JFrame {
 		txtPassword.setBounds(140, 138, 223, 19);
 		contentPane.add(txtPassword);
 		
+
+		JLabel lblUsernameNotFound = new JLabel("*Username not found");
+		lblUsernameNotFound.setForeground(Color.RED);
+		lblUsernameNotFound.setBounds(140, 52, 223, 15);
+		contentPane.add(lblUsernameNotFound);
+		lblUsernameNotFound.setVisible(false);
+		
+		JLabel lblincorrectPassword = new JLabel("*Incorrect Password");
+		lblincorrectPassword.setForeground(Color.RED);
+		lblincorrectPassword.setBounds(140, 113, 223, 15);
+		contentPane.add(lblincorrectPassword);
+		lblincorrectPassword.setVisible(false);
+		
 		JButton btnSignIn = new JButton("Sign In");
 		btnSignIn.setBounds(324, 233, 114, 25);
 		contentPane.add(btnSignIn);
 		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//if(search data base for username returns something){
+				JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 				
-			//}
-//			else{
-				
-//				set error 'User name does not exit'
-//			}
+			if(db.searchUserNames(txtUserName.getText())) {
+				lblUsernameNotFound.setVisible(false);
+				if(db.getPassword(txtUserName.getText().equals(txtPassword))) {
+					lblincorrectPassword.setVisible(false);
+					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()));
+					sw.setVisible(true);
+					dispose();
+				}
+				else {
+					lblincorrectPassword.setVisible(true);
+				}
+			
+			}
+			else {
+				lblUsernameNotFound.setVisible(true);
+			}
 		// if(password.equals(passwordReturend){
 //				good	
 //			}
@@ -84,6 +109,7 @@ public class SignInWindow extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(12, 233, 114, 25);
 		contentPane.add(btnCancel);
+		
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login cancelled = new Login();

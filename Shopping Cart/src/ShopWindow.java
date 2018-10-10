@@ -208,8 +208,8 @@ public class ShopWindow extends JFrame {
 			btnSignIn.setBounds(612, 5, 100, 25);
 			btnSignIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login signOut = new Login();
-					signOut.setVisible(true);
+					SignInWindow signIn = new SignInWindow();
+					signIn.setVisible(true);
 					dispose();
 				}
 			});
