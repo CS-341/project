@@ -39,6 +39,9 @@ public class JdbcSQLiteConnection {
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
   
   private String SEARCH_ALL_ATTRS = "SELECT * FROM Users";
+  
+  private String SEARCH_USER_AND_PASS = "SELECT Username, Password FROM Users";
+  
     public static void main(String[] args) {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -155,7 +158,7 @@ public class JdbcSQLiteConnection {
      * @param username the name to search for in the database
      * @return
      */
-    public boolean searchUserName(String username) {
+    public boolean searchUserNames(String username) {
     	ResultSet rs = null;
     	boolean userInDb = false;
     	try {
@@ -175,10 +178,39 @@ public class JdbcSQLiteConnection {
     	return userInDb;
     }
     
+    /**
+     * 
+     * @param username the username to search the database for
+     * @return a user object w/ all the data in
+     */
     public User getUserInfo(String username) {
     	User user = null;
     	ResultSet  rs = null;
-    	if (searchUserName(username) == true) { //found the user so return their info
+    	String userName = "";
+        String userPass = "";
+        String city ="";
+        String state = "";
+        String zip = "";
+        String credit = "";
+        int userType;
+    	if (searchUserNames(username) == true) { //found the user so return their info
+    		Statement st;
+			try {
+				st = conn.createStatement();
+				rs = st.executeQuery("SELECT * FROM Users WHERE Username = '" + username + "'");
+				int i = 0; //integer for counting 
+				username = rs.getString(0);
+				userPass = rs.getString(1);
+				city = rs.getString(2);
+				state = rs.getString(3);
+				zip = rs.getString(4);
+				credit = rs.getString(5);
+				userType = rs.getInt(6);
+				user = new User(username, userPass, city, state, zip, credit);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		
     	} 
     	//else user will be null and return null
