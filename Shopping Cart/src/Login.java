@@ -86,7 +86,7 @@ public class Login extends JFrame {
 		contentPane.add(buttSignIn);
 		buttSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegisterWindow signIn = new RegisterWindow();
+				SignInWindow signIn = new SignInWindow();
 				signIn.setVisible(true);
 				dispose();
 			}
