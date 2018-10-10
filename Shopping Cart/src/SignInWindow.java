@@ -77,7 +77,7 @@ public class SignInWindow extends JFrame {
 		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JdbcSQLiteConnection db = new JdbcSQLiteConnection();
-				
+				db.openConnection();
 			if(db.searchUserNames(txtUserName.getText())) {
 				lblUsernameNotFound.setVisible(false);
 				if(db.getPassword(txtUserName.getText()).equals(txtPassword.getText())) {

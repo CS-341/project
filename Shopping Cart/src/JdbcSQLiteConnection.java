@@ -187,7 +187,7 @@ public class JdbcSQLiteConnection {
     public User getUserInfo(String username) {
     	User user = null;
     	ResultSet  rs = null;
-    	String userName = "";
+    	String name = "";
         String userPass = "";
         String city ="";
         String state = "";
@@ -200,14 +200,14 @@ public class JdbcSQLiteConnection {
 				st = conn.createStatement();
 				rs = st.executeQuery("SELECT * FROM Users WHERE Username = '" + username + "'");
 				int i = 0; //integer for counting 
-				username = rs.getString(1);
+				name = rs.getString(1);
 				userPass = rs.getString(2);
 				city = rs.getString(3);
 				state = rs.getString(4);
 				zip = rs.getString(5);
 				credit = rs.getString(6);
 				userType = rs.getInt(7);
-				user = new User(userName, userPass, city, state, zip, credit);
+				user = new User(name, userPass, city, state, zip, credit);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
