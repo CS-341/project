@@ -24,7 +24,7 @@ public class JdbcSQLiteConnection {
   		+ 						"Status INTEGER);";
   
 
-  private String DROP_TABLE = "DROP TABLE IF EXISTS Users";
+  private String DROP_TABLE = "DROP TABLE IF EXISTS ";
   
   private String INSERT_INTO = "INSERT INTO Users (\r\n" + 
   		"                        Username,\r\n" + 
@@ -99,7 +99,7 @@ public class JdbcSQLiteConnection {
      
     }
     
-    private boolean dropTable;
+    private boolean dropTable = false;
     //if dropTable == true
     //statement.executeUpdate(DROP_TABLE); should be uncommented 
     // OR 
@@ -107,7 +107,7 @@ public class JdbcSQLiteConnection {
     public JdbcSQLiteConnection () {
     	//dropTable == true on first run to clear the database/tables
     	//dropTable == false to keep existing info in database
-    	dropTable = true;
+    	dropTable = false;
     }
     
     public void dropTable() {
@@ -166,7 +166,8 @@ public class JdbcSQLiteConnection {
 			rs = st.executeQuery(SEARCH_USERNAMES);
 			String temp = "";
 			while(rs.next()) {
-				temp = rs.getString(0);
+				//column 1 in the database is the username field
+				temp = rs.getString(1);
 				if (username.equalsIgnoreCase(temp)) {
 					userInDb = true;
 				}
@@ -206,7 +207,7 @@ public class JdbcSQLiteConnection {
 				zip = rs.getString(4);
 				credit = rs.getString(5);
 				userType = rs.getInt(6);
-				user = new User(username, userPass, city, state, zip, credit);
+				user = new User(userName, userPass, city, state, zip, credit);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -215,6 +216,38 @@ public class JdbcSQLiteConnection {
     	} 
     	//else user will be null and return null
     	return user;
+    }
+    
+    public void displayInfo(){
+    	User user = null;
+    	ResultSet  rs = null;
+    	String userName = "";
+        String userPass = "";
+        String city ="";
+        String state = "";
+        String zip = "";
+        String credit = "";
+        int userType;
+    		Statement st;
+			try {
+				st = conn.createStatement();
+				rs = st.executeQuery("SELECT * FROM Users");
+				int i = 0; //integer for counting 
+				userName = rs.getString(0);
+				userPass = rs.getString(1);
+				city = rs.getString(2);
+				state = rs.getString(3);
+				zip = rs.getString(4);
+				credit = rs.getString(5);
+				userType = rs.getInt(6);
+				System.out.println("Username Password City State Zip Credit UserType");
+				System.out.println(userName + " " + userPass + " " + city + " " + state + " " +
+									zip + " " + credit + " " + userType);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
     }
 }
 
