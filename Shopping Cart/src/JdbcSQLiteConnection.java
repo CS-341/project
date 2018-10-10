@@ -54,13 +54,20 @@ public class JdbcSQLiteConnection {
             	//drop the old table
             	if (db.dropTable == true) {
             		System.out.println("Dropped table");
-            		db.dropTable();
+            		db.dropTable("Users");
             	}
             	//create table
-            	db.createTable();
+            	//SQLiteException may occur here if Users is already created - not a worry
+            	db.createTable("Users");
+            	
             	System.out.println("created table");
+            	
             	//add user to database
-            	db.addUserToDatabase(admin);
+            	if(!db.searchUserNames("admin")) {
+            		db.addUserToDatabase(admin);
+            	}
+            	
+            	db.displayInfo();
                 System.out.println("Connected to the database");
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
                 System.out.println("Driver name: " + dm.getDriverName());
@@ -110,21 +117,22 @@ public class JdbcSQLiteConnection {
     	dropTable = false;
     }
     
-    public void dropTable() {
+    public void dropTable(String tableName) {
     	try {
 			Statement statement = conn.createStatement();
-			statement.executeUpdate(DROP_TABLE);
+			statement.executeUpdate(DROP_TABLE + " " + tableName);
 		} catch (SQLException e) {
 	
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
-    public void createTable() {
+    
+    public void createTable(String tableName) {
     	try {
 			Statement statement = conn.createStatement();
 			if (dropTable == true) {
-				dropTable();
+				dropTable(tableName);
 			}
 			statement.executeUpdate(CREATE_TABLE);
 		} catch (SQLException e) {
@@ -242,7 +250,6 @@ public class JdbcSQLiteConnection {
     }
     
     public void displayInfo(){
-    	User user = null;
     	ResultSet  rs = null;
     	String userName = "";
         String userPass = "";
@@ -254,14 +261,14 @@ public class JdbcSQLiteConnection {
     		Statement st;
 			try {
 				st = conn.createStatement();
-				rs = st.executeQuery("SELECT * FROM Users");
-				userName = rs.getString(0);
-				userPass = rs.getString(1);
-				city = rs.getString(2);
-				state = rs.getString(3);
-				zip = rs.getString(4);
-				credit = rs.getString(5);
-				userType = rs.getInt(6);
+				rs = st.executeQuery(SEARCH_ALL_ATTRS);
+				userName = rs.getString(1);
+				userPass = rs.getString(2);
+				city = rs.getString(3);
+				state = rs.getString(4);
+				zip = rs.getString(5);
+				credit = rs.getString(6);
+				userType = rs.getInt(7);
 				System.out.println("Username Password City State Zip Credit UserType");
 				System.out.println(userName + " " + userPass + " " + city + " " + state + " " +
 									zip + " " + credit + " " + userType);
