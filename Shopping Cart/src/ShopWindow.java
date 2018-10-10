@@ -223,6 +223,13 @@ public class ShopWindow extends JFrame {
 			button.setBounds(727, 5, 100, 25);
 			// action event to sign in page
 			contentPane.add(button);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					RegisterWindow signIn = new RegisterWindow();
+					signIn.setVisible(true);
+					dispose();
+				}
+			});
 		}
 	}
 

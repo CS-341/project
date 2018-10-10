@@ -115,6 +115,7 @@ public class JdbcSQLiteConnection {
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(DROP_TABLE);
 		} catch (SQLException e) {
+	
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -168,7 +169,7 @@ public class JdbcSQLiteConnection {
 			while(rs.next()) {
 				//column 1 in the database is the username field
 				temp = rs.getString(1);
-				if (username.equalsIgnoreCase(temp)) {
+				if (username.equals(temp)) {
 					userInDb = true;
 				}
 			}
@@ -217,6 +218,7 @@ public class JdbcSQLiteConnection {
     	//else user will be null and return null
     	return user;
     }
+    
     public String getPassword(String username) {
     	String password = "";
     	ResultSet rs = null;
@@ -228,7 +230,7 @@ public class JdbcSQLiteConnection {
 			while(rs.next()) {
 				//column 1 in the database is the username field
 				temp = rs.getString(1);
-				if (username.equalsIgnoreCase(temp)) {
+				if (username.equals(temp)) {
 					password = rs.getString(2);
 				}
 			}
@@ -238,6 +240,7 @@ public class JdbcSQLiteConnection {
 		}
     	return password;
     }
+    
     public void displayInfo(){
     	User user = null;
     	ResultSet  rs = null;
