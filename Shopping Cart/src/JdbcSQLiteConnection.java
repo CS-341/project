@@ -122,7 +122,6 @@ public class JdbcSQLiteConnection {
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(DROP_TABLE + " " + tableName);
 		} catch (SQLException e) {
-	
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -177,7 +176,7 @@ public class JdbcSQLiteConnection {
 			while(rs.next()) {
 				//column 1 in the database is the username field
 				temp = rs.getString(1);
-				if (username.equals(temp)) {
+				if (username.equalsIgnoreCase(temp)) {
 					userInDb = true;
 				}
 			}
@@ -226,7 +225,6 @@ public class JdbcSQLiteConnection {
     	//else user will be null and return null
     	return user;
     }
-    
     public String getPassword(String username) {
     	String password = "";
     	ResultSet rs = null;
@@ -238,7 +236,7 @@ public class JdbcSQLiteConnection {
 			while(rs.next()) {
 				//column 1 in the database is the username field
 				temp = rs.getString(1);
-				if (username.equals(temp)) {
+				if (username.equalsIgnoreCase(temp)) {
 					password = rs.getString(2);
 				}
 			}
@@ -248,12 +246,7 @@ public class JdbcSQLiteConnection {
 		}
     	return password;
     }
-<<<<<<< HEAD
-    
-    public void displayInfo(){
-=======
     public void displayInfo(String tableName){
->>>>>>> 7231eae423b06ef038e2a46a10e20fd622c0d1dd
     	ResultSet  rs = null;
     	String userName = "";
         String userPass = "";
@@ -266,16 +259,21 @@ public class JdbcSQLiteConnection {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("SELECT * FROM " + tableName);
-				userName = rs.getString(1);
-				userPass = rs.getString(2);
-				city = rs.getString(3);
-				state = rs.getString(4);
-				zip = rs.getString(5);
-				credit = rs.getString(6);
-				userType = rs.getInt(7);
 				System.out.println("Username Password City State Zip Credit UserType");
-				System.out.println(userName + " " + userPass + " " + city + " " + state + " " +
-									zip + " " + credit + " " + userType);
+				while (rs.next()) {
+					userName = rs.getString(1);
+					userPass = rs.getString(2);
+					city = rs.getString(3);
+					state = rs.getString(4);
+					zip = rs.getString(5);
+					credit = rs.getString(6);
+					userType = rs.getInt(7);
+					
+					System.out.println(userName + " " + userPass + " " + city + " " + state + " " +
+										zip + " " + credit + " " + userType);
+				
+				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
