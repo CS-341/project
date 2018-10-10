@@ -200,13 +200,13 @@ public class JdbcSQLiteConnection {
 				st = conn.createStatement();
 				rs = st.executeQuery("SELECT * FROM Users WHERE Username = '" + username + "'");
 				int i = 0; //integer for counting 
-				username = rs.getString(0);
-				userPass = rs.getString(1);
-				city = rs.getString(2);
-				state = rs.getString(3);
-				zip = rs.getString(4);
-				credit = rs.getString(5);
-				userType = rs.getInt(6);
+				username = rs.getString(1);
+				userPass = rs.getString(2);
+				city = rs.getString(3);
+				state = rs.getString(4);
+				zip = rs.getString(5);
+				credit = rs.getString(6);
+				userType = rs.getInt(7);
 				user = new User(userName, userPass, city, state, zip, credit);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -217,7 +217,27 @@ public class JdbcSQLiteConnection {
     	//else user will be null and return null
     	return user;
     }
-    
+    public String getPassword(String username) {
+    	String password = "";
+    	ResultSet rs = null;
+    	
+    	try {
+			Statement st = conn.createStatement();
+			rs = st.executeQuery(SEARCH_USER_AND_PASS);
+			String temp = "";
+			while(rs.next()) {
+				//column 1 in the database is the username field
+				temp = rs.getString(1);
+				if (username.equalsIgnoreCase(temp)) {
+					password = rs.getString(2);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return password;
+    }
     public void displayInfo(){
     	User user = null;
     	ResultSet  rs = null;
@@ -232,7 +252,6 @@ public class JdbcSQLiteConnection {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("SELECT * FROM Users");
-				int i = 0; //integer for counting 
 				userName = rs.getString(0);
 				userPass = rs.getString(1);
 				city = rs.getString(2);
