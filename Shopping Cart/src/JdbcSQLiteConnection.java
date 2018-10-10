@@ -57,9 +57,11 @@ public class JdbcSQLiteConnection {
             		db.dropTable("Users");
             	}
             	//create table
-            	
+            	//SQLiteException may occur here if Users is already created - not a worry
             	db.createTable("Users");
+            	
             	System.out.println("created table");
+            	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
