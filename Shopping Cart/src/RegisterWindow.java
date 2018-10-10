@@ -304,8 +304,8 @@ public class RegisterWindow extends JFrame {
 				else {
 					lblPleaseEnter_3.setVisible(false);
 				}
-				if(zipCode.getText().length() == 0) {
-					lblPleaseEnter_4.setVisible(true);
+				if(zipCode.getText().length() < 5) {
+					lblPleaseEnter_5.setVisible(true);
 					errorExists = true;
 				}
 				else {
