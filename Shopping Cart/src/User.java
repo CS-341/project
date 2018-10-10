@@ -6,7 +6,7 @@ public class User {
 	String state;
 	String zipCode;
 	String creditCard;
-	int userType;
+	int userType;//0 = guest, 1 = registered customer, 2 = admin?
 	
 	
 	public User() {
@@ -22,6 +22,5 @@ public class User {
 		this.zipCode = zipcode;
 		this.creditCard = creditCard;
 		userType = 1;
-		
 	}
 }
