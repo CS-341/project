@@ -98,6 +98,7 @@ public class JdbcSQLiteConnection {
     			"', '" + credit + "', '" + userType + "');";
     	//remove conn line below -- call open connection immediately after creating DB
     	conn = DriverManager.getConnection(dbURL);
+    	openConnection();
     	Statement statement = conn.createStatement();
       	statement.executeUpdate(temp);
       } catch (SQLException e) {
@@ -115,6 +116,7 @@ public class JdbcSQLiteConnection {
     	//dropTable == true on first run to clear the database/tables
     	//dropTable == false to keep existing info in database
     	dropTable = false;
+    	openConnection();
     }
     
     public void dropTable(String tableName) {
@@ -143,6 +145,12 @@ public class JdbcSQLiteConnection {
      * call this after creating the database
      */
     public void openConnection() {
+    	try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     	try {
 			conn = DriverManager.getConnection(dbURL);
 		} catch (SQLException e) {
