@@ -10,12 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JPasswordField;
 
 public class SignInWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 
 	/**
 	 * Launch the application.
@@ -57,11 +58,6 @@ public class SignInWindow extends JFrame {
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 		
-		txtPassword = new JTextField();
-		txtPassword.setColumns(10);
-		txtPassword.setBounds(140, 138, 223, 19);
-		contentPane.add(txtPassword);
-		
 
 		JLabel lblUsernameNotFound = new JLabel("*Username not found");
 		lblUsernameNotFound.setForeground(Color.RED);
@@ -84,7 +80,7 @@ public class SignInWindow extends JFrame {
 				
 			if(db.searchUserNames(txtUserName.getText())) {
 				lblUsernameNotFound.setVisible(false);
-				if(db.getPassword(txtUserName.getText().equals(txtPassword))) {
+				if(db.getPassword(txtUserName.getText()).equals(txtPassword.getText())) {
 					lblincorrectPassword.setVisible(false);
 					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()));
 					sw.setVisible(true);
@@ -109,6 +105,10 @@ public class SignInWindow extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(12, 233, 114, 25);
 		contentPane.add(btnCancel);
+		
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(140, 138, 223, 19);
+		contentPane.add(txtPassword);
 		
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
