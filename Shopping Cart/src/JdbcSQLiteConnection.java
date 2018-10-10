@@ -53,14 +53,11 @@ public class JdbcSQLiteConnection {
             	JdbcSQLiteConnection db = new JdbcSQLiteConnection();
             	//drop the old table
             	if (db.dropTable == true) {
-            		System.out.println("Dropped table");
             		db.dropTable("Users");
             	}
             	//create table
             	//SQLiteException may occur here if Users is already created - not a worry
             	db.createTable("Users");
-            	
-            	System.out.println("created table");
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
@@ -123,6 +120,7 @@ public class JdbcSQLiteConnection {
     	try {
 			Statement statement = conn.createStatement();
 			statement.executeUpdate(DROP_TABLE + " " + tableName);
+    		System.out.println("Dropped table " + tableName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -136,6 +134,7 @@ public class JdbcSQLiteConnection {
 				dropTable(tableName);
 			}
 			statement.executeUpdate(CREATE_TABLE);
+			System.out.println("created table " + tableName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
