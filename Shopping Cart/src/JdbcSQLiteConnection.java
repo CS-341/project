@@ -57,10 +57,14 @@ public class JdbcSQLiteConnection {
             		db.dropTable("Users");
             	}
             	//create table
+            	
             	db.createTable("Users");
             	System.out.println("created table");
             	//add user to database
-            	db.addUserToDatabase(admin);
+            	if(!db.searchUserNames("admin")) {
+            		db.addUserToDatabase(admin);
+            	}
+            	
             	db.displayInfo();
                 System.out.println("Connected to the database");
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
