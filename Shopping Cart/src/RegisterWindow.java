@@ -315,8 +315,13 @@ public class RegisterWindow extends JFrame {
 				else {
 					stateError.setVisible(false);
 				}
+<<<<<<< HEAD
 				if(city.getText().length() == 0) {
 					cityError.setVisible(true);
+=======
+				if(zipCode.getText().length() < 5) {
+					lblPleaseEnter_5.setVisible(true);
+>>>>>>> 4b28c4ecab76ef25aa95afda4ce0c375b93fdd57
 					errorExists = true;
 				}
 				else {

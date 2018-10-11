@@ -65,7 +65,7 @@ public class ShopWindow extends JFrame {
 		items.add(new Item("hp mouse", "$15" , "/images/hp-mouse_60x60.jpeg"));
 		items.add(new Item("ipad", "$499" , "/images/ipad_60x60.jpeg"));
 		items.add(new Item("kogan keyboard",  "$59" ,"/images/kogan-key_60x60.jpeg"));
-		items.add(new Item("Logitech headset",  "$99" ,"/images/logitech-key_60x60.jpeg"));
+		items.add(new Item("Logitech keyboard",  "$99" ,"/images/logitech-key_60x60.jpeg"));
 		items.add(new Item("Razer Mouse",  "$79" ,"/images/logitech-mouse_60x60.jpeg"));
 		items.add(new Item("ram", "$29" , "/images/ram_60x60.jpeg"));
 		items.add(new Item("Razer Headset", "$49" , "/images/razer-headset_60x60.jpeg"));
