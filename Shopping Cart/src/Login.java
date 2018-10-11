@@ -102,8 +102,6 @@ public class Login extends JFrame {
 				guest.setVisible(true);
 				dispose();
 
-				RegisterWindow newRegister = new RegisterWindow();
-				newRegister.setVisible(true);
 
 			}
 		});

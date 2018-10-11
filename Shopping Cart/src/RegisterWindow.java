@@ -27,10 +27,17 @@ public class RegisterWindow extends JFrame {
 	private JLabel lblRetypePassword;
 	private JLabel lblShippingAddress;
 	private JLabel lblCreditCardNumber;
-	private JLabel lblPasswordsDo;
-	private JLabel lblPleaseEnter_2;
-	private JLabel lblPleaseEnter_6;
-	private JLabel lblPleaseOnly;
+	private JLabel userNameError;
+	private JLabel noPasswordError;
+	private JLabel passwordRetypeError;
+	private JLabel CCLengthEror;
+	private JLabel passwordMatchingError;
+	private JLabel streetAddressError;
+	private JLabel cityError;
+	private JLabel stateError;
+	private JLabel zipcodeLengthError;
+	private JLabel zipCodeIntegerError;
+	private JLabel ccIntegerValuesError;
 	private JLabel lblXxxxxxxxxxxxxxxx;
 	
 	/**
@@ -82,21 +89,21 @@ public class RegisterWindow extends JFrame {
 
 		city = new JTextField();
 		city.setColumns(10);
-		city.setBounds(160, 370, 190, 19);
+		city.setBounds(160, 220, 190, 19);
 		contentPane.add(city);
 
 		state = new JTextField();
-		state.setBounds(160, 220, 190, 19);
+		state.setBounds(160, 270, 190, 19);
 		contentPane.add(state);
 		state.setColumns(10);
 		
 		zipCode = new JTextField();
-		zipCode.setBounds(160, 270, 190, 19);
+		zipCode.setBounds(160, 320, 190, 19);
 		contentPane.add(zipCode);
 		zipCode.setColumns(10);
 		
 		creditCard = new JTextField();
-		creditCard.setBounds(160, 324, 190, 19);
+		creditCard.setBounds(160, 368, 190, 19);
 		contentPane.add(creditCard);
 		creditCard.setColumns(10);
 		
@@ -119,75 +126,6 @@ public class RegisterWindow extends JFrame {
 		lblCreditCardNumber = new JLabel("Credit Card Number:");
 		lblCreditCardNumber.setBounds(12, 370, 154, 15);
 		contentPane.add(lblCreditCardNumber);
-
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(12, 433, 114, 25);
-		contentPane.add(btnCancel);
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login cancelled = new Login();
-				cancelled.setVisible(true);
-				dispose();
-			}
-		});
-		
-		JLabel lblpleaseEnterA = new JLabel("* Please enter a username");
-		lblpleaseEnterA.setForeground(Color.RED);
-		lblpleaseEnterA.setBounds(160, 0, 190, 15);
-		contentPane.add(lblpleaseEnterA);
-		lblpleaseEnterA.setVisible(false);
-		
-		JButton btnRegister = new JButton("Register");
-		btnRegister.setBounds(373, 433, 114, 25);
-		contentPane.add(btnRegister);
-		
-		JLabel lblPleaseEnter = new JLabel("* Please enter a password");
-		lblPleaseEnter.setForeground(Color.RED);
-		lblPleaseEnter.setBounds(160, 51, 190, 15);
-		contentPane.add(lblPleaseEnter);
-		lblPleaseEnter.setVisible(false);
-		
-		JLabel lblPassword_1 = new JLabel("* Please retype your password");
-		lblPassword_1.setForeground(Color.RED);
-		lblPassword_1.setBounds(160, 101, 247, 15);
-		contentPane.add(lblPassword_1);
-		lblPassword_1.setVisible(false);
-		
-		JLabel lblPleaseEnter_1 = new JLabel("* Please enter your 16-digit number");
-		lblPleaseEnter_1.setForeground(Color.RED);
-		lblPleaseEnter_1.setBounds(160, 350, 339, 15);
-		contentPane.add(lblPleaseEnter_1);
-		lblPleaseEnter_1.setVisible(false);
-		
-		lblPasswordsDo = new JLabel("* Passwords do not match");
-		lblPasswordsDo.setForeground(Color.RED);
-		lblPasswordsDo.setBounds(160, 101, 213, 15);
-		contentPane.add(lblPasswordsDo);
-		lblPasswordsDo.setVisible(false);
-		
-		lblPleaseEnter_2 = new JLabel("* Please enter you street address");
-		lblPleaseEnter_2.setForeground(Color.RED);
-		lblPleaseEnter_2.setBounds(160, 151, 258, 15);
-		contentPane.add(lblPleaseEnter_2);
-		lblPleaseEnter_2.setVisible(false);
-		
-		JLabel lblPleaseEnter_3 = new JLabel("* Please enter your city");
-		lblPleaseEnter_3.setForeground(Color.RED);
-		lblPleaseEnter_3.setBounds(160, 201, 190, 15);
-		contentPane.add(lblPleaseEnter_3);
-		lblPleaseEnter_3.setVisible(false);
-		
-		JLabel lblPleaseEnter_4 = new JLabel("* Please enter your state");
-		lblPleaseEnter_4.setForeground(Color.RED);
-		lblPleaseEnter_4.setBounds(160, 251, 190, 15);
-		contentPane.add(lblPleaseEnter_4);
-		lblPleaseEnter_4.setVisible(false);
-		
-		JLabel lblPleaseEnter_5 = new JLabel("* Please enter your 5-digit zipcode");
-		lblPleaseEnter_5.setForeground(Color.RED);
-		lblPleaseEnter_5.setBounds(160, 301, 247, 15);
-		contentPane.add(lblPleaseEnter_5);
-		lblPleaseEnter_5.setVisible(false);
 		
 		JLabel lblCity = new JLabel("City:");
 		lblCity.setBounds(12, 222, 66, 15);
@@ -201,78 +139,158 @@ public class RegisterWindow extends JFrame {
 		lblZipCode.setBounds(12, 322, 66, 15);
 		contentPane.add(lblZipCode);
 		
-		lblPleaseEnter_6 = new JLabel("* Please enter only 5 digit integer values");
-		lblPleaseEnter_6.setForeground(Color.RED);
-		lblPleaseEnter_6.setBounds(160, 301, 300, 15);
-		contentPane.add(lblPleaseEnter_6);
-		lblPleaseEnter_6.setVisible(false);
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(12, 433, 114, 25);
+		contentPane.add(btnCancel);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login cancelled = new Login();
+				cancelled.setVisible(true);
+				dispose();
+			}
+		});
 		
-		lblPleaseOnly = new JLabel("* Please enter only integer values and '-'");
-		lblPleaseOnly.setForeground(Color.RED);
-		lblPleaseOnly.setBounds(160, 350, 327, 15);
-		contentPane.add(lblPleaseOnly);
+		JLabel userNameError = new JLabel("* Please enter a username");
+		userNameError.setForeground(Color.RED);
+		userNameError.setBounds(160, 0, 190, 15);
+		contentPane.add(userNameError);
+		userNameError.setVisible(false);
 		
+		JLabel noPasswordError = new JLabel("* Please enter a password");
+		noPasswordError.setForeground(Color.RED);
+		noPasswordError.setBounds(160, 51, 190, 15);
+		contentPane.add(noPasswordError);
+		noPasswordError.setVisible(false);
+		
+		JLabel passwordRetypeError = new JLabel("* Please retype your password");
+		passwordRetypeError.setForeground(Color.RED);
+		passwordRetypeError.setBounds(160, 101, 247, 15);
+		contentPane.add(passwordRetypeError);
+		passwordRetypeError.setVisible(false);
+		
+		JLabel CCLengthEror = new JLabel("* Please enter your 16-digit number");
+		CCLengthEror.setForeground(Color.RED);
+		CCLengthEror.setBounds(160, 350, 339, 15);
+		contentPane.add(CCLengthEror);
+		CCLengthEror.setVisible(false);
+		
+		passwordMatchingError = new JLabel("* Passwords do not match");
+		passwordMatchingError.setForeground(Color.RED);
+		passwordMatchingError.setBounds(160, 101, 213, 15);
+		contentPane.add(passwordMatchingError);
+		passwordMatchingError.setVisible(false);
+		
+		streetAddressError = new JLabel("* Please enter you street address");
+		streetAddressError.setForeground(Color.RED);
+		streetAddressError.setBounds(160, 151, 258, 15);
+		contentPane.add(streetAddressError);
+		streetAddressError.setVisible(false);
+		
+		JLabel cityError = new JLabel("* Please enter your city");
+		cityError.setForeground(Color.RED);
+		cityError.setBounds(160, 201, 190, 15);
+		contentPane.add(cityError);
+		cityError.setVisible(false);
+		
+		JLabel stateError = new JLabel("* Please enter your state");
+		stateError.setForeground(Color.RED);
+		stateError.setBounds(160, 251, 190, 15);
+		contentPane.add(stateError);
+		stateError.setVisible(false);
+		
+		JLabel zipcodeLengthError = new JLabel("* Please enter your 5-digit zipcode");
+		zipcodeLengthError.setForeground(Color.RED);
+		zipcodeLengthError.setBounds(160, 301, 247, 15);
+		contentPane.add(zipcodeLengthError);
+		zipcodeLengthError.setVisible(false);
+		
+		zipCodeIntegerError = new JLabel("* Please enter only 5 digit integer values");
+		zipCodeIntegerError.setForeground(Color.RED);
+		zipCodeIntegerError.setBounds(160, 301, 300, 15);
+		contentPane.add(zipCodeIntegerError);
+		zipCodeIntegerError.setVisible(false);
+		
+		ccIntegerValuesError = new JLabel("* Please enter only integer values and '-'");
+		ccIntegerValuesError.setForeground(Color.RED);
+		ccIntegerValuesError.setBounds(160, 350, 327, 15);
+		contentPane.add(ccIntegerValuesError);
+		ccIntegerValuesError.setVisible(false);
+		
+		JLabel userNameTakenError = new JLabel("* Username is already taken");
+		userNameTakenError.setForeground(Color.RED);
+		userNameTakenError.setBounds(160, 0, 190, 15);
+		contentPane.add(userNameTakenError);
+		userNameTakenError.setVisible(false);
+
 		lblXxxxxxxxxxxxxxxx = new JLabel("(XXXX-XXXX-XXXX-XXXX)");
 		lblXxxxxxxxxxxxxxxx.setBounds(160, 389, 190, 15);
 		contentPane.add(lblXxxxxxxxxxxxxxxx);
-		lblPleaseOnly.setVisible(false);
 		
+		JButton btnRegister = new JButton("Register");
+		btnRegister.setBounds(373, 433, 114, 25);
+		contentPane.add(btnRegister);
 		
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean errorExists = false;
-//				if(User name is already in database) {
-					JdbcSQLiteConnection j = new JdbcSQLiteConnection();
-					// Search the data base
-					// If something is returned then throw error 'Username already exists'
-//				}
+//				
+//					JdbcSQLiteConnection j = new JdbcSQLiteConnection();
+//					if(j.searchUserNames(userName.getText())) {
+//						userNameTakenError.setVisible(true);
+//					}
+//					else {
+//						userNameTakenError.setVisible(false);
+//					}
+//
+////				}
+//					j.closeConnection();
 				// If there is no username entered show message
 				if(userName.getText().length() == 0) {
-					lblpleaseEnterA.setVisible(true);
+					userNameError.setVisible(true);
 					errorExists =  true;
 
 				}
 				//else remove the message
 				else {
-					lblpleaseEnterA.setVisible(false);
+					userNameError.setVisible(false);
 				}
 				
 				
 				if(password.getText().length() == 0) {
-					lblPleaseEnter.setVisible(true);
-					lblPassword_1.setVisible(false);
-					lblPasswordsDo.setVisible(false);
+					noPasswordError.setVisible(true);
+					passwordRetypeError.setVisible(false);
+					passwordMatchingError.setVisible(false);
 					errorExists = true;
 					
 				}
 				//******************* STILL NEED TO MAKE IT SO ONLY INTEGER VALUES SHOW UP IN CREDIT CARD
 				else if(retypePw.getText().length()==0) {
-					lblPassword_1.setVisible(true);
-					lblPleaseEnter.setVisible(false);
-					lblPasswordsDo.setVisible(false);
+					passwordRetypeError.setVisible(true);
+					noPasswordError.setVisible(false);
+					passwordMatchingError.setVisible(false);
 					errorExists = true;
 				}
 				else if (!password.getText().equals(retypePw.getText())) {
-					lblPasswordsDo.setVisible(true);	
-					lblPassword_1.setVisible(false);
-					lblPleaseEnter.setVisible(false);
+					passwordMatchingError.setVisible(true);	
+					passwordRetypeError.setVisible(false);
+					noPasswordError.setVisible(false);
 					errorExists = true;
 				}
 				else {
-					lblPasswordsDo.setVisible(false);	
-					lblPassword_1.setVisible(false);
-					lblPleaseEnter.setVisible(false);
+					passwordMatchingError.setVisible(false);	
+					passwordRetypeError.setVisible(false);
+					noPasswordError.setVisible(false);
 				}
-				if(lblShippingAddress.getText().length() == 0) {
-					lblPleaseEnter_2.setVisible(true);
+				if(streetAddress.getText().length() == 0) {
+					streetAddressError.setVisible(true);
 					errorExists = true;
 				}
 				else {
-					lblPleaseEnter_2.setVisible(false);
+					streetAddressError.setVisible(false);
 				}
-				String s1 = city.getText().replaceAll("-", "");
+				String s1 = creditCard.getText().replaceAll("-", "");
 				if (s1.length() != 16) {
-					lblPleaseEnter_1.setVisible(true);
+					CCLengthEror.setVisible(true);
 					errorExists = true;
 				}
 				else {
@@ -284,47 +302,42 @@ public class RegisterWindow extends JFrame {
 							break;
 						}
 					}
-					lblPleaseOnly.setVisible(!allDigits);
-					lblPleaseEnter_1.setVisible(false);
+					ccIntegerValuesError.setVisible(!allDigits);
+					CCLengthEror.setVisible(false);
 					if(!allDigits) {
 						errorExists = true;
 					}
 				}
-				if(streetAddress.getText().length() == 0) {
-					lblPleaseEnter_2.setVisible(true);
-					errorExists = true;
-				}
-				else {
-					lblPleaseEnter_2.setVisible(false);
-				}
 				if(state.getText().length() == 0) {
-					lblPleaseEnter_3.setVisible(true);
+					stateError.setVisible(true);
 					errorExists = true;
 				}
 				else {
-					lblPleaseEnter_3.setVisible(false);
+					stateError.setVisible(false);
 				}
-				if(zipCode.getText().length() == 0) {
-					lblPleaseEnter_4.setVisible(true);
+				if(city.getText().length() == 0) {
+					cityError.setVisible(true);
 					errorExists = true;
 				}
 				else {
-					lblPleaseEnter_4.setVisible(false);
+					cityError.setVisible(false);
 				}
-				if(creditCard.getText().length() == 5) {
+
+				if(zipCode.getText().length() == 5) {
 					boolean allDigits = true;
 					for(int i = 0; i < 5; i++) {
-						if(creditCard.getText().charAt(i) - 48 > 9) {
+						if(zipCode.getText().charAt(i) - 48 > 9) {
 							allDigits = false;
 							errorExists = true;
 							break;
 						}
 					}
-					lblPleaseEnter_5.setVisible(false);
-					lblPleaseEnter_6.setVisible(!allDigits);
+					zipcodeLengthError.setVisible(false);
+					zipCodeIntegerError.setVisible(!allDigits);
 				}
 				else{
-					lblPleaseEnter_6.setVisible(false);
+					zipCodeIntegerError.setVisible(false);
+					zipcodeLengthError.setVisible(true);
 					errorExists = true;
 				}
 
