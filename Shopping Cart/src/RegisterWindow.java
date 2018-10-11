@@ -218,7 +218,7 @@ public class RegisterWindow extends JFrame {
 		
 		JLabel userNameTakenError = new JLabel("* Username is already taken");
 		userNameTakenError.setForeground(Color.RED);
-		userNameTakenError.setBounds(160, 0, 190, 15);
+		userNameTakenError.setBounds(160, 0, 247, 15);
 		contentPane.add(userNameTakenError);
 		userNameTakenError.setVisible(false);
 
@@ -233,17 +233,15 @@ public class RegisterWindow extends JFrame {
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean errorExists = false;
-//				
-//					JdbcSQLiteConnection j = new JdbcSQLiteConnection();
-//					if(j.searchUserNames(userName.getText())) {
-//						userNameTakenError.setVisible(true);
-//					}
-//					else {
-//						userNameTakenError.setVisible(false);
-//					}
-//
-////				}
-//					j.closeConnection();
+				
+				JdbcSQLiteConnection j = new JdbcSQLiteConnection();
+				if(j.searchUserNames(userName.getText())) {
+					userNameTakenError.setVisible(true);
+				}
+				else {
+					userNameTakenError.setVisible(false);
+				}
+				j.closeConnection();
 				// If there is no username entered show message
 				if(userName.getText().length() == 0) {
 					userNameError.setVisible(true);
@@ -315,13 +313,8 @@ public class RegisterWindow extends JFrame {
 				else {
 					stateError.setVisible(false);
 				}
-<<<<<<< HEAD
 				if(city.getText().length() == 0) {
 					cityError.setVisible(true);
-=======
-				if(zipCode.getText().length() < 5) {
-					lblPleaseEnter_5.setVisible(true);
->>>>>>> 4b28c4ecab76ef25aa95afda4ce0c375b93fdd57
 					errorExists = true;
 				}
 				else {
