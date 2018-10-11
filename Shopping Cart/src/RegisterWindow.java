@@ -289,6 +289,7 @@ public class RegisterWindow extends JFrame {
 				String s1 = creditCard.getText().replaceAll("-", "");
 				if (s1.length() != 16) {
 					CCLengthEror.setVisible(true);
+					ccIntegerValuesError.setVisible(false);
 					errorExists = true;
 				}
 				else {
