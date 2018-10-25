@@ -27,9 +27,11 @@ public class ShopWindow extends JFrame {
 
 	private JPanel contentPane;
 	public static ArrayList<Item> items;
+	public ArrayList<Item> selectedItems;
 	private JTextField txtSearch;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
+	private EventHandling handler;
 
 	/**
 	 * Launch the application.
@@ -49,13 +51,13 @@ public class ShopWindow extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 * 
 	 * @param newUser
 	 */
 	public ShopWindow(User newUser) {
-
 		setVisible(true);
 		setBackground(Color.WHITE);
 		items = new ArrayList();
@@ -115,18 +117,6 @@ public class ShopWindow extends JFrame {
 		}
 
 		contentPane.setLayout(null);
-			
-		
-		JButton btnCart = new JButton("Shopping Cart");
-		btnCart.setBounds(1500, 5, 150, 25);
-		contentPane.add(btnCart);
-		btnCart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ShoppingCart window = new ShoppingCart(items);
-				
-			}
-		});
-		
 
 		JLabel lblItems = new JLabel("Items");
 		lblItems.setBounds(5, 10, 39, 15);
@@ -143,6 +133,19 @@ public class ShopWindow extends JFrame {
 		JList list = new JList(catList.toArray());
 		list.setBounds(5, 35, 62, 173);
 		contentPane.add(list);
+		
+		
+		JButton btnCart = new JButton("Shopping Cart");
+		btnCart.setBounds(1500, 5, 150, 25);
+		contentPane.add(btnCart);
+		btnCart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectedItems = handler.getSelected();
+				ShoppingCart window = new ShoppingCart(selectedItems, newUser);
+				dispose();
+			}
+		});
+		
 
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		List selectedVals = list.getSelectedValuesList();
@@ -306,6 +309,14 @@ public class ShopWindow extends JFrame {
 		panel1.revalidate();
 		panel1.repaint();
 		pane.setVisible(true);
+		
+		  //Adding ActionListener
+        handler = new EventHandling(Jarray, JlablArry, priceArry, picArry);
+
+        for (JButton buttons : Jarray) {
+
+            buttons.addActionListener(handler);
+        }
 
 	}
 
