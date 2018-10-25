@@ -115,6 +115,18 @@ public class ShopWindow extends JFrame {
 		}
 
 		contentPane.setLayout(null);
+			
+		
+		JButton btnCart = new JButton("Shopping Cart");
+		btnCart.setBounds(1500, 5, 150, 25);
+		contentPane.add(btnCart);
+		btnCart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShoppingCart window = new ShoppingCart(items);
+				
+			}
+		});
+		
 
 		JLabel lblItems = new JLabel("Items");
 		lblItems.setBounds(5, 10, 39, 15);
