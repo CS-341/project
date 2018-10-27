@@ -82,7 +82,7 @@ public class SignInWindow extends JFrame {
 				lblUsernameNotFound.setVisible(false);
 				if(db.getPassword(txtUserName.getText()).equals(txtPassword.getText())) {
 					lblincorrectPassword.setVisible(false);
-					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()));
+					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()),null);
 					sw.setVisible(true);
 					dispose();
 				}

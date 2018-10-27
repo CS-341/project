@@ -345,7 +345,7 @@ public class RegisterWindow extends JFrame {
 					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 					User newUser = new User(userName.getText(), password.getText(), city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
 					dataBase.addUserToDatabase(newUser);
-					ShopWindow user = new ShopWindow(newUser);
+					ShopWindow user = new ShopWindow(newUser,null);
 					user.setVisible(true);
 					dispose();
 				}

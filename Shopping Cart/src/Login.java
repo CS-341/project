@@ -113,7 +113,7 @@ public class Login extends JFrame {
 		Button bttGuest = new Button("Continue as Guest");
 		bttGuest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShopWindow guest = new ShopWindow(new User());
+				ShopWindow guest = new ShopWindow(new User(), null);
 				guest.setVisible(true);
 				dispose();
 			}

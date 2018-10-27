@@ -53,7 +53,7 @@ public class ShoppingCart extends JFrame {
 		contentPane.add(btnShop);
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShopWindow window = new ShopWindow(currentUser);
+				ShopWindow window = new ShopWindow(currentUser,null);
 				dispose();
 			}
 		});
