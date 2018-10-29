@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * This program demonstrates making JDBC connection to a SQLite database.
  * @author www.codejava.net
@@ -38,14 +40,16 @@ public class JdbcSQLiteConnection {
   
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
   
-  private String SEARCH_ALL_ATTRS = "SELECT * FROM Users";
+  private String SEARCH_ALL_ATTRS = "SELECT * FROM";
   
   private String SEARCH_USER_AND_PASS = "SELECT Username, Password FROM Users";
   
     public static void main(String[] args) {
-        try {
+    	//below code block used for testing and reset of database contents
+       /*
+    	try {
             Class.forName("org.sqlite.JDBC");
-            String dbURL = "jdbc:sqlite:UsersDb.db";
+            //String dbURL = "jdbc:sqlite:UsersDb.db";
             conn = DriverManager.getConnection(dbURL);
             if (conn != null) {
             	//create admin account info
@@ -58,6 +62,9 @@ public class JdbcSQLiteConnection {
             	//create table
             	//SQLiteException may occur here if Users is already created - not a worry
             	db.createTable("Users");
+            	
+            	Statement st = conn.createStatement();
+            	st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
@@ -73,16 +80,55 @@ public class JdbcSQLiteConnection {
                 System.out.println("Product version: " + dm.getDatabaseProductVersion());
                 conn.close();
             }
+            
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        */
+    }
+    /**
+     * method used to check stored hashed passwords in the database
+     * @param username the username to search for in the database
+     * @param givenPass the password as entered by the user when logging in
+     * @return
+     */
+    public boolean passwordsMatch(String username, String givenPass) {
+    	ResultSet rs = null;
+    	String hashedPass = "";
+    	try {
+			Statement st = conn.createStatement();
+			rs = st.executeQuery(SEARCH_USER_AND_PASS);
+			String temp = "";
+			while(rs.next()) {
+				//column 1 in the database is the username field
+				temp = rs.getString(1);
+				if (username.equalsIgnoreCase(temp)) {
+					//grab the hashed password from the database
+					hashedPass = rs.getString(2);
+					//may need a null check here
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return BCrypt.checkpw(givenPass, hashedPass);
     }
     
     public void addUserToDatabase(User newUser) {
     	//MUST HASH PASSWORD
-   
+      String hashedPass = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
+      
+      //TESTING -- can delete
+      //will want to store the hashed version of the password in the database
+      
+      //System.out.println("user pass is  : " + newUser.password);
+      //System.out.println("hashed pass is: " + hashedPass);
+      //System.out.println("checking if passwords match for the user: " + 
+      BCrypt.checkpw(newUser.password, hashedPass);
+      
       String userName = newUser.userName;
       String userPass = newUser.password;
       String city = newUser.city;
@@ -151,6 +197,7 @@ public class JdbcSQLiteConnection {
 			e1.printStackTrace();
 		}
     	try {
+    		//establish a connection to the database
 			conn = DriverManager.getConnection(dbURL);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -232,6 +279,11 @@ public class JdbcSQLiteConnection {
     	//else user will be null and return null
     	return user;
     }
+    /**
+     * 
+     * @param username the username to search for
+     * @return return the password as a string
+     */
     public String getPassword(String username) {
     	String password = "";
     	ResultSet rs = null;
@@ -253,6 +305,10 @@ public class JdbcSQLiteConnection {
 		}
     	return password;
     }
+    /**
+     * displays the contents of the table given the table name
+     * @param tableName the name of the table to display contents for
+     */
     public void displayInfo(String tableName){
     	ResultSet  rs = null;
     	String userName = "";
@@ -287,17 +343,49 @@ public class JdbcSQLiteConnection {
 			}
 
     }
+    /**
+     *  method for creating the promotion table 
+     *  only need to call this once to initially create the promotion table inside
+     *  of the "Users" Database
+     */
+    
+    private void createPromotionTable() {
+    	String promoTable = "CREATE TABLE Promotions ("
+    		  		+						"PromotionId Int PRIMARY KEY AUTO_INCREMENT, "
+    		  		+ 						"PromoName TEXT NOT NULL, "
+    		  		+						"PromoType TEXT, "
+    		  		+						"beginDate TEXT, "
+    		  		+ 						"endDate TEXT);";
+    	Statement st;
+    	try {
+			st = conn.createStatement();
+			st.executeUpdate(promoTable);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    /**
+     * 
+     * @param promotion the string name of the promotion to search for
+     * @return the endDate as text 
+     */
+    private String getPromotion(String promotion) {
+    	String search = "SELECT beginDate FROM Promotions WHERE promoName = '" + promotion +
+    			"'";
+    	Statement st;
+    	ResultSet rs;
+    	String result = "";
+    	try {
+			st = conn.createStatement();
+			rs = st.executeQuery(search);
+			result = rs.getString(0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return result;
+    }
 }
 
 
-/*private String CREATE = "CREATE TABLE Users (\r\n" + 
-	"    Username   TEXT    PRIMARY KEY,\r\n" + 
-	"    Password   TEXT,\r\n" + 
-	"    City       TEXT,\r\n" + 
-	"    State      TEXT,\r\n" + 
-	"    Zipcode    TEXT,\r\n" + 
-	"    Creditcard TEXT,\r\n" + 
-	"    Status     INTEGER\r\n" + 
-	");";*/
-
-//private String INSERT = "INSERT INTO Users(Username, Password, Status) VALUES(?,?,?)";
