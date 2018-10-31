@@ -92,7 +92,7 @@ public class JdbcSQLiteConnection {
      * method used to check stored hashed passwords in the database
      * @param username the username to search for in the database
      * @param givenPass the password as entered by the user when logging in
-     * @return
+     * @return true if passwords match, false otherwise
      */
     public boolean passwordsMatch(String username, String givenPass) {
     	ResultSet rs = null;
