@@ -67,6 +67,13 @@ public class ShopWindow extends JFrame {
 		setVisible(true);
 		this.newUser = newUser;
 		setBackground(Color.WHITE);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, screenSize.width, screenSize.height);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.menu);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 
 		if (items == null) {
 			items = new ArrayList<Item>();
@@ -99,14 +106,20 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
 			standardSize = items.size();
 		}
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, screenSize.width, screenSize.height);
-		contentPane = new JPanel();
-		contentPane.setBackground(SystemColor.menu);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-
+		else {
+			
+				JButton bttnResetList = new JButton("Refresh List");
+				bttnResetList.setBounds(842, 5, 200, 25);
+				contentPane.add(bttnResetList);
+				bttnResetList.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new ShopWindow(newUser, null).setVisible(true);
+						dispose();
+					}
+				});
+				
+		}
+	
 		// Give welcome mesg if guest
 		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
@@ -225,18 +238,8 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
-		System.out.println(items.size() + "  " +standardSize);
-		if(items.size() < standardSize) {
-		JButton bttnResetList = new JButton("Refresh List");
-		bttnResetList.setBounds(842, 5, 100, 25);
-		contentPane.add(bttnResetList);
-		bttnResetList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new ShopWindow(newUser, null).setVisible(true);
-				dispose();
-			}
-		});
-		}
+		
+		
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
