@@ -25,14 +25,20 @@ import javax.swing.border.EmptyBorder;
 
 public class ShopWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6022393559091857909L;
+
 	private JPanel contentPane;
 
 	public ArrayList<Item> selectedItems;
 	private JTextField txtSearch;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
-	private EventHandling handler;
+	public EventHandling handler;
 	public User newUser;
+	public int standardSize = 0; /*gives initial size of list */
 
 	/**
 	 * Launch the application.
@@ -91,6 +97,7 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("Subwoofer", "$200", "/images/sub.jpeg"));
 			items.add(new Item("VR Headset", "$100", "/images/vr.jpeg"));
 			items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
+			standardSize = items.size();
 		}
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,6 +152,7 @@ public class ShopWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				selectedItems = handler.getSelected();
 				ShoppingCart window = new ShoppingCart(selectedItems, newUser);
+				window.setVisible(true);
 				dispose();
 			}
 		});
@@ -217,6 +225,18 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
+		System.out.println(items.size() + "  " +standardSize);
+		if(items.size() < standardSize) {
+		JButton bttnResetList = new JButton("Refresh List");
+		bttnResetList.setBounds(842, 5, 100, 25);
+		contentPane.add(bttnResetList);
+		bttnResetList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ShopWindow(newUser, null).setVisible(true);
+				dispose();
+			}
+		});
+		}
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
@@ -284,7 +304,7 @@ public class ShopWindow extends JFrame {
 
 		// Adding ActionListener
 		handler = new EventHandling(Jarray, JlablArry, priceArry, picArry, this.newUser, items1);
-
+		
 		for (JButton buttons : Jarray) {
 
 			buttons.addActionListener(handler);
@@ -292,15 +312,59 @@ public class ShopWindow extends JFrame {
 		}
 
 	}
+	 class EventHandling implements ActionListener {
 
-	// gets string representatin of keystroke
-	public String getStringRepresentation(ArrayList<Character> list) {
+	     /**
+		 * 
+		 */
 
-		StringBuilder builder = new StringBuilder(list.size());
-		for (Character ch : list) {
-			builder.append(ch);
-		}
-		return builder.toString();
+		private ArrayList<JButton> selectButtons;
+	     private ArrayList<Item> selectedItems;
+	     private ArrayList<JLabel> JlabelArry;
+	     private ArrayList<JLabel> priceArry;
+	     private ArrayList<JLabel> picArry;
+	     public User currentUser;
+	     public ArrayList<Item> item;
+	     public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry, 
+	    		 ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser
+	    		 , ArrayList<Item> item) {
+	    	 
+	    	 this.currentUser = currentUser;
+	        this.selectButtons = selectButtons;
+	        selectedItems = new ArrayList<Item>();
+	        this.JlabelArry = JlabelArry;
+	        this.priceArry = priceArry;
+	        this.picArry = picArry;
+	        this.item = item;
+	    }
+
+	    public void actionPerformed(ActionEvent event) {
+
+	    	for(int i = 0; i < selectButtons.size(); i++)
+	        if (event.getSource() == selectButtons.get(i)) {
+	        	Item temp = new Item(JlabelArry.get(i).getText(), priceArry.get(i).getText(), picArry.get(i).getText());
+	            System.out.println(temp.name);
+	            temp.icon = item.get(i).icon;
+	            System.out.println(temp.filePath);
+	            DescriptionWindow discription = new DescriptionWindow(temp,currentUser);
+	           dispose();
+	            discription.setVisible(true);
+	            if(selectedItems.size() == 0) {
+	            	selectedItems.add(temp);
+	            } else if(!selectedItems.contains(temp)) {
+	            	selectedItems.add(temp);
+	            }
+	            break;
+	        }
+
+	     }
+	    
+	    public ArrayList<Item> getSelected(){
+	    	return selectedItems;
+	    }
+
 	}
+
+	
 
 }
