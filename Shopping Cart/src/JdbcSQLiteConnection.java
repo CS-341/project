@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -10,13 +12,21 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class JdbcSQLiteConnection {
 	
+  private String CREATE_PROMOTABLE = "CREATE TABLE Promotions ("
+	  		+						"PromotionId INTEGER PRIMARY KEY AUTOINCREMENT, "
+	  		+ 						"PromoName TEXT NOT NULL, "
+	  		+						"PromoType TEXT, "
+	  		+						"PromoTag TEXT, " //name of the item the promo applies to
+	  		+						"beginDate TEXT, "
+	  		+ 						"endDate TEXT);";
+  
   private static User admin = new User("admin", "admin", "lax", "wi", "54601", 
 			"12345678912345678");
 	
   private static String dbURL = "jdbc:sqlite:UsersDb.db";
   private static Connection conn;
 
-  private String CREATE_TABLE = "CREATE TABLE Users ("
+  private String CREATE_USERSTABLE = "CREATE TABLE Users ("
   		+						"Username TEXT PRIMARY KEY,"
   		+ 						"Password TEXT,"
   		+ 						"City TEXT,"
@@ -28,7 +38,7 @@ public class JdbcSQLiteConnection {
 
   private String DROP_TABLE = "DROP TABLE IF EXISTS ";
   
-  private String INSERT_INTO = "INSERT INTO Users (\r\n" + 
+  private String INSERT_USERS = "INSERT INTO Users (\r\n" + 
   		"                        Username,\r\n" + 
   		"                        Password,\r\n" + 
   		"                        City,\r\n" + 
@@ -36,6 +46,13 @@ public class JdbcSQLiteConnection {
   		"                        Zipcode,\r\n" + 
   		"                        Creditcard,\r\n" + 
   		"                        Status\r\n" + 
+  		"                    )";
+  private String INSERT_PROMO = "INSERT INTO Promotions (\r\n" + 
+  		"                        promoName,\r\n" + 
+  		"                        promoType,\r\n" + 
+  		"                        promoTag,\r\n" + 
+  		"                        beginDate,\r\n" + 
+  		"                        endDate\r\n" + 
   		"                    )";
   
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
@@ -45,11 +62,12 @@ public class JdbcSQLiteConnection {
   private String SEARCH_USER_AND_PASS = "SELECT Username, Password FROM Users";
   
     public static void main(String[] args) {
+    	
     	//below code block used for testing and reset of database contents
        /*
     	try {
             Class.forName("org.sqlite.JDBC");
-            //String dbURL = "jdbc:sqlite:UsersDb.db";
+            String dbURL = "jdbc:sqlite:UsersDb.db";
             conn = DriverManager.getConnection(dbURL);
             if (conn != null) {
             	//create admin account info
@@ -58,20 +76,32 @@ public class JdbcSQLiteConnection {
             	//drop the old table
             	if (db.dropTable == true) {
             		db.dropTable("Users");
+            		db.dropTable("Promotions");
             	}
             	//create table
             	//SQLiteException may occur here if Users is already created - not a worry
-            	db.createTable("Users");
+            	//db.createTable("Users");
+            	//db.createPromotionTable();
             	
             	Statement st = conn.createStatement();
-            	st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
+            	//st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
             	}
+            	if(!db.searchDatabaseForTag("20% off iPhone", "iPhone").equals("iPhone")) {
+            		db.insertPromotion("20% off iPhone", "20%", "iPhone", "01-11-2018", "30-11-2018");
+            	}
+            	System.out.println(db.checkPromoDate("20% off iPhone"));
+            	
+            	//db.insertPromotion("30% off macbook", "30%", "macbook", "01-12-2018", "30-12-2018");
+            	System.out.println(db.checkPromoDate("30% off macbook"));
+            	
             	//calls method to display all info currently held in the database
             	db.displayInfo("Users");
+            	db.displayPromotions();
+            	
                 System.out.println("Connected to the database");
                 DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
                 System.out.println("Driver name: " + dm.getDriverName());
@@ -127,7 +157,7 @@ public class JdbcSQLiteConnection {
       //System.out.println("user pass is  : " + newUser.password);
       //System.out.println("hashed pass is: " + hashedPass);
       //System.out.println("checking if passwords match for the user: " + 
-      BCrypt.checkpw(newUser.password, hashedPass);
+      //BCrypt.checkpw(newUser.password, hashedPass));
       
       String userName = newUser.userName;
       String userPass = newUser.password;
@@ -137,7 +167,7 @@ public class JdbcSQLiteConnection {
       String credit = newUser.creditCard;
       int userType = newUser.userType;
       try {
-    	String temp = INSERT_INTO + " VALUES ('" + userName + "', '" + userPass + "', '" + city + "', '" + state +"', '" + zip + 
+    	String temp = INSERT_USERS + " VALUES ('" + userName + "', '" + userPass + "', '" + city + "', '" + state +"', '" + zip + 
     			"', '" + credit + "', '" + userType + "');";
     	//remove conn line below -- call open connection immediately after creating DB
     	conn = DriverManager.getConnection(dbURL);
@@ -179,7 +209,7 @@ public class JdbcSQLiteConnection {
 			if (dropTable == true) {
 				dropTable(tableName);
 			}
-			statement.executeUpdate(CREATE_TABLE);
+			statement.executeUpdate(CREATE_USERSTABLE);
 			System.out.println("created table " + tableName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -349,17 +379,11 @@ public class JdbcSQLiteConnection {
      *  of the "Users" Database
      */
     
-    private void createPromotionTable() {
-    	String promoTable = "CREATE TABLE Promotions ("
-    		  		+						"PromotionId Int PRIMARY KEY AUTO_INCREMENT, "
-    		  		+ 						"PromoName TEXT NOT NULL, "
-    		  		+						"PromoType TEXT, "
-    		  		+						"beginDate TEXT, "
-    		  		+ 						"endDate TEXT);";
+    private void createPromotionTable() {	
     	Statement st;
     	try {
 			st = conn.createStatement();
-			st.executeUpdate(promoTable);
+			st.executeUpdate(CREATE_PROMOTABLE);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -367,11 +391,12 @@ public class JdbcSQLiteConnection {
     }
     /**
      * 
-     * @param promotion the string name of the promotion to search for
-     * @return the endDate as text 
+     * @param promoName = the string name of the promotion to search for
+     * @param promoTag = the name of the item the promotion applies to
+     * @return the tag of the item the promotion applies to
      */
-    private String getPromotion(String promotion) {
-    	String search = "SELECT beginDate FROM Promotions WHERE promoName = '" + promotion +
+    private String searchDatabaseForTag(String promoName, String promoTag) {
+    	String search = "SELECT promoTag FROM Promotions WHERE promoName = '" + promoName +
     			"'";
     	Statement st;
     	ResultSet rs;
@@ -379,13 +404,154 @@ public class JdbcSQLiteConnection {
     	try {
 			st = conn.createStatement();
 			rs = st.executeQuery(search);
-			result = rs.getString(0);
+			if (!rs.isClosed()) {
+				result = rs.getString(1); //promotag is the the only thing returned 
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return result;
     }
+    
+    /**
+     * 
+     * @param the promotion name to search in the database for
+     * @return true if the current date is within the start and end date of the promotion
+     */
+    private boolean checkPromoDate(String promoName) {
+    	boolean result = false;
+    	String search = "SELECT beginDate, endDate FROM Promotions WHERE promoName = '" + promoName +
+    			"'";
+    	Statement st;
+    	ResultSet rs;
+    	String currentStringDate = "";
+    	String beginDate = "";
+    	String endDate = "";
+    	
+    	//IMPORTANT NOTE
+    	//dates of promotions are assumed to be stored in this format********
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd-MM-yyyy" );
+    	
+    	/*
+    	 * depends how we store the date in the table to see if we want
+    	 */
+    	try {
+			st = conn.createStatement();
+			rs = st.executeQuery(search);
+			//while rs.next() loop through all results?
+			
+			beginDate = rs.getString(1); //1st attribute  
+			endDate = rs.getString(2); //2nd attribute 
+			
+			//grab the start and end dates in objects to compare against each other
+			LocalDate startDate = LocalDate.parse(beginDate, formatter); 
+			LocalDate endOfPromo = LocalDate.parse(endDate, formatter);
+			LocalDate currentDate = java.time.LocalDate.now();
+			//TEST
+			currentStringDate = currentDate.toString();
+			System.out.println("current date is: " + currentDate);
+			//DELETE TEST
+			
+			//check if the promo date is valid
+			if(currentDate.isBefore(endOfPromo) && currentDate.isAfter(startDate)) {
+				System.out.println("DEBUG: Date for promotion is valid");
+				result = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return result;
+    }
+    /**
+     * 
+     * @param promoName name of promotion
+     * @param promoType 20%, 5%, 10%, $5, etc.
+     * @param promoTag name of the item the promotion applies to
+     * @param promoBeginDate start date for the promotion
+     * @param promoEndDate end date for the promotion
+     * @return
+     */
+    private boolean insertPromotion(String promoName, String promoType, 
+    		String promoTag, String promoBeginDate, String promoEndDate) {
+    	boolean inserted = false; 
+    	//first column is promoId
+    	Statement st;
+    	ResultSet rs;
+    	
+    	String insert = "";
+      	try {
+      			insert = INSERT_PROMO + " VALUES ('" + promoName + "', '" + promoType + "', '" + 
+      					promoTag + "', '" + promoBeginDate +"', '" + promoEndDate + "');";
+    			st = conn.createStatement();
+    			st.executeUpdate(insert);
+    			inserted = true;
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	
+    	return inserted; 
+    }
+    
+    /**
+     * method for printing out countents of promotion table
+     */
+	private void displayPromotions() {
+		ResultSet rs = null;
+		String promoName = "";
+		String promoType = "";
+		String promoTag = "";
+		String beginDate = "";
+		String endDate = "";
+		Statement st;
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM Promotions");
+			System.out.println("Username Password City State Zip Credit UserType");
+			while (rs.next()) {
+				promoName = rs.getString(2);
+				promoType = rs.getString(3);
+				promoTag = rs.getString(4);
+				beginDate = rs.getString(5);
+				endDate = rs.getString(6);
+
+				System.out.println(promoName + " " + promoType + " " + promoTag + " " + beginDate + " " + endDate);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    /**
+     * 
+     * @param promoName the name of the promotion to search for
+     * @return the String representation (type) of what the promotion offers
+     */
+    private String getPromotionAsString(String promoName) {
+    	String search = "SELECT promoType FROM Promotions WHERE promoName = '" + promoName +
+    			"'";
+    	Statement st;
+    	ResultSet rs;
+    	String result = "";
+    	try {
+			st = conn.createStatement();
+			rs = st.executeQuery(search);
+			if (!rs.isClosed()) {
+				result = rs.getString(1); //promotag is the the only thing returned 
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return result;
+    }
+	
 }
 
 

@@ -226,7 +226,7 @@ public class ShopWindow extends JFrame {
 		// register if user is guest
 		// TODO: insert register page
 		if (newUser.userType == 0) {
-			JButton button = new JButton("Regsiter");
+			JButton button = new JButton("Register");
 			button.setBounds(727, 5, 100, 25);
 			// action event to sign in page
 			contentPane.add(button);
