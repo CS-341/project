@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
 public class ShopWindow extends JFrame {
 
@@ -31,8 +32,6 @@ public class ShopWindow extends JFrame {
 	private static final long serialVersionUID = 6022393559091857909L;
 
 	private JPanel contentPane;
-
-	public ArrayList<Item> selectedItems;
 	private JTextField txtSearch;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
@@ -163,8 +162,8 @@ public class ShopWindow extends JFrame {
 		contentPane.add(btnCart);
 		btnCart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedItems = handler.getSelected();
-				ShoppingCart window = new ShoppingCart(selectedItems, newUser);
+				User.selectedItems = handler.getSelected();
+				ShoppingCart window = new ShoppingCart(null, newUser);
 				window.setVisible(true);
 				dispose();
 			}
