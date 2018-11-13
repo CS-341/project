@@ -1,5 +1,3 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -87,7 +85,8 @@ public static Item item;
 			public void actionPerformed(ActionEvent e) {
 				int quantityValue =  Integer.parseInt(quantity.getText());
 				item.amount += quantityValue; /* add amount typed to quantity */
-				//ShoppingCart shop = new ShoppingCart(item,currentUser);
+				ShoppingCart shop = new ShoppingCart(item,currentUser);
+				shop.setVisible(true);
 				/** you should allow just an item into the shopping cart then 
 				 * have a array list speficilly for shopping cart and add 
 				 * item to the list right when shopping cart opens then 
