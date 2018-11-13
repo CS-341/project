@@ -88,8 +88,26 @@ public static Item item;
 				System.out.println(item.amount);
 				if(User.selectedItems.size() == 0) {
 	            	User.selectedItems.add(item);
-	            } else if(!User.selectedItems.contains(item)) {
-	            	User.selectedItems.add(item);
+	            } else {
+	            	boolean duplicate = false;
+	            	Object[] tempArr = User.selectedItems.toArray();
+	            	Item[] tempItemArr = new Item[tempArr.length];
+	            	for(int i = 0; i < tempArr.length; i++) {
+	            		if(tempArr[i] instanceof Item) {
+	            			tempItemArr[i] = (Item) tempArr[i];
+	            		}
+	            	}
+	            	for(int i = 0; i < tempItemArr.length; i++) {
+	            		if(tempItemArr[i].name.equals(item.name)) {
+	            			Item temp = User.selectedItems.get(i);
+	            			temp.amount += item.amount;
+	            			User.selectedItems.set(i, temp);
+	            			duplicate = true;
+	            		}
+	            	}
+	            	if(duplicate == false) {
+	            		User.selectedItems.add(item);
+	            	}
 	            } 
 				ShoppingCart shop = new ShoppingCart(item,currentUser);
 				shop.setVisible(true);
