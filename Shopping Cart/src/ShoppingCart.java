@@ -30,7 +30,14 @@ public class ShoppingCart extends JFrame {
 	private Label cartTotal;
 	private JButton promoCheck;
 
-	public ShoppingCart(ArrayList<Item> items, User currentUser, ShopWindow window) {
+	public ShoppingCart(Item newItem, User currentUser) {
+		if(User.selectedItems == null) {
+			System.out.println("here");
+		}
+		items = User.selectedItems;
+		if (newItem != null) {
+			addItem(newItem);
+		}
 		setVisible(true);
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +49,7 @@ public class ShoppingCart extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		showList(items, panel, pane);
-
+		// for promotion handling
 		proLabel = new Label("Enter Promotion:");
 		proLabel.setBounds(500, 10, 95, 19);
 		contentPane.add(proLabel);
@@ -58,14 +65,14 @@ public class ShoppingCart extends JFrame {
 
 			}
 		});
-		this.items = items;
+
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.setBounds(260, 5, 100, 25);
 		contentPane.add(btnCheckout);
 		btnCheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Checkout checkWindow = new Checkout(3); // temp int
-				setVisible(false);
+				dispose();
 			}
 		});
 
@@ -74,17 +81,19 @@ public class ShoppingCart extends JFrame {
 		contentPane.add(btnShop);
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ShopWindow window = new ShopWindow(currentUser, null);
 				window.setVisible(true);
-				setVisible(false);
+				dispose();
 			}
 		});
 	}
 
 	// add item to cart
-	public void addItem(Item newItem) {
+	private void addItem(Item newItem) {
 		Item temp = newItem;
-		if (items.contains(temp)) {
-			
+		System.out.println(newItem.filePath);
+		if (items.size() > 0 && items.contains(temp)) {
+
 		} else {
 			items.add(temp);
 		}
@@ -92,12 +101,11 @@ public class ShoppingCart extends JFrame {
 			System.out.println(items.get(i).item);
 			System.out.println("here");
 		}
-		showList(this.items, this.panel, this.pane);
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
 		panel1.removeAll();
-		
+
 		panel1 = new JPanel();
 		panel1.setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
