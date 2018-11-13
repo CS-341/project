@@ -145,6 +145,14 @@ public class ShoppingCart extends JFrame {
 			gbc_lblNewLabel_2.gridx = 2;
 			gbc_lblNewLabel_2.gridy = i;
 			panel1.add(priceArry.get(i), gbc_lblNewLabel_2);
+			// add quantity of item
+			quantityArry.add(new JLabel(Integer.toString(items1.get(i).amount)));
+			GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+			gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+			gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNewLabel_3.gridx = 3;
+			gbc_lblNewLabel_3.gridy = i;
+			panel1.add(quantityArry.get(i), gbc_lblNewLabel_3);
 			// add picture of item
 			picArry.add(new JLabel(""));
 			picArry.get(i).setIcon((items1.get(i).icon));
