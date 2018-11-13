@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 public class ShoppingCart extends JFrame {
 	private JPanel contentPane;
+	public User currentUser;
 	public ArrayList<Item> items;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
@@ -29,15 +30,14 @@ public class ShoppingCart extends JFrame {
 	private Label proLabel;
 	private Label cartTotal;
 	private JButton promoCheck;
+	public EventHandling handler;
 
 	public ShoppingCart(Item newItem, User currentUser) {
-		if(User.selectedItems == null) {
-			System.out.println("here");
-		}
+		this.currentUser = currentUser;
 		items = User.selectedItems;
-		if (newItem != null) {
-			addItem(newItem);
-		}
+		/**
+		 * if (newItem != null) { addItem(newItem); }
+		 **/
 		setVisible(true);
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -112,13 +112,14 @@ public class ShoppingCart extends JFrame {
 		// setBounds(100,100,screenSize.width, screenSize.height);
 		panel1.setBounds(0, 0, screenSize.width + 100, screenSize.height - 100);
 		contentPane.add(panel1);
-		panel1.setLayout(new GridLayout(items1.size(), 5, 0, 0));
+		panel1.setLayout(new GridLayout(items1.size(), 6, 0, 0));
 		panel1.removeAll();
 		pane.removeAll();
 		ArrayList<JButton> Jarray = new ArrayList();
 		ArrayList<JLabel> JlablArry = new ArrayList();
 		ArrayList<JLabel> picArry = new ArrayList();
 		ArrayList<JLabel> priceArry = new ArrayList();
+		ArrayList<JLabel> quantityArry = new ArrayList();
 		for (int i = 0; i < items1.size(); i++) {
 			// ADD LABEL FOR ITEM
 			Jarray.add(items1.get(i).select = new JButton("remove"));
@@ -130,7 +131,6 @@ public class ShoppingCart extends JFrame {
 			panel1.add(Jarray.get(i), gbc_btnNewButton);
 			// ADD DISCRIPTION OF ITEM
 			JlablArry.add(items1.get(i).discription);
-
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -159,7 +159,7 @@ public class ShoppingCart extends JFrame {
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_lblNewLabel.gridx = 3;
+			gbc_lblNewLabel.gridx = 4;
 			gbc_lblNewLabel.gridy = i;
 			panel1.add(picArry.get(i), gbc_lblNewLabel);
 
@@ -173,6 +173,15 @@ public class ShoppingCart extends JFrame {
 		panel1.repaint();
 		pane.setVisible(true);
 
+		// Adding ActionListener
+		handler = new EventHandling(Jarray, JlablArry, priceArry, picArry, this.currentUser, items1);
+
+		for (JButton buttons : Jarray) {
+
+			buttons.addActionListener(handler);
+			dispose();
+		}
+
 	}
 
 	// gets string representatin of keystroke
@@ -184,5 +193,48 @@ public class ShoppingCart extends JFrame {
 		}
 		return builder.toString();
 	}
-}
 
+	class EventHandling implements ActionListener {
+
+		/**
+		* 
+		*/
+
+		private ArrayList<JButton> selectButtons;
+		//private ArrayList<Item> selectedItems;
+		private ArrayList<JLabel> JlabelArry;
+		private ArrayList<JLabel> priceArry;
+		private ArrayList<JLabel> picArry;
+		public User currentUser;
+		public ArrayList<Item> item;
+
+		public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry,
+				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item) {
+
+			this.currentUser = currentUser;
+			this.selectButtons = selectButtons;
+			//selectedItems = new ArrayList<Item>();
+			this.JlabelArry = JlabelArry;
+			this.priceArry = priceArry;
+			this.picArry = picArry;
+			this.item = item;
+		}
+
+		public void actionPerformed(ActionEvent event) {
+
+			for (int i = 0; i < selectButtons.size(); i++)
+				if (event.getSource() == selectButtons.get(i)) {
+					Item temp = item.get(i);
+					//System.out.println(temp.name);
+					temp.icon = item.get(i).icon;
+					//System.out.println(temp.filePath);
+					DescriptionWindow discription = new DescriptionWindow(temp, currentUser, true);
+					dispose();
+					discription.setVisible(true);
+					//System.out.println(temp.amount);
+					break;
+				}
+
+		}
+	}
+}
