@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Label;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class ShoppingCart extends JFrame {
@@ -23,51 +25,84 @@ public class ShoppingCart extends JFrame {
 	public ArrayList<Item> items;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
-	
-	
-	public ShoppingCart(ArrayList<Item> items, User currentUser) {
+	private JTextField promotion;
+	private Label proLabel;
+	private Label cartTotal;
+	private JButton promoCheck;
+
+	public ShoppingCart(ArrayList<Item> items, User currentUser, ShopWindow window) {
 		setVisible(true);
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0,0,screenSize.width, screenSize.height);
+		setBounds(0, 0, screenSize.width, screenSize.height);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.menu);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		this.items = items;
 		showList(items, panel, pane);
-		
+
+		proLabel = new Label("Enter Promotion:");
+		proLabel.setBounds(500, 10, 95, 19);
+		contentPane.add(proLabel);
+		promotion = new JTextField();
+		promotion.setBounds(600, 10, 100, 19);
+		contentPane.add(promotion);
+		promotion.setColumns(10);
+		promoCheck = new JButton("Check");
+		promoCheck.setBounds(705, 10, 30, 19);
+		contentPane.add(promoCheck);
+		promoCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		this.items = items;
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.setBounds(260, 5, 100, 25);
 		contentPane.add(btnCheckout);
 		btnCheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Checkout checkWindow = new Checkout(3); // temp int
+				setVisible(false);
 			}
 		});
-		
+
 		JButton btnShop = new JButton("Back to Shop");
 		btnShop.setBounds(100, 5, 150, 25);
 		contentPane.add(btnShop);
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShopWindow window = new ShopWindow(currentUser,null);
 				window.setVisible(true);
-				dispose();
+				setVisible(false);
 			}
 		});
 	}
-	
+
+	// add item to cart
+	public void addItem(Item newItem) {
+		Item temp = newItem;
+		if (items.contains(temp)) {
+			
+		} else {
+			items.add(temp);
+		}
+		for (int i = 0; i < items.size(); i++) {
+			System.out.println(items.get(i).item);
+			System.out.println("here");
+		}
+		showList(this.items, this.panel, this.pane);
+	}
+
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
 		panel1.removeAll();
-
+		
 		panel1 = new JPanel();
 		panel1.setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		// setBounds(100,100,screenSize.width, screenSize.height);
-		panel1. setBounds(0,0,screenSize.width +100, screenSize.height-100);
+		panel1.setBounds(0, 0, screenSize.width + 100, screenSize.height - 100);
 		contentPane.add(panel1);
 		panel1.setLayout(new GridLayout(items1.size(), 5, 0, 0));
 		panel1.removeAll();
@@ -87,7 +122,7 @@ public class ShoppingCart extends JFrame {
 			panel1.add(Jarray.get(i), gbc_btnNewButton);
 			// ADD DISCRIPTION OF ITEM
 			JlablArry.add(items1.get(i).discription);
-			
+
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -95,7 +130,7 @@ public class ShoppingCart extends JFrame {
 			gbc_lblNewLabel_1.gridy = i;
 			panel1.add(JlablArry.get(i), gbc_lblNewLabel_1);
 			// add price of item
-			priceArry.add(items1.get(i).price);			
+			priceArry.add(items1.get(i).price);
 			GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 			gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
@@ -116,7 +151,7 @@ public class ShoppingCart extends JFrame {
 
 		pane = new JScrollPane(panel1);
 		pane.setLocation(200, 0);
-		pane. setBounds(100,40,screenSize.width -200, screenSize.height -100);
+		pane.setBounds(100, 40, screenSize.width - 200, screenSize.height - 100);
 		contentPane.add(pane);
 		panel1.revalidate();
 		panel1.repaint();
