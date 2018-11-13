@@ -54,9 +54,9 @@ public static Item item;
 	 * Create the frame.
 	 */
 
-	public DescriptionWindow(Item item, User currentUser) {
-		this.item = item;
-		System.out.println(item.filePath);
+	public DescriptionWindow(Item item1, User currentUser) {
+		this.item = item1;
+		//System.out.println(item.filePath);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 setBounds(0,0,screenSize.width/3, screenSize.height/3);
@@ -75,7 +75,7 @@ public static Item item;
 		quantity.setBounds(17, 96, 114, 19);
 		quantity.setColumns(10);
 		JLabel lblNewLabel = new JLabel("");
-		System.out.println(item.filePath + "d");
+		//System.out.println(item.filePath + "d");
 		lblNewLabel.setIcon(item.icon);
 		lblNewLabel.setBounds(12, 12, 130, 77);		
 		contentPane.add(lblNewLabel);
@@ -85,15 +85,14 @@ public static Item item;
 			public void actionPerformed(ActionEvent e) {
 				int quantityValue =  Integer.parseInt(quantity.getText());
 				item.amount += quantityValue; /* add amount typed to quantity */
+				System.out.println(item.amount);
+				if(User.selectedItems.size() == 0) {
+	            	User.selectedItems.add(item);
+	            } else if(!User.selectedItems.contains(item)) {
+	            	User.selectedItems.add(item);
+	            } 
 				ShoppingCart shop = new ShoppingCart(item,currentUser);
 				shop.setVisible(true);
-				/** you should allow just an item into the shopping cart then 
-				 * have a array list speficilly for shopping cart and add 
-				 * item to the list right when shopping cart opens then 
-				 * display the contents of the cart.
-				 */
-				// go to shopping cart
-				System.out.println(item.amount);
 				dispose();
 			}
 		});
@@ -113,7 +112,63 @@ public static Item item;
 		contentPane.add(quantity);
 		contentPane.add(btnAdd);
 		contentPane.add(btnReturnToStore);
+	}
+	
+	public DescriptionWindow(Item item1, User currentUser, boolean cart) {
+		this.item = item1;
+		//System.out.println(item.filePath);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 setBounds(0,0,screenSize.width/3, screenSize.height/3);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.menu);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 		
+		JLabel lblDescription = (item.discription);
+		lblDescription.setBounds(162, 28, 288, 29);
 		
+		JLabel lblPrice =  (item.price);
+		lblPrice.setBounds(162, 63, 108, 15);
+		
+		quantity = new JTextField();
+		quantity.setBounds(17, 96, 114, 19);
+		quantity.setColumns(10);
+		JLabel lblNewLabel = new JLabel("");
+		//System.out.println(item.filePath + "d");
+		lblNewLabel.setIcon(item.icon);
+		lblNewLabel.setBounds(12, 12, 130, 77);		
+		contentPane.add(lblNewLabel);
+		JButton btnRemove = new JButton("Remove");
+		btnRemove.setBounds(149, 96, 80, 25);
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int quantityValue =  Integer.parseInt(quantity.getText());
+				System.out.println(item.amount);
+				item.amount -= quantityValue; /* add amount typed to quantity */
+				if (item.amount <= 0) {
+					User.selectedItems.remove(item);
+				}
+				ShoppingCart shop = new ShoppingCart(item,currentUser);
+				shop.setVisible(true);
+				dispose();
+			}
+		});
+		JButton btnReturnToCart = new JButton("return to Cart");
+		btnReturnToCart.setBounds(17, 139, 141, 25);
+		btnReturnToCart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ShoppingCart(item, currentUser).setVisible(true);
+				
+				dispose();
+			}
+		});
+		contentPane.setLayout(null);
+		
+		contentPane.add(lblDescription);
+		contentPane.add(lblPrice);
+		contentPane.add(quantity);
+		contentPane.add(btnRemove);
+		contentPane.add(btnReturnToCart);
 	}
 }
