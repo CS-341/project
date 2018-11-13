@@ -333,7 +333,7 @@ public class ShopWindow extends JFrame {
 	    	 
 	    	 this.currentUser = currentUser;
 	        this.selectButtons = selectButtons;
-	        selectedItems = new ArrayList<Item>();
+	        User.selectedItems = new ArrayList<Item>();
 	        this.JlabelArry = JlabelArry;
 	        this.priceArry = priceArry;
 	        this.picArry = picArry;
@@ -351,10 +351,10 @@ public class ShopWindow extends JFrame {
 	            DescriptionWindow discription = new DescriptionWindow(temp,currentUser);
 	           dispose();
 	            discription.setVisible(true);
-	            if(selectedItems.size() == 0) {
-	            	selectedItems.add(temp);
+	            if(User.selectedItems.size() == 0) {
+	            	User.selectedItems.add(temp);
 	            } else if(!selectedItems.contains(temp)) {
-	            	selectedItems.add(temp);
+	            	User.selectedItems.add(temp);
 	            }
 	            break;
 	        }
