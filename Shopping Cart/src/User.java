@@ -7,7 +7,7 @@ public class User {
 	String zipCode;
 	String creditCard;
 	int userType;//0 = guest, 1 = registered customer, 2 = admin?
-	
+	public static ArrayList<Item> selectedItems = new ArrayList<Item>();
 	
 	public User() {
 		this.userType = 0;
