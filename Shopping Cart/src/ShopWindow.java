@@ -325,6 +325,7 @@ public class ShopWindow extends JFrame {
 	     private ArrayList<JLabel> JlabelArry;
 	     private ArrayList<JLabel> priceArry;
 	     private ArrayList<JLabel> picArry;
+	     private ArrayList<JLabel> quantity;
 	     public User currentUser;
 	     public ArrayList<Item> item;
 	     public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry, 
@@ -345,28 +346,20 @@ public class ShopWindow extends JFrame {
 	    	for(int i = 0; i < selectButtons.size(); i++)
 	        if (event.getSource() == selectButtons.get(i)) {
 	        	Item temp = new Item(JlabelArry.get(i).getText(), priceArry.get(i).getText(), picArry.get(i).getText());
-	            System.out.println(temp.name);
+	            //System.out.println(temp.name);
 	            temp.icon = item.get(i).icon;
-	            System.out.println(temp.filePath);
+	            //System.out.println(temp.filePath);
 	            DescriptionWindow discription = new DescriptionWindow(temp,currentUser);
 	           dispose();
 	            discription.setVisible(true);
-	            if(selectedItems.size() == 0) {
-	            	selectedItems.add(temp);
-	            } else if(!selectedItems.contains(temp)) {
-	            	selectedItems.add(temp);
-	            }
 	            break;
 	        }
 
 	     }
 	    
 	    public ArrayList<Item> getSelected(){
-	    	return selectedItems;
+	    	return User.selectedItems;
 	    }
 
 	}
-
-	
-
 }
