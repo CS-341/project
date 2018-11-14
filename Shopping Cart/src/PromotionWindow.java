@@ -28,6 +28,7 @@ public class PromotionWindow extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblStartDate;
 	private JLabel lblEndDate;
+	private boolean isValid;
 
 	/**
 	 * Launch the application.
@@ -36,7 +37,7 @@ public class PromotionWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PromotionWindow frame = new PromotionWindow();
+					PromotionWindow frame = new PromotionWindow(new User());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +49,7 @@ public class PromotionWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PromotionWindow() {
+	public PromotionWindow(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -56,11 +57,54 @@ public class PromotionWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		//home button
+		JButton btnHome = new JButton("Home");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//go back to ShopWindow
+				new ShopWindow(user, null).setVisible(true);;
+				dispose();
+			}
+		});
+		btnHome.setBounds(12, 243, 117, 29);
+		contentPane.add(btnHome);
+		//error messages
+		JLabel nameErrMsg = new JLabel("Invalid Promo Name");
+		nameErrMsg.setForeground(Color.RED);
+		nameErrMsg.setBounds(300, 34, 250, 26);
+		nameErrMsg.setVisible(false);
+		contentPane.add(nameErrMsg);
+		JLabel typeErrMsg = new JLabel("Invalid Promo Type");
+		typeErrMsg.setForeground(Color.RED);
+		typeErrMsg.setVisible(false);
+		typeErrMsg.setBounds(300, 72, 250, 26);
+		contentPane.add(typeErrMsg);
+		JLabel tagErrMsg = new JLabel("Invalid Promo Type");
+		tagErrMsg.setForeground(Color.RED);
+		tagErrMsg.setBounds(300, 110, 250, 26);
+		tagErrMsg.setVisible(false);
+		contentPane.add(tagErrMsg);
+		JLabel beginErrMsg = new JLabel("Invalid begin date");
+		beginErrMsg.setForeground(Color.RED);
+		beginErrMsg.setBounds(300, 148, 250, 26);
+		beginErrMsg.setVisible(false);
+		contentPane.add(beginErrMsg);
+		JLabel endErrMsg = new JLabel("Invalid end date");
+		endErrMsg.setForeground(Color.RED);
+		endErrMsg.setBounds(300, 186, 250, 26);
+		endErrMsg.setVisible(false);
+		contentPane.add(endErrMsg);
 		
 		JLabel lblFillInAll = new JLabel("Fill in all fields to add a valid promotion");
 		lblFillInAll.setForeground(Color.WHITE);
 		lblFillInAll.setBounds(92, 6, 266, 16);
 		contentPane.add(lblFillInAll);
+		//promoName
+		textField_5 = new JTextField();
+		textField_5.setToolTipText("The name of the promotion");
+		textField_5.setBounds(160, 34, 130, 26);
+		contentPane.add(textField_5);
+		//textField_5.setColumns(10);
 		//promoType
 		textField = new JTextField();
 		textField.setToolTipText("20% off = \"%20\", $5 off = \"$5\"");
@@ -88,44 +132,20 @@ public class PromotionWindow extends JFrame {
 		//extra textbox, delete or use for admin password
 		textField_4 = new JTextField();
 		textField_4.setBounds(160, 224, 130, 26);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
-		//promoName
-		textField_5 = new JTextField();
-		textField_5.setToolTipText("The name of the promotion");
-		textField_5.setBounds(160, 34, 130, 26);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
+		//contentPane.add(textField_4);
+		
 		
 		JButton btnAddPromotion = new JButton("Add Promotion");
 		btnAddPromotion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//submit button was clicked... check each text field
+				isValid = true; //if promotion is valid, will stay true 
 				String promoName = "";
 				String promoType = "";
 				String promoTag = "";
 				String beginDate = "";
 				String endDate = "";
-				JLabel nameErrMsg = new JLabel("Invalid Promo Name");
-				nameErrMsg.setForeground(Color.RED);
-				nameErrMsg.setVisible(false);
-				contentPane.add(nameErrMsg);
-				JLabel typeErrMsg = new JLabel("Invalid Promo Type");
-				typeErrMsg.setForeground(Color.RED);
-				typeErrMsg.setVisible(false);
-				contentPane.add(typeErrMsg);
-				JLabel tagErrMsg = new JLabel("Invalid Promo Type");
-				tagErrMsg.setForeground(Color.RED);
-				tagErrMsg.setVisible(false);
-				contentPane.add(tagErrMsg);
-				JLabel beginErrMsg = new JLabel("Invalid begin date");
-				beginErrMsg.setForeground(Color.RED);
-				beginErrMsg.setVisible(false);
-				contentPane.add(beginErrMsg);
-				JLabel endErrMsg = new JLabel("Invalid end date");
-				endErrMsg.setForeground(Color.RED);
-				endErrMsg.setVisible(false);
-				contentPane.add(endErrMsg);
+				
 				promoName = textField_5.getText();
 				promoType = textField.getText();
 				promoTag = textField_1.getText();
@@ -135,32 +155,57 @@ public class PromotionWindow extends JFrame {
 				
 				String textToCheck;
 				textToCheck = promoName;
-				if(promoName == "" || promoName.length() <= 2) {
+				if(promoName.equals("")|| promoName.length() <= 2) {
+					System.out.println("bad promoname");
+					isValid = false;
+					nameErrMsg.setVisible(true);
 					//errorMsg
 					//or make textBox red
 				} else {
+					nameErrMsg.setVisible(false);
 					//hide error msg
 				}
-				if(promoType == "" || (promoType.charAt(0)!= '%' && promoType.charAt(0)!='$')
-						|| (promoType.charAt(1) <= '0' && promoType.charAt(1) > '9')) {
+				if(promoType.equals("") || (promoType.charAt(0)!= '%' && promoType.charAt(0)!='$')
+						|| (promoType.charAt(1) < '0' && promoType.charAt(1) > '9')) {
+					isValid = false;
+					typeErrMsg.setVisible(true);
 					//display errorMsg
 				} else {
+					typeErrMsg.setVisible(false);
 					//hide error message
 				}
-				if(promoTag == "" || promoTag.length() <= 2) {
+				if(promoTag.equals("") || promoTag.length() <= 2) {
+					isValid = false;
+					tagErrMsg.setVisible(true);
 					//display error msg
 				} else {
+					tagErrMsg.setVisible(false);
 					//hide error msg
 				}
-				if(beginDate == "" || beginDate.length() != 10) {
+				if(beginDate.equals("") || beginDate.length() != 10 || !checkDateFormat(beginDate)) {
+					isValid = false;
+					beginErrMsg.setVisible(true);
 					//display error msg
 				} else {
+					beginErrMsg.setVisible(false);
 					//hide error msg
 				}
-				if(endDate == "" || endDate.length() != 10) {
+				if(endDate.equals("") || endDate.length() != 10 || !checkDateFormat(endDate)) {
+					isValid = false;
+					endErrMsg.setVisible(true);
 					//display error msg
-				} else {
+				} else { //check date format before hiding error message
 					//hide error msg
+					endErrMsg.setVisible(false);
+				}
+				//if all fields were valid, add promotion
+				if(isValid) {
+					System.out.println("succesfully added promotion");
+					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					db.openConnection();
+					db.insertPromotion(promoName, promoType, promoTag, beginDate, endDate);
+					db.displayPromotions();
+					db.closeConnection();
 				}
 			}
 		});
@@ -201,5 +246,25 @@ public class PromotionWindow extends JFrame {
 		lblBgpic.setIcon(newImg);
 		
 		contentPane.add(lblBgpic);
+		
+		
+	}
+	
+	private boolean checkDateFormat(String date) {
+		boolean valid = true;
+		if (date.charAt(2) != '/' && date.charAt(2) != '-') {
+			valid = false;
+		} 
+		if(date.charAt(5) != '/' && date.charAt(5) != '-') {
+			valid = false;
+		}
+		for(int i = 0; i < date.length(); i++){
+			if (i !=2 && i != 5) {
+				if (date.charAt(i) < '0' || date.charAt(i) > '9') {
+					valid = false;
+				}
+			}
+		}
+		return valid;
 	}
 }
