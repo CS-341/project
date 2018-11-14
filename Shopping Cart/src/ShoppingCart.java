@@ -71,7 +71,7 @@ public class ShoppingCart extends JFrame {
 		contentPane.add(btnCheckout);
 		btnCheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Checkout checkWindow = new Checkout(3); // temp int
+				Checkout checkWindow = new Checkout(getTotalPrice(items), items, currentUser); // temp int
 				dispose();
 			}
 		});
@@ -87,7 +87,15 @@ public class ShoppingCart extends JFrame {
 			}
 		});
 	}
-
+	private double getTotalPrice(ArrayList<Item> itemList){
+		double totalPrice = 0;
+		for(int i = 0; i < itemList.size(); i++){
+			String price =itemList.get(i).price.getText().substring(1);
+			totalPrice += itemList.get(i).amount *  Double.parseDouble(price);
+		}
+		return totalPrice;
+		
+	}
 	// add item to cart
 	private void addItem(Item newItem) {
 		Item temp = newItem;
