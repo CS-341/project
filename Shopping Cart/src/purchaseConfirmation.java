@@ -36,6 +36,7 @@ public class purchaseConfirmation extends JFrame {
 		contentPane.add(btnOk);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				user.selectedItems.clear();
 				ShopWindow shop = new ShopWindow(user, null);
 				shop.setVisible(true);
 				dispose();

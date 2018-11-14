@@ -158,7 +158,7 @@ public class ShopWindow extends JFrame {
 		contentPane.add(list);
 
 		JButton btnCart = new JButton("Shopping Cart");
-		btnCart.setBounds(1500, 5, 150, 25);
+		btnCart.setBounds(1055, 5, 150, 25);
 		contentPane.add(btnCart);
 		btnCart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -240,7 +240,7 @@ public class ShopWindow extends JFrame {
 		//promotion button if user is an admin
 		if(newUser.userType == 2) {
 			JButton promoBtn = new JButton("Add Promotion");
-			promoBtn.setBounds(842,5,125,25);
+			promoBtn.setBounds(842,5,200,25);
 			promoBtn.setVisible(true);
 			//action event to PromotionWindow
 			contentPane.add(promoBtn);
