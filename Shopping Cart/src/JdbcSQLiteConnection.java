@@ -85,7 +85,7 @@ public class JdbcSQLiteConnection {
             	
             	Statement st = conn.createStatement();
             	//st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
-            	
+            	st.executeUpdate("UPDATE Users SET Status = 2 WHERE Username = 'admin'");
             	//add user to database
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
@@ -299,7 +299,11 @@ public class JdbcSQLiteConnection {
 				zip = rs.getString(5);
 				credit = rs.getString(6);
 				userType = rs.getInt(7);
+				//System.out.println("user type is : " + userType);
 				user = new User(name, userPass, city, state, zip, credit);
+				if(userType == 2) {
+					user.userType = 2;
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -379,7 +383,7 @@ public class JdbcSQLiteConnection {
      *  of the "Users" Database
      */
     
-    private void createPromotionTable() {	
+    public void createPromotionTable() {	
     	Statement st;
     	try {
 			st = conn.createStatement();
@@ -395,7 +399,7 @@ public class JdbcSQLiteConnection {
      * @param promoTag = the name of the item the promotion applies to
      * @return the tag of the item the promotion applies to
      */
-    private String searchDatabaseForTag(String promoName, String promoTag) {
+    public String searchDatabaseForTag(String promoName, String promoTag) {
     	String search = "SELECT promoTag FROM Promotions WHERE promoName = '" + promoName +
     			"'";
     	Statement st;
@@ -420,7 +424,7 @@ public class JdbcSQLiteConnection {
      * @param the promotion name to search in the database for
      * @return true if the current date is within the start and end date of the promotion
      */
-    private boolean checkPromoDate(String promoName) {
+    public boolean checkPromoDate(String promoName) {
     	boolean result = false;
     	String search = "SELECT beginDate, endDate FROM Promotions WHERE promoName = '" + promoName +
     			"'";
@@ -474,7 +478,7 @@ public class JdbcSQLiteConnection {
      * @param promoEndDate end date for the promotion
      * @return
      */
-    private boolean insertPromotion(String promoName, String promoType, 
+    public boolean insertPromotion(String promoName, String promoType, 
     		String promoTag, String promoBeginDate, String promoEndDate) {
     	boolean inserted = false; 
     	//first column is promoId
@@ -499,7 +503,7 @@ public class JdbcSQLiteConnection {
     /**
      * method for printing out countents of promotion table
      */
-	private void displayPromotions() {
+	public void displayPromotions() {
 		ResultSet rs = null;
 		String promoName = "";
 		String promoType = "";
@@ -532,7 +536,7 @@ public class JdbcSQLiteConnection {
      * @param promoName the name of the promotion to search for
      * @return the String representation (type) of what the promotion offers
      */
-    private String getPromotionAsString(String promoName) {
+    public String getPromotionAsString(String promoName) {
     	String search = "SELECT promoType FROM Promotions WHERE promoName = '" + promoName +
     			"'";
     	Statement st;

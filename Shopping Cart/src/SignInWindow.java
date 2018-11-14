@@ -17,7 +17,7 @@ public class SignInWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JPasswordField txtPassword;
-
+	private boolean validUser = false;
 	/**
 	 * Launch the application.
 	 */
@@ -122,5 +122,10 @@ public class SignInWindow extends JFrame {
 		});
 		
 		
+	}
+	private User getUser() {
+		User user = null;
+		
+		return user;
 	}
 }
