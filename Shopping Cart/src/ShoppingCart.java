@@ -26,18 +26,11 @@ public class ShoppingCart extends JFrame {
 	public ArrayList<Item> items;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
-	private JTextField promotion;
-	private Label proLabel;
-	private Label cartTotal;
-	private JButton promoCheck;
 	public EventHandling handler;
 
 	public ShoppingCart(Item newItem, User currentUser) {
 		this.currentUser = currentUser;
 		items = User.selectedItems;
-		/**
-		 * if (newItem != null) { addItem(newItem); }
-		 **/
 		setVisible(true);
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,23 +42,6 @@ public class ShoppingCart extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		showList(items, panel, pane);
-		// for promotion handling
-		proLabel = new Label("Enter Promotion:");
-		proLabel.setBounds(500, 10, 95, 19);
-		contentPane.add(proLabel);
-		promotion = new JTextField();
-		promotion.setBounds(600, 10, 100, 19);
-		contentPane.add(promotion);
-		promotion.setColumns(10);
-		promoCheck = new JButton("Check");
-		promoCheck.setBounds(705, 10, 30, 19);
-		contentPane.add(promoCheck);
-		promoCheck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.setBounds(260, 5, 100, 25);
 		contentPane.add(btnCheckout);
@@ -97,20 +73,6 @@ public class ShoppingCart extends JFrame {
 		}
 		return totalPrice;
 		
-	}
-	// add item to cart
-	private void addItem(Item newItem) {
-		Item temp = newItem;
-		System.out.println(newItem.filePath);
-		if (items.size() > 0 && items.contains(temp)) {
-
-		} else {
-			items.add(temp);
-		}
-		for (int i = 0; i < items.size(); i++) {
-			System.out.println(items.get(i).item);
-			System.out.println("here");
-		}
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
@@ -212,9 +174,6 @@ public class ShoppingCart extends JFrame {
 
 		private ArrayList<JButton> selectButtons;
 		//private ArrayList<Item> selectedItems;
-		private ArrayList<JLabel> JlabelArry;
-		private ArrayList<JLabel> priceArry;
-		private ArrayList<JLabel> picArry;
 		public User currentUser;
 		public ArrayList<Item> item;
 
@@ -223,10 +182,6 @@ public class ShoppingCart extends JFrame {
 
 			this.currentUser = currentUser;
 			this.selectButtons = selectButtons;
-			//selectedItems = new ArrayList<Item>();
-			this.JlabelArry = JlabelArry;
-			this.priceArry = priceArry;
-			this.picArry = picArry;
 			this.item = item;
 		}
 
