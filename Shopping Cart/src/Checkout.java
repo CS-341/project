@@ -1,3 +1,5 @@
+import java.awt.Button;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -89,6 +91,20 @@ public class Checkout extends JFrame {
 			labelTotal.setBounds(274, 222, 154, 42);
 			contentPane.add(labelTotal);
 			setVisible(true);
+			
+			Button bttUser = new Button("Purchase");
+			bttUser.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					purchaseConfirmation guest = new purchaseConfirmation(user);
+					guest.setVisible(true);
+					dispose();
+				}
+			});
+			bttUser.setForeground(Color.WHITE);
+			bttUser.setBackground(new Color(47, 79, 79));
+			bttUser.setBounds(435, 227, 154, 42);
+			contentPane.add(bttUser);
+		
 		}
 		else{ /* Guest User Screen*/
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -137,16 +153,18 @@ public class Checkout extends JFrame {
 			contentPane.add(labelTotal);
 			setVisible(true);
 			
-			JButton btnGuestInfo = new JButton("info");
-			btnGuestInfo.setBounds(335, 227, 89, 23);
-			btnGuestInfo.setVisible(true);
-			btnGuestInfo.addActionListener(new ActionListener() {
+			Button bttGuest = new Button("Purchase as Guest");
+			bttGuest.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-			
-					
+					GuestInfo guest = new GuestInfo(user);
+					guest.setVisible(true);
 					dispose();
 				}
 			});
+			bttGuest.setForeground(Color.WHITE);
+			bttGuest.setBackground(new Color(47, 79, 79));
+			bttGuest.setBounds(435, 227, 154, 42);
+			contentPane.add(bttGuest);
 		}
 
 	}

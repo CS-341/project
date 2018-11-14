@@ -87,6 +87,8 @@ public class ShoppingCart extends JFrame {
 			}
 		});
 	}
+
+	
 	private double getTotalPrice(ArrayList<Item> itemList){
 		double totalPrice = 0;
 		for(int i = 0; i < itemList.size(); i++){

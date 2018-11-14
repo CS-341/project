@@ -52,6 +52,7 @@ public static Item item;
 
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
 
 	public DescriptionWindow(Item item1, User currentUser) {

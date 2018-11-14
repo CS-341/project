@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
+
 
 public class ShopWindow extends JFrame {
 
@@ -186,7 +186,7 @@ public class ShopWindow extends JFrame {
 		contentPane.add(txtSearch);
 		txtSearch.setColumns(10);
 		contentPane.add(btnFind);
-		JButton btnEnter = new JButton("Enter");
+		JButton btnEnter = new JButton("enter");
 
 		final ArrayList<Item> tmp = (ArrayList<Item>) items.clone();
 		btnEnter.addActionListener(new ActionListener() {
@@ -238,20 +238,6 @@ public class ShopWindow extends JFrame {
 			});
 		}
 		
-		//promotion button if user is an admin
-		if(newUser.userType == 2) {
-			JButton promoBtn = new JButton("Add Promotion");
-			promoBtn.setBounds(842,5,125,25);
-			//action event to PromotionWindow
-			contentPane.add(promoBtn);
-			promoBtn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					PromotionWindow promoWin = new PromotionWindow(newUser);
-					promoWin.setVisible(true);
-					dispose();
-				}
-			});
-		}
 		
 	}
 
