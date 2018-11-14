@@ -64,7 +64,7 @@ public class JdbcSQLiteConnection {
     public static void main(String[] args) {
     	
     	//below code block used for testing and reset of database contents
-       
+       /*
     	try {
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:UsersDb.db";
@@ -78,9 +78,11 @@ public class JdbcSQLiteConnection {
             		db.dropTable("Users");
             		db.dropTable("Promotions");
             	}
+            	
             	//create table
             	//SQLiteException may occur here if Users is already created - not a worry
             	//db.createTable("Users");
+            	//db.dropTable("Promotions");
             	//db.createPromotionTable();
             	
             	Statement st = conn.createStatement();
@@ -91,12 +93,12 @@ public class JdbcSQLiteConnection {
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
             	}
-            	if(!db.searchDatabaseForTag("20% off iPhone", "iPhone").equals("iPhone")) {
-            		db.insertPromotion("20% off iPhone", "20%", "iPhone", "01-11-2018", "30-11-2018");
-            	}
+            	//if(!db.searchDatabaseForTag("20% off iPhone", "iPhone").equals("iPhone")) {
+            	//	db.insertPromotion("20% off iPhone", "20%", "iPhone", "01-11-2018", "30-11-2018");
+            	//}
             	System.out.println(db.checkPromoDate("20% off iPhone"));
             	
-            	//db.insertPromotion("30% off macbook", "30%", "macbook", "01-12-2018", "30-12-2018");
+            	db.insertPromotion("30% off macbook", "%30", "macbook", "01-12-2018", "30-12-2018");
             	System.out.println(db.checkPromoDate("30% off macbook"));
             	
             	//calls method to display all info currently held in the database
@@ -117,7 +119,7 @@ public class JdbcSQLiteConnection {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+        */
     }
     /**
      * method used to check stored hashed passwords in the database
@@ -396,10 +398,9 @@ public class JdbcSQLiteConnection {
     /**
      * 
      * @param promoName = the string name of the promotion to search for
-     * @param promoTag = the name of the item the promotion applies to
      * @return the tag of the item the promotion applies to
      */
-    public String searchDatabaseForTag(String promoName, String promoTag) {
+    public String getPromoTag(String promoName) {
     	String search = "SELECT promoTag FROM Promotions WHERE promoName = '" + promoName +
     			"'";
     	Statement st;
@@ -514,7 +515,6 @@ public class JdbcSQLiteConnection {
 		try {
 			st = conn.createStatement();
 			rs = st.executeQuery("SELECT * FROM Promotions");
-			System.out.println("Username Password City State Zip Credit UserType");
 			while (rs.next()) {
 				promoName = rs.getString(2);
 				promoType = rs.getString(3);
@@ -536,7 +536,7 @@ public class JdbcSQLiteConnection {
      * @param promoName the name of the promotion to search for
      * @return the String representation (type) of what the promotion offers
      */
-    public String getPromotionAsString(String promoName) {
+    public String getPromotionType(String promoName) {
     	String search = "SELECT promoType FROM Promotions WHERE promoName = '" + promoName +
     			"'";
     	Statement st;
@@ -546,7 +546,7 @@ public class JdbcSQLiteConnection {
 			st = conn.createStatement();
 			rs = st.executeQuery(search);
 			if (!rs.isClosed()) {
-				result = rs.getString(1); //promotag is the the only thing returned 
+				result = rs.getString(1); //promoType is the the only thing returned 
 			}
 			
 		} catch (SQLException e) {
@@ -554,6 +554,32 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     	return result;
+    }
+    
+    public boolean doesPromotionExist(String promoName) {
+    	boolean exists = true;
+    	String search = "SELECT * FROM Promotions WHERE promoName = '" + promoName +
+    			"'";
+    	JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+    	db.displayPromotions();
+    	Statement st;
+    	ResultSet rs;
+ 
+    	try {
+			st = conn.createStatement();
+			rs = st.executeQuery(search);
+			
+			if (!rs.isClosed()) {
+				exists = true;
+			} else {
+				exists = false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return exists;
     }
 	
 }

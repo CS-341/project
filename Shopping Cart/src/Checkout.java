@@ -48,15 +48,11 @@ public class Checkout extends JFrame {
 			textField.setBounds(486, 35, 128, 20);
 			contentPane.add(textField);
 			textField.setColumns(10);
-
-			JButton btnEnterPromo = new JButton("Enter Promo");
-			btnEnterPromo.setBounds(486, 58, 128, 23);
-			contentPane.add(btnEnterPromo);
-
+			
 			JLabel lblenterPromoCode = new JLabel("*Enter Promo Here");
 			lblenterPromoCode.setBounds(500, 21, 144, 14);
 			contentPane.add(lblenterPromoCode);
-
+			
 			JLabel lblTotal = new JLabel("Total:");
 			lblTotal.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblTotal.setBounds(217, 222, 70, 42);
@@ -105,7 +101,49 @@ public class Checkout extends JFrame {
 			bttUser.setBackground(new Color(47, 79, 79));
 			bttUser.setBounds(435, 227, 154, 42);
 			contentPane.add(bttUser);
-		
+			
+			JButton btnEnterPromo = new JButton("Enter Promo");
+			btnEnterPromo.setBounds(486, 58, 128, 23);
+			//add action listener and do promotion logic
+			contentPane.add(btnEnterPromo);
+			btnEnterPromo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					String enteredPromo = textField.getText();
+					if (db.doesPromotionExist(enteredPromo)) { 
+						//there is a valid promotion
+						String percentOff = db.getPromotionType(enteredPromo);
+						double percentOffDbl = 0;
+						percentOffDbl = (percentOff.charAt(1) - '0') * 10;
+						percentOffDbl += percentOff.charAt(2) - '0';
+						percentOffDbl = percentOffDbl / 100;
+						System.out.println("percent off is: " + percentOffDbl);
+						//go through items and any name that matches the promoTag 
+						String promoItem = db.getPromoTag(enteredPromo);
+						double promoDiscount = 0;
+						//calculate promotion amount
+						for(int i = 0; i < items.size(); i++) {
+							if(User.selectedItems.get(i).name.toLowerCase().equalsIgnoreCase(promoItem)) {
+								promoDiscount = (percentOffDbl) * Double.parseDouble(items.get(i).price.getText().substring(1, items.get(i).price.getText().length()));
+								promoDiscount *= items.get(i).amount;
+								System.out.println("fkljdslfjksdlfa");
+							}
+						}
+						//subtract promotion amount from total and apply it 
+						String totalBeforeDiscount = labelTotal.getText();
+						//String subTotalBeforeDiscount = SubtotalLabel.getText().substring(9, SubtotalLabel.getText().length());
+						Double totalBeforeDiscountDbl = Double.parseDouble(totalBeforeDiscount.substring(0, totalBeforeDiscount.length()-1));
+						Double totalAfterDiscount = totalBeforeDiscountDbl - promoDiscount;
+						Double subTotalAfterDiscount = totalValue - promoDiscount;
+						String totalAfterDiscountString = Double.toString(totalAfterDiscount);
+						labelTotal.setText(totalAfterDiscountString);
+						labelSubtotal.setText(Double.toString(subTotalAfterDiscount) + "$");
+						contentPane.repaint();
+					} else {
+						//display promo code error message
+					}
+				}
+			});
 		}
 		else{ /* Guest User Screen*/
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
