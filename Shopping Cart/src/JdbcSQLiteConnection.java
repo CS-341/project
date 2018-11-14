@@ -64,7 +64,7 @@ public class JdbcSQLiteConnection {
     public static void main(String[] args) {
     	
     	//below code block used for testing and reset of database contents
-       /*
+       
     	try {
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:UsersDb.db";
@@ -85,6 +85,7 @@ public class JdbcSQLiteConnection {
             	
             	Statement st = conn.createStatement();
             	//st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
+            	st.executeUpdate("UPDATE Users SET Status = 2 WHERE Username = 'admin'");
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
@@ -116,7 +117,7 @@ public class JdbcSQLiteConnection {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        */
+        
     }
     /**
      * method used to check stored hashed passwords in the database
@@ -300,6 +301,9 @@ public class JdbcSQLiteConnection {
 				credit = rs.getString(6);
 				userType = rs.getInt(7);
 				user = new User(name, userPass, city, state, zip, credit);
+				if(userType == 2) { //if the user is an admin, set the returned user's info to admin status
+					user.userType = 2;
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

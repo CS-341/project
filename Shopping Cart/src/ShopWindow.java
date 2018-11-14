@@ -237,11 +237,11 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
-		
 		//promotion button if user is an admin
 		if(newUser.userType == 2) {
 			JButton promoBtn = new JButton("Add Promotion");
 			promoBtn.setBounds(842,5,125,25);
+			promoBtn.setVisible(true);
 			//action event to PromotionWindow
 			contentPane.add(promoBtn);
 			promoBtn.addActionListener(new ActionListener() {
