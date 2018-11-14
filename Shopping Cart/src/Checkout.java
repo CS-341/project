@@ -95,6 +95,7 @@ public class Checkout extends JFrame {
 			Button bttUser = new Button("Purchase");
 			bttUser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					User.selectedItems.clear();
 					purchaseConfirmation guest = new purchaseConfirmation(user);
 					guest.setVisible(true);
 					dispose();
@@ -157,6 +158,7 @@ public class Checkout extends JFrame {
 			bttGuest.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					GuestInfo guest = new GuestInfo(user);
+					User.selectedItems.clear();
 					guest.setVisible(true);
 					dispose();
 				}
