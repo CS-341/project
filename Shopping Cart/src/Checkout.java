@@ -101,7 +101,19 @@ public class Checkout extends JFrame {
 			bttUser.setBackground(new Color(47, 79, 79));
 			bttUser.setBounds(435, 227, 154, 42);
 			contentPane.add(bttUser);
-			
+//			JButton btnReturnCart = new JButton("return to cart");
+//			btnReturnCart.setBounds(636, 58, 300, 23);
+//			contentPane.add(btnReturnCart);
+//			btnReturnCart.addActionListener(new ActionListener() {
+//
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					new ShoppingCart(null,user).setVisible(true);
+//					dispose();
+//					
+//				}
+//				
+//			});
 			JButton btnEnterPromo = new JButton("Enter Promo");
 			btnEnterPromo.setBounds(486, 58, 128, 23);
 			//add action listener and do promotion logic
@@ -213,6 +225,19 @@ public class Checkout extends JFrame {
 					guest.setVisible(true);
 					dispose();
 				}
+			});
+			JButton btnReturnCart = new JButton("return to cart");
+			btnReturnCart.setBounds(194, 300, 300, 23);
+			contentPane.add(btnReturnCart);
+			btnReturnCart.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new ShoppingCart(null,user).setVisible(true);
+					dispose();
+					
+				}
+				
 			});
 			bttGuest.setForeground(Color.WHITE);
 			bttGuest.setBackground(new Color(47, 79, 79));
