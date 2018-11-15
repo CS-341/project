@@ -87,7 +87,6 @@ public class SignInWindow extends JFrame {
 				//db.passwordsMatch(txtUserName.getText(), txtPassword.getText());
 				String hashedPass = BCrypt.hashpw(txtPassword.getText(),BCrypt.gensalt());
 				if(BCrypt.checkpw(txtPassword.getText(), db.getPassword(txtUserName.getText()))) {
-					
 					lblincorrectPassword.setVisible(false);
 					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()),null);
 					sw.setVisible(true);
