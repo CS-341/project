@@ -125,8 +125,9 @@ public class Checkout extends JFrame {
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					String enteredPromo = textField.getText();
 					boolean isValid = true;
-					if (db.doesPromotionExist(enteredPromo)) { 
+					if (db.doesPromotionExist(enteredPromo) && db.checkPromoDate(enteredPromo)) { 
 						int j = 0;
+						//check if the promo was already used at checkout
 						while(j < usedPromos.size()) {
 							if (checkIfPromoUsed(usedPromos, enteredPromo)) {
 								isValid = false;
