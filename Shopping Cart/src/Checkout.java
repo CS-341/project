@@ -97,7 +97,7 @@ public class Checkout extends JFrame {
 					dispose();
 				}
 			});
-			bttUser.setForeground(Color.WHITE);
+			bttUser.setForeground(Color.BLACK);
 			bttUser.setBackground(new Color(47, 79, 79));
 			bttUser.setBounds(435, 227, 154, 42);
 			contentPane.add(bttUser);
@@ -239,7 +239,7 @@ public class Checkout extends JFrame {
 				}
 				
 			});
-			bttGuest.setForeground(Color.WHITE);
+			bttGuest.setForeground(Color.BLACK);
 			bttGuest.setBackground(new Color(47, 79, 79));
 			bttGuest.setBounds(435, 227, 154, 42);
 			contentPane.add(bttGuest);
