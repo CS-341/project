@@ -26,7 +26,7 @@ public class ShoppingCart extends JFrame {
 	public ArrayList<Item> items;
 	public JPanel panel = new JPanel();
 	public JScrollPane pane = new JScrollPane();
-	public EventHandling handler;
+	public EventHandling handler, handlerEdit;
 
 	public ShoppingCart(Item newItem, User currentUser) {
 		this.currentUser = currentUser;
@@ -47,7 +47,8 @@ public class ShoppingCart extends JFrame {
 		contentPane.add(btnCheckout);
 		btnCheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Checkout checkWindow = new Checkout(getTotalPrice(items), items, currentUser); // temp int
+				Checkout checkWindow = new Checkout(getTotalPrice(items), items, currentUser); // temp
+																								// int
 				dispose();
 			}
 		});
@@ -64,15 +65,14 @@ public class ShoppingCart extends JFrame {
 		});
 	}
 
-	
-	private double getTotalPrice(ArrayList<Item> itemList){
+	private double getTotalPrice(ArrayList<Item> itemList) {
 		double totalPrice = 0;
-		for(int i = 0; i < itemList.size(); i++){
-			String price =itemList.get(i).price.getText().substring(1);
-			totalPrice += itemList.get(i).amount *  Double.parseDouble(price);
+		for (int i = 0; i < itemList.size(); i++) {
+			String price = itemList.get(i).price.getText().substring(1);
+			totalPrice += itemList.get(i).amount * Double.parseDouble(price);
 		}
 		return totalPrice;
-		
+
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
@@ -84,16 +84,17 @@ public class ShoppingCart extends JFrame {
 		// setBounds(100,100,screenSize.width, screenSize.height);
 		panel1.setBounds(0, 0, screenSize.width + 100, screenSize.height - 100);
 		contentPane.add(panel1);
-		panel1.setLayout(new GridLayout(items1.size(), 6, 0, 0));
+		panel1.setLayout(new GridLayout(items1.size(), 7, 0, 0));
 		panel1.removeAll();
 		pane.removeAll();
 		ArrayList<JButton> Jarray = new ArrayList();
+		ArrayList<JButton> Jedit = new ArrayList();
 		ArrayList<JLabel> JlablArry = new ArrayList();
 		ArrayList<JLabel> picArry = new ArrayList();
 		ArrayList<JLabel> priceArry = new ArrayList();
 		ArrayList<JLabel> quantityArry = new ArrayList();
 		for (int i = 0; i < items1.size(); i++) {
-			// ADD LABEL FOR ITEM
+			// ADD REMOVE FOR ITEM
 			Jarray.add(items1.get(i).select = new JButton("remove"));
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 			gbc_btnNewButton.anchor = GridBagConstraints.WEST;
@@ -101,12 +102,20 @@ public class ShoppingCart extends JFrame {
 			gbc_btnNewButton.gridx = 0;
 			gbc_btnNewButton.gridy = i;
 			panel1.add(Jarray.get(i), gbc_btnNewButton);
+			// ADD MORE FOR ITEM
+			Jedit.add(items1.get(i).select = new JButton("add"));
+			GridBagConstraints gbc_btnNewButton1 = new GridBagConstraints();
+			gbc_btnNewButton1.anchor = GridBagConstraints.WEST;
+			gbc_btnNewButton1.insets = new Insets(0, 0, 5, 5);
+			gbc_btnNewButton1.gridx = 1;
+			gbc_btnNewButton1.gridy = i;
+			panel1.add(Jedit.get(i), gbc_btnNewButton1);
 			// ADD DISCRIPTION OF ITEM
 			JlablArry.add(items1.get(i).discription);
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNewLabel_1.gridx = 1;
+			gbc_lblNewLabel_1.gridx = 2;
 			gbc_lblNewLabel_1.gridy = i;
 			panel1.add(JlablArry.get(i), gbc_lblNewLabel_1);
 			// add price of item
@@ -114,7 +123,7 @@ public class ShoppingCart extends JFrame {
 			GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 			gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNewLabel_2.gridx = 2;
+			gbc_lblNewLabel_2.gridx = 3;
 			gbc_lblNewLabel_2.gridy = i;
 			panel1.add(priceArry.get(i), gbc_lblNewLabel_2);
 			// add quantity of item
@@ -122,7 +131,7 @@ public class ShoppingCart extends JFrame {
 			GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 			gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNewLabel_3.gridx = 3;
+			gbc_lblNewLabel_3.gridx = 4;
 			gbc_lblNewLabel_3.gridy = i;
 			panel1.add(quantityArry.get(i), gbc_lblNewLabel_3);
 			// add picture of item
@@ -131,7 +140,7 @@ public class ShoppingCart extends JFrame {
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_lblNewLabel.gridx = 4;
+			gbc_lblNewLabel.gridx = 5;
 			gbc_lblNewLabel.gridy = i;
 			panel1.add(picArry.get(i), gbc_lblNewLabel);
 
@@ -146,11 +155,18 @@ public class ShoppingCart extends JFrame {
 		pane.setVisible(true);
 
 		// Adding ActionListener
-		handler = new EventHandling(Jarray, JlablArry, priceArry, picArry, this.currentUser, items1);
+		handler = new EventHandling(Jarray, JlablArry, priceArry, picArry, this.currentUser, items1, false);
+		handlerEdit = new EventHandling(Jedit, JlablArry, priceArry, picArry, this.currentUser, items1,  true);
 
 		for (JButton buttons : Jarray) {
 
 			buttons.addActionListener(handler);
+			dispose();
+		}
+
+		for (JButton buttons : Jedit) {
+
+			buttons.addActionListener(handlerEdit);
 			dispose();
 		}
 
@@ -171,35 +187,43 @@ public class ShoppingCart extends JFrame {
 		/**
 		* 
 		*/
-
+		private boolean add;
 		private ArrayList<JButton> selectButtons;
-		//private ArrayList<Item> selectedItems;
 		public User currentUser;
 		public ArrayList<Item> item;
 
 		public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry,
-				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item) {
+				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item,
+				boolean add) {
 
 			this.currentUser = currentUser;
 			this.selectButtons = selectButtons;
 			this.item = item;
+			this.add = add;
 		}
 
 		public void actionPerformed(ActionEvent event) {
-
-			for (int i = 0; i < selectButtons.size(); i++)
-				if (event.getSource() == selectButtons.get(i)) {
-					Item temp = item.get(i);
-					//System.out.println(temp.name);
-					temp.icon = item.get(i).icon;
-					//System.out.println(temp.filePath);
-					DescriptionWindow discription = new DescriptionWindow(temp, currentUser, true);
-					dispose();
-					discription.setVisible(true);
-					//System.out.println(temp.amount);
-					break;
-				}
-
+			if (add == false) {
+				for (int i = 0; i < selectButtons.size(); i++)
+					if (event.getSource() == selectButtons.get(i)) {
+						Item temp = item.get(i);
+						temp.icon = item.get(i).icon;
+						DescriptionWindow discription = new DescriptionWindow(temp, currentUser, true);
+						dispose();
+						discription.setVisible(true);
+						break;
+					}
+			} else {
+				for (int i = 0; i < selectButtons.size(); i++)
+					if (event.getSource() == selectButtons.get(i)) {
+						Item temp = item.get(i);
+						temp.icon = item.get(i).icon;
+						DescriptionWindow discription = new DescriptionWindow(temp, currentUser, false);
+						dispose();
+						discription.setVisible(true);
+						break;
+					}
+			}
 		}
 	}
 }
