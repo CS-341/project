@@ -106,11 +106,22 @@ public class Checkout extends JFrame {
 			btnEnterPromo.setBounds(486, 58, 128, 23);
 			//add action listener and do promotion logic
 			contentPane.add(btnEnterPromo);
+			ArrayList<String> usedPromos = new ArrayList<String>();
+			
 			btnEnterPromo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					String enteredPromo = textField.getText();
+					boolean isValid = true;
 					if (db.doesPromotionExist(enteredPromo)) { 
+						int j = 0;
+						while(j < usedPromos.size()) {
+							if (checkIfPromoUsed(usedPromos, enteredPromo)) {
+								isValid = false;
+							}
+							j++;
+						}
+						usedPromos.add(enteredPromo);
 						//there is a valid promotion
 						String percentOff = db.getPromotionType(enteredPromo);
 						double percentOffDbl = 0;
@@ -123,24 +134,26 @@ public class Checkout extends JFrame {
 						double promoDiscount = 0;
 						//calculate promotion amount
 						for(int i = 0; i < items.size(); i++) {
-							if(User.selectedItems.get(i).name.toLowerCase().equalsIgnoreCase(promoItem)) {
+							if(User.selectedItems.get(i).name.toLowerCase().equalsIgnoreCase(promoItem)
+									&& isValid) {
 								promoDiscount = (percentOffDbl) * Double.parseDouble(items.get(i).price.getText().substring(1, items.get(i).price.getText().length()));
 								promoDiscount *= items.get(i).amount;
-								System.out.println("fkljdslfjksdlfa");
+								//subtract promotion amount from total and apply it 
+								String totalBeforeDiscount = labelTotal.getText();
+								//String subTotalBeforeDiscount = SubtotalLabel.getText().substring(9, SubtotalLabel.getText().length());
+								Double totalBeforeDiscountDbl = Double.parseDouble(totalBeforeDiscount.substring(0, totalBeforeDiscount.length()-1));
+								Double totalAfterDiscount = totalBeforeDiscountDbl - promoDiscount;
+								Double subTotalAfterDiscount = totalValue - promoDiscount;
+								String totalAfterDiscountString = Double.toString(totalAfterDiscount);
+								labelTotal.setText(totalAfterDiscountString);
+								labelSubtotal.setText(Double.toString(subTotalAfterDiscount) + "$");
+								contentPane.repaint();
 							}
 						}
-						//subtract promotion amount from total and apply it 
-						String totalBeforeDiscount = labelTotal.getText();
-						//String subTotalBeforeDiscount = SubtotalLabel.getText().substring(9, SubtotalLabel.getText().length());
-						Double totalBeforeDiscountDbl = Double.parseDouble(totalBeforeDiscount.substring(0, totalBeforeDiscount.length()-1));
-						Double totalAfterDiscount = totalBeforeDiscountDbl - promoDiscount;
-						Double subTotalAfterDiscount = totalValue - promoDiscount;
-						String totalAfterDiscountString = Double.toString(totalAfterDiscount);
-						labelTotal.setText(totalAfterDiscountString);
-						labelSubtotal.setText(Double.toString(subTotalAfterDiscount) + "$");
-						contentPane.repaint();
+						
 					} else {
 						//display promo code error message
+						System.out.println("did not find promo");
 					}
 				}
 			});
@@ -207,5 +220,16 @@ public class Checkout extends JFrame {
 			contentPane.add(bttGuest);
 		}
 
+	}
+	
+	private boolean checkIfPromoUsed(ArrayList<String> usedPromos, String promoName) {
+		boolean wasUsed = false;
+		for(int i = 0; i < usedPromos.size(); i++) {
+			if(promoName.equals(usedPromos.get(i))) {
+				wasUsed = true;
+			}
+		}
+		
+		return wasUsed;
 	}
 }

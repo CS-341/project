@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
@@ -29,7 +30,6 @@ public class PromotionWindow extends JFrame {
 	private JLabel lblStartDate;
 	private JLabel lblEndDate;
 	private boolean isValid;
-
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +50,7 @@ public class PromotionWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public PromotionWindow(User user) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -198,13 +199,14 @@ public class PromotionWindow extends JFrame {
 					//hide error msg
 					endErrMsg.setVisible(false);
 				}
+				//check if the promotion was already applie
 				//if all fields were valid, add promotion
 				if(isValid) {
 					System.out.println("succesfully added promotion");
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					db.openConnection();
 					db.insertPromotion(promoName, promoType, promoTag, beginDate, endDate);
-					db.displayPromotions();
+					//db.displayPromotions();
 					db.closeConnection();
 				}
 			}
@@ -267,4 +269,5 @@ public class PromotionWindow extends JFrame {
 		}
 		return valid;
 	}
+	
 }
