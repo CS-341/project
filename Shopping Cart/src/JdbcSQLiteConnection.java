@@ -81,24 +81,27 @@ public class JdbcSQLiteConnection {
             	
             	//create table
             	//SQLiteException may occur here if Users is already created - not a worry
-            	//db.createTable("Users");
+            	db.dropTable("Users");
+            	db.createTable("Users");
             	//db.dropTable("Promotions");
             	//db.createPromotionTable();
             	
             	Statement st = conn.createStatement();
             	//st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
-            	st.executeUpdate("UPDATE Users SET Status = 2 WHERE Username = 'admin'");
+            	
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
             	}
+            	st.executeUpdate("UPDATE Users SET Status = 2 WHERE Username = 'admin'");
+            	
             	//if(!db.searchDatabaseForTag("20% off iPhone", "iPhone").equals("iPhone")) {
             	//	db.insertPromotion("20% off iPhone", "20%", "iPhone", "01-11-2018", "30-11-2018");
             	//}
-            	System.out.println(db.checkPromoDate("20% off iPhone"));
-            	
-            	db.insertPromotion("30% off macbook", "%30", "macbook", "01-12-2018", "30-12-2018");
+            	//System.out.println(db.checkPromoDate("20% off iPhone"));
+           
+            	//db.insertPromotion("30% off macbook", "%30", "macbook", "01-12-2018", "30-12-2018");
             	System.out.println(db.checkPromoDate("30% off macbook"));
             	
             	//calls method to display all info currently held in the database
@@ -113,13 +116,13 @@ public class JdbcSQLiteConnection {
                 System.out.println("Product version: " + dm.getDatabaseProductVersion());
                 conn.close();
             }
-            
+          
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        */
+       */
     }
     /**
      * method used to check stored hashed passwords in the database
@@ -160,8 +163,11 @@ public class JdbcSQLiteConnection {
       //System.out.println("user pass is  : " + newUser.password);
       //System.out.println("hashed pass is: " + hashedPass);
       //System.out.println("checking if passwords match for the user: " + 
-      //BCrypt.checkpw(newUser.password, hashedPass));
+      if (BCrypt.checkpw(newUser.password, hashedPass)) {
+    	  newUser.password = hashedPass;
+      }
       
+      //Encrypt userPass' here
       String userName = newUser.userName;
       String userPass = newUser.password;
       String city = newUser.city;
