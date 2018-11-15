@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -82,7 +85,8 @@ public class SignInWindow extends JFrame {
 				lblUsernameNotFound.setVisible(false);
 				//call this to return a boolean to check if the passwords match
 				//db.passwordsMatch(txtUserName.getText(), txtPassword.getText());
-				if(db.getPassword(txtUserName.getText()).equals(txtPassword.getText())) {
+				String hashedPass = BCrypt.hashpw(txtPassword.getText(),BCrypt.gensalt());
+				if(BCrypt.checkpw(txtPassword.getText(), db.getPassword(txtUserName.getText()))) {
 					
 					lblincorrectPassword.setVisible(false);
 					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()),null);
@@ -103,6 +107,7 @@ public class SignInWindow extends JFrame {
 //			else {
 //				send error 'Password is incorrect'
 //			}
+			db.closeConnection();
 			}});
 		
 		JButton btnCancel = new JButton("Cancel");
