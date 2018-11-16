@@ -34,6 +34,25 @@ public class Checkout extends JFrame {
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 
+			//error messages
+			JLabel promoDoesNotExist = new JLabel("Promotion does not exist");
+			promoDoesNotExist.setForeground(Color.RED);
+			promoDoesNotExist.setBounds(300, 34, 250, 26);
+			promoDoesNotExist.setVisible(false);
+			contentPane.add(promoDoesNotExist);
+			//promotion exists, date valid, or been used already
+			JLabel promoDateInvalid = new JLabel("Promotion has expired");
+			promoDateInvalid.setForeground(Color.RED);
+			promoDateInvalid.setBounds(300, 60, 350, 26);
+			promoDateInvalid.setVisible(false);
+			contentPane.add(promoDateInvalid);
+			
+			JLabel promoAlreadyUsed = new JLabel("Promotion cannot be applied more than once");
+			promoAlreadyUsed.setForeground(Color.RED);
+			promoAlreadyUsed.setBounds(300, 86, 250, 26);
+			promoAlreadyUsed.setVisible(false);
+			contentPane.add(promoAlreadyUsed);
+			
 			JLabel labelSubtotal = new JLabel(Double.toString(totalValue) + "$");
 			labelSubtotal.setFont(new Font("Tahoma", Font.BOLD, 15));
 			labelSubtotal.setBounds(274, 128, 154, 42);
@@ -119,17 +138,26 @@ public class Checkout extends JFrame {
 			//add action listener and do promotion logic
 			contentPane.add(btnEnterPromo);
 			ArrayList<String> usedPromos = new ArrayList<String>();
-			
+
 			btnEnterPromo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					String enteredPromo = textField.getText();
+					boolean promoExists = db.doesPromotionExist(enteredPromo);
+					boolean promoDateValid = db.checkPromoDate(enteredPromo);
+					
+					promoDoesNotExist.setVisible(false);
+					promoDateInvalid.setVisible(false);
+					promoAlreadyUsed.setVisible(false);
+					
+					boolean wasUsed = false;
 					boolean isValid = true;
-					if (db.doesPromotionExist(enteredPromo) && db.checkPromoDate(enteredPromo)) { 
+					if (promoExists && promoDateValid) { 
 						int j = 0;
 						//check if the promo was already used at checkout
 						while(j < usedPromos.size()) {
 							if (checkIfPromoUsed(usedPromos, enteredPromo)) {
+								wasUsed = true;
 								isValid = false;
 							}
 							j++;
@@ -164,9 +192,17 @@ public class Checkout extends JFrame {
 							}
 						}
 						
-					} else {
+					} else if (wasUsed){ 
 						//display promo code error message
+						promoAlreadyUsed.setVisible(true);
+					} else {//promo did not exist or promo date was invalid -- check
 						System.out.println("did not find promo");
+						if(!promoDateValid) {
+							promoDateInvalid.setVisible(true);
+						}
+						if(!promoExists) {
+							promoDoesNotExist.setVisible(true);
+						}
 					}
 				}
 			});
