@@ -32,7 +32,7 @@ public class Login extends JFrame {
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
-					frame.setUndecorated(true);
+					//frame.setUndecorated(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,6 +66,7 @@ public class Login extends JFrame {
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the team4 electroincs store!");
 		lblWelcomeToThe.setBounds(315, 28, 321, 15);
+		lblWelcomeToThe.setForeground(Color.WHITE);
 		panel.add(lblWelcomeToThe);
 		
 		JLabel lblNewLabel_2 = new JLabel("New label");
@@ -74,12 +75,13 @@ public class Login extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(Login.class.getResource("/images/iPhone.jpeg")));
 		
 		JLabel lblBuyOneIphone = new JLabel("Buy one iPhone get the 2nd one free!");
+		lblBuyOneIphone.setForeground(Color.BLACK);
 		lblBuyOneIphone.setBounds(321, 68, 332, 15);
 		panel.add(lblBuyOneIphone);
 	
 		// TODO: sign in page
 		Button buttSignIn = new Button("Sign In");
-		buttSignIn.setForeground(Color.WHITE);
+		buttSignIn.setForeground(Color.BLACK);
 		buttSignIn.setFont(UIManager.getFont("MenuBar.font"));
 		buttSignIn.setBackground(new Color(47, 79, 79));
 		buttSignIn.setBounds(516, 298, 139, 39);
@@ -106,7 +108,7 @@ public class Login extends JFrame {
 			}
 		});
 		bttRegister.setBackground(new Color(47, 79, 79));
-		bttRegister.setForeground(Color.WHITE);
+		bttRegister.setForeground(Color.BLACK);
 		bttRegister.setBounds(516, 228, 139, 39);
 		contentPane.add(bttRegister);
 		
@@ -118,7 +120,7 @@ public class Login extends JFrame {
 				dispose();
 			}
 		});
-		bttGuest.setForeground(Color.WHITE);
+		bttGuest.setForeground(Color.BLACK);
 		bttGuest.setBackground(new Color(47, 79, 79));
 		bttGuest.setBounds(516, 373, 139, 39);
 		contentPane.add(bttGuest);
