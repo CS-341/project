@@ -12,6 +12,12 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class JdbcSQLiteConnection {
 	
+  private static String CREATE_ORDER_HISTORY_TABLE ="CREATE TABLE OrderHistory (" 
+		  + 						"Username TEXT PRIMARY KEY, "
+		  + 						"Price TEXT, "
+		  +							"Items TEXT, " //As CSV
+		  +							"Quantities TEXT);"; //As CSV
+	
   private String CREATE_PROMOTABLE = "CREATE TABLE Promotions ("
 	  		+						"PromotionId INTEGER PRIMARY KEY AUTOINCREMENT, "
 	  		+ 						"PromoName TEXT NOT NULL, "
@@ -55,6 +61,13 @@ public class JdbcSQLiteConnection {
   		"                        endDate\r\n" + 
   		"                    )";
   
+  private String INSERT_ORDER_HISTORY = "INSERT INTO OrderHistory (\r\n" + 
+  		"                        Username,\r\n" + 
+		"						 Price, \r\n"   +				
+  		"                        Items,\r\n" + 
+  		"                        Quantities\r\n" +
+  		"                    )";
+  
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
   
   private String SEARCH_ALL_ATTRS = "SELECT * FROM";
@@ -83,18 +96,21 @@ public class JdbcSQLiteConnection {
             	//SQLiteException may occur here if Users is already created - not a worry
             	db.dropTable("Users");
             	db.createTable("Users");
+            	//db.dropTable("OrderHistory");
             	//db.dropTable("Promotions");
             	//db.createPromotionTable();
             	
+            	
             	Statement st = conn.createStatement();
             	//st.executeUpdate("DELETE FROM Users WHERE Username = 'admin'");
-            	
             	
             	//add user to database
             	if(!db.searchUserNames("admin")) {
             		db.addUserToDatabase(admin);
             	}
             	st.executeUpdate("UPDATE Users SET Status = 2 WHERE Username = 'admin'");
+            	
+            	//st.executeUpdate(CREATE_ORDER_HISTORY_TABLE);
             	
             	//if(!db.searchDatabaseForTag("20% off iPhone", "iPhone").equals("iPhone")) {
             	//	db.insertPromotion("20% off iPhone", "20%", "iPhone", "01-11-2018", "30-11-2018");
@@ -587,7 +603,69 @@ public class JdbcSQLiteConnection {
 		}
     	return exists;
     }
-	
+    /**
+     * 
+     * @param statement the CREATE TABLE statement that is in sql form
+     */
+    public void createNewTable(String statement) {	
+    	Statement st;
+    	try {
+			st = conn.createStatement();
+			st.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    /**
+     * 
+     * @param username the username of the customer who issued the order
+     * @param items array of quantities, not in CSV format
+     * @param quantities the array of quantities already in CSV format
+     * @return
+     */
+    public boolean insertOrderHistory(String username, String price, String[] items, String quantities) {
+    	boolean inserted = false; 
+    	//first column is promoId
+    	Statement st;
+    	ResultSet rs;
+    	
+    	String itemsCsv = convertArrayToCsv(items);
+    	System.out.println("adding order history for the following: ");
+    	System.out.println("username: " + username);
+    	System.out.println("price: " + price);
+    	System.out.println("itemsCSV = " + itemsCsv);
+    	System.out.println("quantities = " + quantities);
+    	
+    	String insert = "";
+      	try {
+      			insert = INSERT_ORDER_HISTORY + " VALUES ('" + username + "', '" + price + "', '" + itemsCsv + "', '" + 
+      					quantities + "');";
+    			st = conn.createStatement();
+    			st.executeUpdate(insert);
+    			inserted = true;
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	
+    	return inserted; 
+    }
+    
+    private String convertArrayToCsv(String[] arr) {
+    	String csv = "";
+    	
+    	for(int i = 0; i < arr.length; i++) {
+    		if (i < arr.length-1) {
+    			csv += arr[i] + ", ";
+    		} else {
+    			csv += arr[i];
+    		}
+    	}
+    	
+    	return csv;
+    }
+    
 }
 
 
