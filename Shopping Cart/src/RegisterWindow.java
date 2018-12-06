@@ -144,7 +144,7 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login cancelled = new Login();
+				Login cancelled = new Login(ShopWindow.items);
 				cancelled.setVisible(true);
 				dispose();
 			}
@@ -345,7 +345,7 @@ public class RegisterWindow extends JFrame {
 					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 					User newUser = new User(userName.getText(), password.getText(), city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
 					dataBase.addUserToDatabase(newUser);
-					ShopWindow user = new ShopWindow(newUser,null);
+					ShopWindow user = new ShopWindow(newUser,ShopWindow.items);
 					user.setVisible(true);
 					dispose();
 				}

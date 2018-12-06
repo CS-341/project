@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,7 +17,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class Login extends JFrame {
-
+ArrayList<Item> items = ShopWindow.items;
 	/**
 	 * 
 	 */
@@ -30,7 +31,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					Login frame = new Login(ShopWindow.items);
 					frame.setVisible(true);
 					//frame.setUndecorated(true);
 				} catch (Exception e) {
@@ -43,7 +44,8 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
+	public Login(ArrayList<Item> items) {
+		
 		setBackground(Color.DARK_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 683, 469);
@@ -115,7 +117,8 @@ public class Login extends JFrame {
 		Button bttGuest = new Button("Continue as Guest");
 		bttGuest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ShopWindow guest = new ShopWindow(new User(), null);
+				
+				ShopWindow guest = new ShopWindow(new User(), items);
 				guest.setVisible(true);
 				dispose();
 			}

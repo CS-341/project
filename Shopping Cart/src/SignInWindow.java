@@ -88,7 +88,7 @@ public class SignInWindow extends JFrame {
 				String hashedPass = BCrypt.hashpw(txtPassword.getText(),BCrypt.gensalt());
 				if(BCrypt.checkpw(txtPassword.getText(), db.getPassword(txtUserName.getText()))) {
 					lblincorrectPassword.setVisible(false);
-					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()),null);
+					ShopWindow sw = new ShopWindow(db.getUserInfo(txtUserName.getText()),ShopWindow.items);
 					sw.setVisible(true);
 					dispose();
 				}
@@ -119,7 +119,7 @@ public class SignInWindow extends JFrame {
 		
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login cancelled = new Login();
+				Login cancelled = new Login(ShopWindow.items);
 				cancelled.setVisible(true);
 				dispose();
 			}

@@ -22,7 +22,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
 public class ShopWindow extends JFrame {
 
@@ -37,7 +36,8 @@ public class ShopWindow extends JFrame {
 	public JScrollPane pane = new JScrollPane();
 	public EventHandling handler;
 	public User newUser;
-	public int standardSize = 0; /*gives initial size of list */
+	public static ArrayList<Item> items;
+	public int standardSize = 0; /* gives initial size of list */
 
 	/**
 	 * Launch the application.
@@ -62,9 +62,11 @@ public class ShopWindow extends JFrame {
 	 * 
 	 * @param newUser
 	 */
+
 	public ShopWindow(User newUser, ArrayList<Item> items) {
 		setVisible(true);
 		this.newUser = newUser;
+		this.items = ShopWindow.items;
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,46 +81,47 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("iPhone", "$1000", "/images/rsz_1rsz_iphone-x.jpg"));
 			items.add(new Item("acer monitor", "$399", "/images/acer-monitor_60x60.jpeg"));
 			items.add(new Item("corisair keyboard", "$99", "/images/corisair-key_60x60.jpeg"));
-			items.add(new Item("hp mouse", "$15", "/images/hp-mouse_60x60.jpeg"));
-			items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
-			items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
-			items.add(new Item("Logitech keyboard", "$99", "/images/logitech-key_60x60.jpeg"));
-			items.add(new Item("Razer Mouse", "$79", "/images/logitech-mouse_60x60.jpeg"));
-			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
-			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
-			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
-			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
-			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
-			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
-			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
-			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
-			items.add(new Item("PSU", "$49", "/images/psu.jpeg"));
-			items.add(new Item("TV", "$1000", "/images/tv.jpeg"));
-			items.add(new Item("Flash Drive", "$5", "/images/flashe-drive.jpeg"));
-			items.add(new Item("Ear Buds", "$10", "/images/earbuds.jpeg"));
-			items.add(new Item("laser", "$2", "/images/laser.jpeg"));
-			items.add(new Item("Macbook", "$1000", "/images/macbook.jpeg"));
-			items.add(new Item("Over Ear Headphones", "$300", "/images/overear.jpeg"));
-			items.add(new Item("Playstation 4", "$699", "/images/ps4.jpeg"));
-			items.add(new Item("Subwoofer", "$200", "/images/sub.jpeg"));
-			items.add(new Item("VR Headset", "$100", "/images/vr.jpeg"));
-			items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
+			// items.add(new Item("hp mouse", "$15", "/images/hp-mouse_60x60.jpeg"));
+			// items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
+			// items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
+			// items.add(new Item("Logitech keyboard", "$99",
+			// "/images/logitech-key_60x60.jpeg"));
+			// items.add(new Item("Razer Mouse", "$79",
+			// "/images/logitech-mouse_60x60.jpeg"));
+//			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
+//			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
+//			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
+//			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
+//			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
+//			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
+//			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
+//			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
+//			items.add(new Item("PSU", "$49", "/images/psu.jpeg"));
+//			items.add(new Item("TV", "$1000", "/images/tv.jpeg"));
+//			items.add(new Item("Flash Drive", "$5", "/images/flashe-drive.jpeg"));
+//			items.add(new Item("Ear Buds", "$10", "/images/earbuds.jpeg"));
+//			items.add(new Item("laser", "$2", "/images/laser.jpeg"));
+//			items.add(new Item("Macbook", "$1000", "/images/macbook.jpeg"));
+//			items.add(new Item("Over Ear Headphones", "$300", "/images/overear.jpeg"));
+//			items.add(new Item("Playstation 4", "$699", "/images/ps4.jpeg"));
+//			items.add(new Item("Subwoofer", "$200", "/images/sub.jpeg"));
+//			items.add(new Item("VR Headset", "$100", "/images/vr.jpeg"));
+			// items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
 			standardSize = items.size();
+		} else {
+
+			JButton bttnResetList = new JButton("Refresh List");
+			bttnResetList.setBounds(842, 5, 200, 25);
+			contentPane.add(bttnResetList);
+			bttnResetList.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new ShopWindow(newUser, null).setVisible(true);
+					dispose();
+				}
+			});
+
 		}
-		else {
-			
-				JButton bttnResetList = new JButton("Refresh List");
-				bttnResetList.setBounds(842, 5, 200, 25);
-				contentPane.add(bttnResetList);
-				bttnResetList.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new ShopWindow(newUser, null).setVisible(true);
-						dispose();
-					}
-				});
-				
-		}
-	
+
 		// Give welcome mesg if guest
 		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
@@ -129,13 +132,25 @@ public class ShopWindow extends JFrame {
 		// TODO: insert user name
 		else if (newUser.userType > 0) {
 
-			JLabel lblWelomeUest = new JLabel("Welome insertUserHere!");
-			lblWelomeUest.setBounds(5, 0, 108, 15);
-
 			JLabel lblWelomeUest1 = new JLabel("Welome " + newUser.userName + "!");
 			lblWelomeUest1.setBounds(5, 0, 200, 15);
 
 			contentPane.add(lblWelomeUest1);
+			JButton btnSignOut = new JButton("Sign Out");
+//			btnCart.setBounds(1055, 5, 150, 25);
+
+			btnSignOut.setBounds(1205, 5, 150, 25);
+			contentPane.add(btnSignOut);
+			
+			btnSignOut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					newUser.userType = 0;
+				
+					Login login = new Login(ShopWindow.items);
+					login.setVisible(true);
+					dispose();
+				}
+			});
 
 		}
 
@@ -204,7 +219,26 @@ public class ShopWindow extends JFrame {
 			}
 
 		});
-
+		if (newUser.userType == 2) {
+			JButton btnAddItem = new JButton("Add Item");
+			btnAddItem.setBounds(612, 5, 100, 25);
+			contentPane.add(btnAddItem);
+			final ArrayList<Item> tmp1 = items;
+			btnAddItem.addActionListener(new ActionListener() {				
+				public void actionPerformed(ActionEvent e) {
+					ArrayList<Item> item1 = new ArrayList<Item>();
+					for(int i = 0; i < tmp1.size(); i++) {
+						item1.add(tmp1.get(i));				
+						
+					}
+					AddItemWindow itemWindow = new AddItemWindow(newUser,item1);
+					itemWindow.setVisible(true);
+					dispose();
+				}
+			});
+		}
+		ShopWindow.items = (ArrayList<Item>) items.clone();
+		
 		btnEnter.setBounds(497, 5, 100, 25);
 		contentPane.add(btnEnter);
 
@@ -237,12 +271,12 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
-		//promotion button if user is an admin
-		if(newUser.userType == 2) {
+		// promotion button if user is an admin
+		if (newUser.userType == 2) {
 			JButton promoBtn = new JButton("Add Promotion");
-			promoBtn.setBounds(842,5,200,25);
+			promoBtn.setBounds(842, 5, 200, 25);
 			promoBtn.setVisible(true);
-			//action event to PromotionWindow
+			// action event to PromotionWindow
 			contentPane.add(promoBtn);
 			promoBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -252,7 +286,7 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
-		
+
 	}
 
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
@@ -320,7 +354,7 @@ public class ShopWindow extends JFrame {
 
 		// Adding ActionListener
 		handler = new EventHandling(Jarray, JlablArry, priceArry, picArry, this.newUser, items1);
-		
+
 		for (JButton buttons : Jarray) {
 
 			buttons.addActionListener(handler);
@@ -328,52 +362,55 @@ public class ShopWindow extends JFrame {
 		}
 
 	}
-	 class EventHandling implements ActionListener {
 
-	     /**
-		 * 
-		 */
+	class EventHandling implements ActionListener {
+
+		/**
+		* 
+		*/
 
 		private ArrayList<JButton> selectButtons;
-	     private ArrayList<Item> selectedItems;
-	     private ArrayList<JLabel> JlabelArry;
-	     private ArrayList<JLabel> priceArry;
-	     private ArrayList<JLabel> picArry;
-	     private ArrayList<JLabel> quantity;
-	     public User currentUser;
-	     public ArrayList<Item> item;
-	     public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry, 
-	    		 ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser
-	    		 , ArrayList<Item> item) {
-	    	 
-	    	 this.currentUser = currentUser;
-	        this.selectButtons = selectButtons;
-	        selectedItems = new ArrayList<Item>();
-	        this.JlabelArry = JlabelArry;
-	        this.priceArry = priceArry;
-	        this.picArry = picArry;
-	        this.item = item;
-	    }
+		private ArrayList<Item> selectedItems;
+		private ArrayList<JLabel> JlabelArry;
+		private ArrayList<JLabel> priceArry;
+		private ArrayList<JLabel> picArry;
+		private ArrayList<JLabel> quantity;
+		public User currentUser;
+		public ArrayList<Item> item;
 
-	    public void actionPerformed(ActionEvent event) {
+		public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry,
+				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item) {
 
-	    	for(int i = 0; i < selectButtons.size(); i++)
-	        if (event.getSource() == selectButtons.get(i)) {
-	        	Item temp = new Item(JlabelArry.get(i).getText(), priceArry.get(i).getText(), picArry.get(i).getText());
-	            //System.out.println(temp.name);
-	            temp.icon = item.get(i).icon;
-	            //System.out.println(temp.filePath);
-	            DescriptionWindow discription = new DescriptionWindow(temp,currentUser);
-	           dispose();
-	            discription.setVisible(true);
-	            break;
-	        }
+			this.currentUser = currentUser;
+			this.selectButtons = selectButtons;
+			selectedItems = new ArrayList<Item>();
+			this.JlabelArry = JlabelArry;
+			this.priceArry = priceArry;
+			this.picArry = picArry;
+			this.item = item;
+		}
 
-	     }
-	    
-	    public ArrayList<Item> getSelected(){
-	    	return User.selectedItems;
-	    }
+		public void actionPerformed(ActionEvent event) {
+
+			for (int i = 0; i < selectButtons.size(); i++)
+				if (event.getSource() == selectButtons.get(i)) {
+					Item temp = new Item(JlabelArry.get(i).getText(), priceArry.get(i).getText(),
+							picArry.get(i).getText());
+					// System.out.println(temp.name);
+					temp.icon = item.get(i).icon;
+					// System.out.println(temp.filePath);
+					DescriptionWindow discription = new DescriptionWindow(temp, currentUser, item);
+					dispose();
+					discription.setVisible(true);
+					break;
+				}
+
+		}
+	
+
+		public ArrayList<Item> getSelected() {
+			return User.selectedItems;
+		}
 
 	}
 }

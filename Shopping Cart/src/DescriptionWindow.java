@@ -5,6 +5,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import javax.swing.JButton;
 
 public class DescriptionWindow extends JFrame {
 	public static Item item;
+	public ArrayList<Item> items;
 	private JPanel contentPane;
 	private JTextField quantity;
 
@@ -41,7 +43,7 @@ public class DescriptionWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DescriptionWindow frame = new DescriptionWindow(item, new User());
+					DescriptionWindow frame = new DescriptionWindow(item, new User(),null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,8 +58,9 @@ public class DescriptionWindow extends JFrame {
 	 * @wbp.parser.constructor
 	 */
 
-	public DescriptionWindow(Item item1, User currentUser) {
+	public DescriptionWindow(Item item1, User currentUser, ArrayList<Item> items) {
 		this.item = item1;
+		this.items = items;
 		// System.out.println(item.filePath);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,6 +128,27 @@ public class DescriptionWindow extends JFrame {
 				dispose();
 			}
 		});
+		
+		if(currentUser.userType == 2) {
+			JButton btnRemoveItem = new JButton("Remove Ihis Item");
+			btnRemoveItem.setBounds(175, 139, 160, 25);
+			contentPane.add(btnRemoveItem);
+			btnRemoveItem.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					for(int i = 0; i < items.size(); i++) {
+						if(items.get(i).name.equals(item.name)) {
+							items.remove(i);
+						break;
+						}
+					}
+					
+					new ShopWindow(currentUser,items).setVisible(true);
+					dispose();
+				}
+			
+			});
+		}
+		
 		contentPane.setLayout(null);
 
 		contentPane.add(lblDescription);
@@ -167,8 +191,7 @@ public class DescriptionWindow extends JFrame {
 					int quantityValue = Integer.parseInt(quantity.getText());
 					System.out.println(item.amount);
 					item.amount -= quantityValue; /*
-													 * add amount typed to
-													 * quantity
+													 * add amount typed to quantity
 													 */
 					if (item.amount <= 0) {
 						User.selectedItems.remove(item);
@@ -222,12 +245,12 @@ public class DescriptionWindow extends JFrame {
 			JButton btnRemove = new JButton("Add");
 			btnRemove.setBounds(149, 96, 80, 25);
 			btnRemove.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+
+	public void actionPerformed(ActionEvent e) {
 					int quantityValue = Integer.parseInt(quantity.getText());
 					System.out.println(item.amount);
 					item.amount += quantityValue; /*
-													 * add amount typed to
-													 * quantity
+													 * add amount typed to quantity
 													 */
 					if (item.amount <= 0) {
 						User.selectedItems.remove(item);
@@ -254,5 +277,4 @@ public class DescriptionWindow extends JFrame {
 			contentPane.add(btnRemove);
 			contentPane.add(btnReturnToCart);
 		}
-	}
-}
+}}
