@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class User {
 	String userName;
 	String password;
+	String street;
 	String city;
 	String state;
 	String zipCode;
@@ -14,10 +15,11 @@ public class User {
 		this.userType = 0;
 	}
 	
-	public User(String userName, String password, String city, String state, String zipcode, String creditCard) {
+	public User(String userName, String password, String street, String city, String state, String zipcode, String creditCard) {
 		// Add cart in future
 		this.userName = userName;
 		this.password = password;
+		this.street = street;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipcode;

@@ -273,8 +273,8 @@ public class ShopWindow extends JFrame {
 		}
 		// promotion button if user is an admin
 		if (newUser.userType == 2) {
-			JButton promoBtn = new JButton("Add Promotion");
-			promoBtn.setBounds(842, 5, 200, 25);
+			JButton promoBtn = new JButton("Add/Edit Promotion");
+			promoBtn.setBounds(842, 5, 210, 25);
 			promoBtn.setVisible(true);
 			// action event to PromotionWindow
 			contentPane.add(promoBtn);

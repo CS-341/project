@@ -30,6 +30,8 @@ public class PromotionWindow extends JFrame {
 	private JLabel lblStartDate;
 	private JLabel lblEndDate;
 	private boolean isValid;
+	private JLabel nameErrMsg, tagErrMsg, typeErrMsg, beginErrMsg, endErrMsg;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -70,27 +72,27 @@ public class PromotionWindow extends JFrame {
 		btnHome.setBounds(12, 243, 117, 29);
 		contentPane.add(btnHome);
 		//error messages
-		JLabel nameErrMsg = new JLabel("Invalid Promo Name");
+		nameErrMsg = new JLabel("Invalid Promo Name");
 		nameErrMsg.setForeground(Color.RED);
 		nameErrMsg.setBounds(300, 34, 250, 26);
 		nameErrMsg.setVisible(false);
 		contentPane.add(nameErrMsg);
-		JLabel typeErrMsg = new JLabel("Invalid Promo Type");
+		typeErrMsg = new JLabel("Invalid Promo Type");
 		typeErrMsg.setForeground(Color.RED);
 		typeErrMsg.setVisible(false);
 		typeErrMsg.setBounds(300, 72, 250, 26);
 		contentPane.add(typeErrMsg);
-		JLabel tagErrMsg = new JLabel("Invalid Promo Type");
+		tagErrMsg = new JLabel("Invalid Promo Type");
 		tagErrMsg.setForeground(Color.RED);
 		tagErrMsg.setBounds(300, 110, 250, 26);
 		tagErrMsg.setVisible(false);
 		contentPane.add(tagErrMsg);
-		JLabel beginErrMsg = new JLabel("Invalid begin date");
+		beginErrMsg = new JLabel("Invalid begin date");
 		beginErrMsg.setForeground(Color.RED);
 		beginErrMsg.setBounds(300, 148, 250, 26);
 		beginErrMsg.setVisible(false);
 		contentPane.add(beginErrMsg);
-		JLabel endErrMsg = new JLabel("Invalid end date");
+		endErrMsg = new JLabel("Invalid end date");
 		endErrMsg.setForeground(Color.RED);
 		endErrMsg.setBounds(300, 186, 250, 26);
 		endErrMsg.setVisible(false);
@@ -135,6 +137,46 @@ public class PromotionWindow extends JFrame {
 		textField_4.setBounds(160, 224, 130, 26);
 		//contentPane.add(textField_4);
 		
+		JButton btnEditPromotion = new JButton("Edit Promotion");
+		btnEditPromotion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//similar/same logic as add promo button but call updatePromo method if valid
+				String promoName = "";
+				String promoType = "";
+				String promoTag = "";
+				String beginDate = "";
+				String endDate = "";
+				JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+				
+				String oldPromoName = textField_5.getText();
+				//make a new textbox for old promo name?
+				
+				promoName = textField_5.getText();
+				promoType = textField.getText();
+				promoTag = textField_1.getText();
+				beginDate = textField_2.getText();
+				endDate = textField_3.getText();
+				
+				boolean isValid = checkValidity();
+				
+				if (!db.doesPromotionExist(oldPromoName)) {
+					//display error message for not being able to find promotion
+					System.out.println("promotion " + oldPromoName + " does not exist");
+					isValid = false;
+				}
+				//if all fields were valid, add promotion
+				if(isValid) {
+					System.out.println("succesfully added promotion");
+					db.openConnection();
+					db.updatePromotion(oldPromoName, promoName, promoType, promoTag,
+							beginDate, endDate);
+					//db.displayPromotions();
+					db.closeConnection();
+				}
+			}
+		});
+		btnEditPromotion.setBounds(160, 243, 130, 29);
+		contentPane.add(btnEditPromotion);
 		
 		JButton btnAddPromotion = new JButton("Add Promotion");
 		btnAddPromotion.addActionListener(new ActionListener() {
@@ -156,6 +198,7 @@ public class PromotionWindow extends JFrame {
 				
 				String textToCheck;
 				textToCheck = promoName;
+				//could just call method instead of this
 				if(promoName.equals("")|| promoName.length() <= 2) {
 					System.out.println("bad promoname");
 					isValid = false;
@@ -249,7 +292,6 @@ public class PromotionWindow extends JFrame {
 		
 		contentPane.add(lblBgpic);
 		
-		
 	}
 	
 	private boolean checkDateFormat(String date) {
@@ -268,6 +310,69 @@ public class PromotionWindow extends JFrame {
 			}
 		}
 		return valid;
+	}
+	
+	private boolean checkValidity() {
+		isValid = true; //if promotion is valid, will stay true 
+		String promoName = "";
+		String promoType = "";
+		String promoTag = "";
+		String beginDate = "";
+		String endDate = "";
+		
+		promoName = textField_5.getText();
+		promoType = textField.getText();
+		promoTag = textField_1.getText();
+		beginDate = textField_2.getText();
+		endDate = textField_3.getText();
+		//check each field and display error message if criteria doesn't fit
+		
+		String textToCheck;
+		textToCheck = promoName;
+		if(promoName.equals("")|| promoName.length() <= 2) {
+			System.out.println("bad promoname");
+			isValid = false;
+			nameErrMsg.setVisible(true);
+			//errorMsg
+			//or make textBox red
+		} else {
+			nameErrMsg.setVisible(false);
+			//hide error msg
+		}
+		if(promoType.equals("") || (promoType.charAt(0)!= '%' && promoType.charAt(0)!='$')
+				|| (promoType.charAt(1) < '0' && promoType.charAt(1) > '9')) {
+			isValid = false;
+			typeErrMsg.setVisible(true);
+			//display errorMsg
+		} else {
+			typeErrMsg.setVisible(false);
+			//hide error message
+		}
+		if(promoTag.equals("") || promoTag.length() <= 2) {
+			isValid = false;
+			tagErrMsg.setVisible(true);
+			//display error msg
+		} else {
+			tagErrMsg.setVisible(false);
+			//hide error msg
+		}
+		if(beginDate.equals("") || beginDate.length() != 10 || !checkDateFormat(beginDate)) {
+			isValid = false;
+			beginErrMsg.setVisible(true);
+			//display error msg
+		} else {
+			beginErrMsg.setVisible(false);
+			//hide error msg
+		}
+		if(endDate.equals("") || endDate.length() != 10 || !checkDateFormat(endDate)) {
+			isValid = false;
+			endErrMsg.setVisible(true);
+			//display error msg
+		} else { //check date format before hiding error message
+			//hide error msg
+			endErrMsg.setVisible(false);
+		}
+		return isValid;
 	}
 	
 }

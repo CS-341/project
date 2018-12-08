@@ -26,7 +26,7 @@ public class JdbcSQLiteConnection {
 	  		+						"beginDate TEXT, "
 	  		+ 						"endDate TEXT);";
   
-  private static User admin = new User("admin", "admin", "lax", "wi", "54601", 
+  private static User admin = new User("admin", "admin", "lacrosse st", "lax", "wi", "54601", 
 			"12345678912345678");
 	
   private static String dbURL = "jdbc:sqlite:UsersDb.db";
@@ -187,12 +187,13 @@ public class JdbcSQLiteConnection {
       String userName = newUser.userName;
       String userPass = newUser.password;
       String city = newUser.city;
+      String street = newUser.street;
       String state = newUser.state;
       String zip = newUser.zipCode;
       String credit = newUser.creditCard;
       int userType = newUser.userType;
       try {
-    	String temp = INSERT_USERS + " VALUES ('" + userName + "', '" + userPass + "', '" + city + "', '" + state +"', '" + zip + 
+    	String temp = INSERT_USERS + " VALUES ('" + userName + "', '" + userPass + "', '" + street + "', '" + city + "', '" + state +"', '" + zip + 
     			"', '" + credit + "', '" + userType + "');";
     	//remove conn line below -- call open connection immediately after creating DB
     	conn = DriverManager.getConnection(dbURL);
@@ -306,6 +307,8 @@ public class JdbcSQLiteConnection {
     	ResultSet  rs = null;
     	String name = "";
         String userPass = "";
+        String street ="";
+        //need to add street column into user
         String city ="";
         String state = "";
         String zip = "";
@@ -319,12 +322,13 @@ public class JdbcSQLiteConnection {
 				int i = 0; //integer for counting 
 				name = rs.getString(1);
 				userPass = rs.getString(2);
-				city = rs.getString(3);
-				state = rs.getString(4);
-				zip = rs.getString(5);
-				credit = rs.getString(6);
-				userType = rs.getInt(7);
-				user = new User(name, userPass, city, state, zip, credit);
+				street = rs.getString(3);
+				city = rs.getString(4);
+				state = rs.getString(5);
+				zip = rs.getString(6);
+				credit = rs.getString(7);
+				userType = rs.getInt(8);
+				user = new User(name, userPass, street, city, state, zip, credit);
 				if(userType == 2) { //if the user is an admin, set the returned user's info to admin status
 					user.userType = 2;
 				}
@@ -603,6 +607,25 @@ public class JdbcSQLiteConnection {
 		}
     	return exists;
     }
+    
+    public void updatePromotion(String oldPromoName, String promoName, String promoType, 
+    		String promoTag, String promoBeginDate, String promoEndDate) {
+    	String update = "UPDATE Promotions SET PromoName = ?, PromoType = ?, PromoTag = ?,"
+    			+ "beginDate = ?, endDate = ? WHERE PromoName = '" + oldPromoName + "'";
+    	try {
+			PreparedStatement stmt = conn.prepareStatement(update);
+			stmt.setString(1, promoName);
+			stmt.setString(2, promoType);
+			stmt.setString(3, promoTag);
+			stmt.setString(4, promoBeginDate);
+			stmt.setString(5, promoEndDate);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     /**
      * 
      * @param statement the CREATE TABLE statement that is in sql form
@@ -627,6 +650,7 @@ public class JdbcSQLiteConnection {
     public boolean insertOrderHistory(String username, String price, String[] items, String quantities) {
     	boolean inserted = false; 
     	//first column is promoId
+    	//insert the data collected?
     	Statement st;
     	ResultSet rs;
     	
@@ -652,7 +676,7 @@ public class JdbcSQLiteConnection {
     	return inserted; 
     }
     
-    private String convertArrayToCsv(String[] arr) {
+    public String convertArrayToCsv(String[] arr) {
     	String csv = "";
     	
     	for(int i = 0; i < arr.length; i++) {

@@ -24,10 +24,10 @@ public class Checkout extends JFrame {
 
 	public Checkout(double totalValue, ArrayList<Item> items, User user) {
 		getContentPane().setLayout(null);
-		if (user.userType > 0) {
+		if (user.userType > 0) { //user is not a guest
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0, 0, screenSize.width / 3, screenSize.height / 3);
+			setBounds(0, 0, screenSize.width- screenSize.width/4, screenSize.height / 2);
 			contentPane = new JPanel();
 			contentPane.setBackground(SystemColor.menu);
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,7 +49,8 @@ public class Checkout extends JFrame {
 			
 			JLabel promoAlreadyUsed = new JLabel("Promotion cannot be applied more than once");
 			promoAlreadyUsed.setForeground(Color.RED);
-			promoAlreadyUsed.setBounds(300, 86, 250, 26);
+			promoAlreadyUsed.setBounds(300, 86, 300, 26);
+			
 			promoAlreadyUsed.setVisible(false);
 			contentPane.add(promoAlreadyUsed);
 			
@@ -110,6 +111,20 @@ public class Checkout extends JFrame {
 			Button bttUser = new Button("Purchase");
 			bttUser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					//add order to order history under this user's ID or username
+					String[] itemsArr = new String[User.selectedItems.size()];
+					Item[] arr = new Item [user.selectedItems.size()];
+					arr = user.selectedItems.toArray(arr);
+					for(int k = 0; k < arr.length; k++) {
+						itemsArr[k] = arr[k].name;
+					}
+					String quantities = storeQuantitiesAsString(User.selectedItems);
+					//add order history to db
+					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					db.openConnection();
+					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities);
+					db.closeConnection();
+					
 					User.selectedItems.clear();
 					purchaseConfirmation guest = new purchaseConfirmation(user);
 					guest.setVisible(true);
@@ -159,6 +174,7 @@ public class Checkout extends JFrame {
 							if (checkIfPromoUsed(usedPromos, enteredPromo)) {
 								wasUsed = true;
 								isValid = false;
+								promoAlreadyUsed.setVisible(true);
 							}
 							j++;
 						}
@@ -191,17 +207,12 @@ public class Checkout extends JFrame {
 								contentPane.repaint();
 							}
 						}
-						
-					} else if (wasUsed){ 
-						//display promo code error message
-						promoAlreadyUsed.setVisible(true);
 					} else {//promo did not exist or promo date was invalid -- check
 						System.out.println("did not find promo");
-						if(!promoDateValid) {
-							promoDateInvalid.setVisible(true);
-						}
 						if(!promoExists) {
 							promoDoesNotExist.setVisible(true);
+						} else if(!promoDateValid) {
+							promoDateInvalid.setVisible(true);
 						}
 					}
 				}
@@ -210,7 +221,7 @@ public class Checkout extends JFrame {
 		else{ /* Guest User Screen*/
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0, 0, screenSize.width / 3, screenSize.height / 3);
+			setBounds(0, 0, screenSize.width - screenSize.width/4, screenSize.height / 2);
 			contentPane = new JPanel();
 			contentPane.setBackground(SystemColor.menu);
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -257,7 +268,20 @@ public class Checkout extends JFrame {
 			Button bttGuest = new Button("Purchase as Guest");
 			bttGuest.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					//add order to order history before items cleared
 					GuestInfo guest = new GuestInfo(user);
+					String[] itemsArr = new String[User.selectedItems.size()];
+					Item[] arr = new Item [user.selectedItems.size()];
+					arr = user.selectedItems.toArray(arr);
+					for(int k = 0; k < arr.length; k++) {
+						itemsArr[k] = arr[k].name;
+					}
+					String quantities = storeQuantitiesAsString(User.selectedItems);
+					//add order history to db
+					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					db.openConnection();
+					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities);
+					db.closeConnection();
 					User.selectedItems.clear();
 					guest.setVisible(true);
 					dispose();
@@ -294,4 +318,23 @@ public class Checkout extends JFrame {
 		
 		return wasUsed;
 	}
+	
+	private String storeQuantitiesAsString(ArrayList<Item> quantities ) {
+		String quantitiesString = "";
+		int tempDigit;
+		char tempChar;
+		for(int i = 0; i < quantities.size(); i++) {
+			 tempDigit = quantities.get(i).amount;
+			 tempChar = Character.forDigit(tempDigit, 10);
+			 if (i < quantities.size()-1) {
+				 quantitiesString += tempChar + ", ";
+			 } else {
+				 quantitiesString += tempChar;
+			 }
+			 
+		}
+		
+		return quantitiesString;
+	}
+	
 }
