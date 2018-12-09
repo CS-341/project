@@ -66,7 +66,7 @@ public class ShopWindow extends JFrame {
 	public ShopWindow(User newUser, ArrayList<Item> items) {
 		setVisible(true);
 		this.newUser = newUser;
-		this.items = ShopWindow.items;
+		
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,18 +110,19 @@ public class ShopWindow extends JFrame {
 			standardSize = items.size();
 		} else {
 
-			JButton bttnResetList = new JButton("Refresh List");
-			bttnResetList.setBounds(842, 5, 200, 25);
+			JButton bttnResetList = new JButton("Refresh");
+			bttnResetList.setBounds(0, 30, 100, 25);
 			contentPane.add(bttnResetList);
 			bttnResetList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ShopWindow(newUser, null).setVisible(true);
+					new ShopWindow(newUser, ShopWindow.items).setVisible(true);
 					dispose();
 				}
 			});
 
 		}
-
+		if(items.size() > 1)
+			this.items = ShopWindow.items;
 		// Give welcome mesg if guest
 		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
@@ -170,7 +171,7 @@ public class ShopWindow extends JFrame {
 		catList.add("laptop");
 		JList list = new JList(catList.toArray());
 		list.setBounds(5, 35, 62, 173);
-		contentPane.add(list);
+	
 
 		JButton btnCart = new JButton("Shopping Cart");
 		btnCart.setBounds(1055, 5, 150, 25);
@@ -200,7 +201,7 @@ public class ShopWindow extends JFrame {
 		txtSearch.setBounds(229, 10, 245, 19);
 		contentPane.add(txtSearch);
 		txtSearch.setColumns(10);
-		contentPane.add(btnFind);
+		
 		JButton btnEnter = new JButton("Enter");
 
 		final ArrayList<Item> tmp = (ArrayList<Item>) items.clone();
@@ -237,6 +238,7 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
+		if(items.size() > 1)
 		ShopWindow.items = (ArrayList<Item>) items.clone();
 		
 		btnEnter.setBounds(497, 5, 100, 25);
@@ -274,7 +276,7 @@ public class ShopWindow extends JFrame {
 		// promotion button if user is an admin
 		if (newUser.userType == 2) {
 			JButton promoBtn = new JButton("Add/Edit Promotion");
-			promoBtn.setBounds(842, 5, 210, 25);
+			promoBtn.setBounds(842, 5, 180, 25);
 			promoBtn.setVisible(true);
 			// action event to PromotionWindow
 			contentPane.add(promoBtn);

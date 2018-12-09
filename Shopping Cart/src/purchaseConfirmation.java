@@ -37,7 +37,7 @@ public class purchaseConfirmation extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				user.selectedItems.clear();
-				ShopWindow shop = new ShopWindow(user, null);
+				ShopWindow shop = new ShopWindow(user, ShopWindow.items);
 				shop.setVisible(true);
 				dispose();
 				//TODO REMOVE ITEMS FROM CART!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
