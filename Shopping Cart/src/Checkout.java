@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -122,7 +123,8 @@ public class Checkout extends JFrame {
 					//add order history to db
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					db.openConnection();
-					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities);
+					Date date = new Date();
+					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
 					db.closeConnection();
 					
 					User.selectedItems.clear();
@@ -280,7 +282,8 @@ public class Checkout extends JFrame {
 					//add order history to db
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					db.openConnection();
-					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities);
+					Date date = new Date();
+					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
 					db.closeConnection();
 					User.selectedItems.clear();
 					guest.setVisible(true);

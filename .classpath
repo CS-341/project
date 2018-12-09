@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Shopping Cart/src"/>
+	<classpathentry kind="lib" path="Shopping Cart/jgoodies-common-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="Shopping Cart/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="Shopping Cart/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="Shopping Cart/miglayout15-swing.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/Willums/Documents/sqlite-jdbc-3.23.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -81,16 +81,16 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("iPhone", "$1000", "/images/rsz_1rsz_iphone-x.jpg"));
 			items.add(new Item("acer monitor", "$399", "/images/acer-monitor_60x60.jpeg"));
 			items.add(new Item("corisair keyboard", "$99", "/images/corisair-key_60x60.jpeg"));
-			// items.add(new Item("hp mouse", "$15", "/images/hp-mouse_60x60.jpeg"));
-			// items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
-			// items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
-			// items.add(new Item("Logitech keyboard", "$99",
-			// "/images/logitech-key_60x60.jpeg"));
-			// items.add(new Item("Razer Mouse", "$79",
-			// "/images/logitech-mouse_60x60.jpeg"));
-//			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
-//			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
-//			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
+			items.add(new Item("hp mouse", "$15", "/images/hp-mouse_60x60.jpeg"));
+			items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
+			 items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
+			 items.add(new Item("Logitech keyboard", "$99",
+			 "/images/logitech-key_60x60.jpeg"));
+			 items.add(new Item("Razer Mouse", "$79",
+			 "/images/logitech-mouse_60x60.jpeg"));
+			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
+			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
+			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
 //			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
 //			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
 //			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
@@ -111,7 +111,7 @@ public class ShopWindow extends JFrame {
 		} else {
 
 			JButton bttnResetList = new JButton("Refresh List");
-			bttnResetList.setBounds(842, 5, 200, 25);
+			bttnResetList.setBounds(842, 55, 200, 25);
 			contentPane.add(bttnResetList);
 			bttnResetList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -127,7 +127,6 @@ public class ShopWindow extends JFrame {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
-
 		}
 		// TODO: insert user name
 		else if (newUser.userType > 0) {
@@ -151,7 +150,17 @@ public class ShopWindow extends JFrame {
 					dispose();
 				}
 			});
-
+			JButton btnViewOrderHistory = new JButton("Purchase History");
+			btnViewOrderHistory.setBounds(707,5,135,25);
+			contentPane.add(btnViewOrderHistory);
+			
+			btnViewOrderHistory.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("button pressed");
+					new OrderHistoryWindow(newUser, false).setVisible(true);
+					dispose();
+				}
+			});
 		}
 
 		contentPane.setLayout(null);
@@ -221,7 +230,7 @@ public class ShopWindow extends JFrame {
 		});
 		if (newUser.userType == 2) {
 			JButton btnAddItem = new JButton("Add Item");
-			btnAddItem.setBounds(612, 5, 100, 25);
+			btnAddItem.setBounds(605, 5, 100, 25);
 			contentPane.add(btnAddItem);
 			final ArrayList<Item> tmp1 = items;
 			btnAddItem.addActionListener(new ActionListener() {				

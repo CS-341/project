@@ -65,7 +65,8 @@ public class JdbcSQLiteConnection {
   		"                        Username,\r\n" + 
 		"						 Price, \r\n"   +				
   		"                        Items,\r\n" + 
-  		"                        Quantities\r\n" +
+  		"                        Quantities,\r\n"+ 
+  		"                        Date\r\n" + 
   		"                    )";
   
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
@@ -647,7 +648,7 @@ public class JdbcSQLiteConnection {
      * @param quantities the array of quantities already in CSV format
      * @return
      */
-    public boolean insertOrderHistory(String username, String price, String[] items, String quantities) {
+    public boolean insertOrderHistory(String username, String price, String[] items, String quantities, String date) {
     	boolean inserted = false; 
     	//first column is promoId
     	//insert the data collected?
@@ -664,7 +665,7 @@ public class JdbcSQLiteConnection {
     	String insert = "";
       	try {
       			insert = INSERT_ORDER_HISTORY + " VALUES ('" + username + "', '" + price + "', '" + itemsCsv + "', '" + 
-      					quantities + "');";
+      					quantities+ "', '" + date + "');";
     			st = conn.createStatement();
     			st.executeUpdate(insert);
     			inserted = true;
@@ -688,6 +689,36 @@ public class JdbcSQLiteConnection {
     	}
     	
     	return csv;
+    }
+    
+    
+    public ArrayList<OrderHistory> getOrderHistory(String userName) {
+    	String search = "SELECT * FROM OrderHistory WHERE Username = '" + userName +
+    			"'";
+    	Statement st;
+    	ResultSet rs;
+    	ArrayList<OrderHistory> result = new ArrayList<>();
+    	String username="", cost="", items="", date="", quantities="";
+    	try {
+			st = conn.createStatement();
+			rs = st.executeQuery(search);
+			if (!rs.isClosed()) {
+				while(rs.next()) {
+					cost = rs.getString(2); 
+					items = rs.getString(3);
+					quantities = rs.getString(4);
+					date = rs.getString(5);
+					OrderHistory temp = new OrderHistory(username, cost, items, quantities, date);
+					result.add(temp);
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return result;
     }
     
 }
