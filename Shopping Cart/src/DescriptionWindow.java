@@ -123,7 +123,7 @@ public class DescriptionWindow extends JFrame {
 		btnReturnToStore.setBounds(17, 139, 141, 25);
 		btnReturnToStore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ShopWindow(currentUser, null).setVisible(true);
+				new ShopWindow(currentUser, ShopWindow.items).setVisible(true);
 
 				dispose();
 			}
