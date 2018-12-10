@@ -108,8 +108,8 @@ public class OrderHistoryWindow extends JFrame {
 		panel1 = new JPanel();
 		panel1.setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		// setBounds(100,100,screenSize.width, screenSize.height);
-		panel1.setBounds(0, 0, screenSize.width + 100, screenSize.height - 100);
+		
+		panel1.setBounds(100, 50, screenSize.width - 200, screenSize.height - 100);
 		
 		panel1.setLayout(new GridLayout(orders.size(), 5, 0, 0));
 		panel1.removeAll();
@@ -159,7 +159,7 @@ public class OrderHistoryWindow extends JFrame {
 
 		pane = new JScrollPane(panel1);
 		pane.setLocation(200, 0);
-		pane.setBounds(100, 40, screenSize.width - 200, screenSize.height - 100);
+		pane.setBounds(100, 50, screenSize.width - 200, screenSize.height - 100);
 		contentPane.add(panel1);
 		contentPane.add(pane);
 		panel1.revalidate();
