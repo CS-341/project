@@ -60,7 +60,7 @@ public class OrderHistoryWindow extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setBackground(SystemColor.menu);
 		JLabel title = new JLabel("Order History");
-		title.setBounds(screenSize.width/2 -85, 10, 85, 16);
+		title.setBounds(screenSize.width/2 -85, 10, 300, 16);
 		contentPane.add(title);
 		
 		JLabel lblDatePurchased = new JLabel("Date Purchased");
@@ -91,7 +91,6 @@ public class OrderHistoryWindow extends JFrame {
 	}
 	
 	private void showHistory(ArrayList<OrderHistory> orders) {
-<<<<<<< HEAD
 		panel1.removeAll();
 
 		panel1 = new JPanel();
@@ -135,55 +134,6 @@ public class OrderHistoryWindow extends JFrame {
 			
 			a.gridx = 2;
 			a.gridy = i;
-=======
-		bg.removeAll();
-		bg = new JPanel();
-		
-		//temporarily store these in a list
-		ArrayList<JLabel> datePurchased = new ArrayList<>();
-		ArrayList<JLabel> itemsPurchased = new ArrayList<>();
-		ArrayList<JLabel> cost = new ArrayList<>();
-		
-		bg.setBackground(Color.WHITE);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		System.out.println(getWidth() + " " + getHeight());
-		
-		bg.setBounds(50, 50, screenSize.width-100, screenSize.height-100);
-		GridLayout layout = new GridLayout(0,3,0,0);
-		System.out.println("numCols: " + layout.getColumns());
-		System.out.println("numRows: " + layout.getRows());
-		contentPane.add(bg);
-		bg.setLayout(layout);
-		bg.removeAll();
-		scroller.removeAll();
-		//temps for the new costa dn labels being added
-		JLabel date = new JLabel();
-		date.setSize(bg.getWidth()/3-5, bg.getHeight()/(orders.size()-5));
-		JLabel items = new JLabel();
-		items.setSize(bg.getWidth()/3-5, bg.getHeight()/(orders.size()-5));
-		JLabel totalCost = new JLabel();
-		totalCost.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
-		System.out.println("BG" + (bg.getWidth()) + " " + (bg.getHeight()));
-		
-		for(int i = 0; i < orders.size(); i++) {
-			System.out.println(orders.get(i).items + " i:" + i);
-			date.setText(orders.get(i).date);
-			GridBagConstraints dateConstraint = new GridBagConstraints();
-			dateConstraint.anchor = GridBagConstraints.WEST;
-			dateConstraint.insets = new Insets(0, 0, 5, 5);
-			dateConstraint.gridx = 0;
-			dateConstraint.gridy = i;
-			datePurchased.add(date);
-			bg.add(datePurchased.get(i), dateConstraint);
-			
-			items.setText(orders.get(i).items);
-			GridBagConstraints itemsConstraint = new GridBagConstraints();
-			itemsConstraint.anchor = GridBagConstraints.CENTER;
-			itemsConstraint.insets = new Insets(0, 0, 5, 5);
-			itemsConstraint.gridx = 1;
-			itemsConstraint.gridy = i;
->>>>>>> 38566356964484edbfca4393e936debe6febcf6e
 			System.out.println(orders.get(i).date);
 			itemsPurchased.add(items.get(i));
 			panel1.add(itemsPurchased.get(i), a);
@@ -194,7 +144,6 @@ public class OrderHistoryWindow extends JFrame {
 			cost.add(totalCost.get(i));
 			panel1.add(cost.get(i), a);
 		}
-<<<<<<< HEAD
 
 		pane = new JScrollPane(panel1);
 		pane.setLocation(200, 0);
@@ -205,19 +154,5 @@ public class OrderHistoryWindow extends JFrame {
 		panel1.repaint();
 		pane.setVisible(true);
 		
-=======
-	
-		scroller = new JScrollPane(bg);
-		scroller.setLocation(200, 0);
-		scroller.setBounds(50, 50, screenSize.width - 250, screenSize.height - 150);
-		
-		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		contentPane.add(scroller);
-		//contentPane.repaint();
-		bg.revalidate();
-		bg.repaint();
-		bg.setVisible(true);
-		scroller.setVisible(true);
->>>>>>> 38566356964484edbfca4393e936debe6febcf6e
 	}
 }
