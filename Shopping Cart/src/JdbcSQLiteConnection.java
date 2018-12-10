@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -5,6 +8,7 @@ import java.util.*;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+// TODO: Auto-generated Javadoc
 /**
  * This program demonstrates making JDBC connection to a SQLite database.
  * @author www.codejava.net
@@ -12,12 +16,14 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class JdbcSQLiteConnection {
 	
+  /** The create order history table. */
   private static String CREATE_ORDER_HISTORY_TABLE ="CREATE TABLE OrderHistory (" 
 		  + 						"Username TEXT PRIMARY KEY, "
 		  + 						"Price TEXT, "
 		  +							"Items TEXT, " //As CSV
 		  +							"Quantities TEXT);"; //As CSV
 	
+  /** The create promotable. */
   private String CREATE_PROMOTABLE = "CREATE TABLE Promotions ("
 	  		+						"PromotionId INTEGER PRIMARY KEY AUTOINCREMENT, "
 	  		+ 						"PromoName TEXT NOT NULL, "
@@ -26,12 +32,17 @@ public class JdbcSQLiteConnection {
 	  		+						"beginDate TEXT, "
 	  		+ 						"endDate TEXT);";
   
+  /** The admin. */
   private static User admin = new User("admin", "admin", "lacrosse st", "lax", "wi", "54601", 
 			"12345678912345678");
 	
+  /** The db URL. */
   private static String dbURL = "jdbc:sqlite:UsersDb.db";
+  
+  /** The conn. */
   private static Connection conn;
 
+  /** The create userstable. */
   private String CREATE_USERSTABLE = "CREATE TABLE Users ("
   		+						"Username TEXT PRIMARY KEY,"
   		+ 						"Password TEXT,"
@@ -42,8 +53,10 @@ public class JdbcSQLiteConnection {
   		+ 						"Status INTEGER);";
   
 
+  /** The drop table. */
   private String DROP_TABLE = "DROP TABLE IF EXISTS ";
   
+  /** The insert users. */
   private String INSERT_USERS = "INSERT INTO Users (\r\n" + 
   		"                        Username,\r\n" + 
   		"                        Password,\r\n" + 
@@ -53,6 +66,8 @@ public class JdbcSQLiteConnection {
   		"                        Creditcard,\r\n" + 
   		"                        Status\r\n" + 
   		"                    )";
+  
+  /** The insert promo. */
   private String INSERT_PROMO = "INSERT INTO Promotions (\r\n" + 
   		"                        promoName,\r\n" + 
   		"                        promoType,\r\n" + 
@@ -61,6 +76,7 @@ public class JdbcSQLiteConnection {
   		"                        endDate\r\n" + 
   		"                    )";
   
+  /** The insert order history. */
   private String INSERT_ORDER_HISTORY = "INSERT INTO OrderHistory (\r\n" + 
   		"                        Username,\r\n" + 
 		"						 Price, \r\n"   +				
@@ -69,12 +85,20 @@ public class JdbcSQLiteConnection {
   		"                        Date\r\n" + 
   		"                    )";
   
+  /** The search usernames. */
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
   
+  /** The search all attrs. */
   private String SEARCH_ALL_ATTRS = "SELECT * FROM";
   
+  /** The search user and pass. */
   private String SEARCH_USER_AND_PASS = "SELECT Username, Password FROM Users";
   
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
     	
     	//below code block used for testing and reset of database contents
@@ -141,8 +165,10 @@ public class JdbcSQLiteConnection {
         }
        */
     }
+    
     /**
-     * method used to check stored hashed passwords in the database
+     * method used to check stored hashed passwords in the database.
+     *
      * @param username the username to search for in the database
      * @param givenPass the password as entered by the user when logging in
      * @return true if passwords match, false otherwise
@@ -170,6 +196,11 @@ public class JdbcSQLiteConnection {
     	return BCrypt.checkpw(givenPass, hashedPass);
     }
     
+    /**
+     * Adds the user to database.
+     *
+     * @param newUser the new user
+     */
     public void addUserToDatabase(User newUser) {
     	//MUST HASH PASSWORD
       String hashedPass = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
@@ -207,10 +238,14 @@ public class JdbcSQLiteConnection {
      
     }
     
+    /** The drop table. */
     private boolean dropTable = false;
     //if dropTable == true
     //statement.executeUpdate(DROP_TABLE); should be uncommented 
     // OR 
+    /**
+     * Instantiates a new jdbc SQ lite connection.
+     */
     // the dropTable method should be called upon creation of the JDBC object.
     public JdbcSQLiteConnection () {
     	//dropTable == true on first run to clear the database/tables
@@ -219,6 +254,11 @@ public class JdbcSQLiteConnection {
     	openConnection();
     }
     
+    /**
+     * Drop table.
+     *
+     * @param tableName the table name
+     */
     public void dropTable(String tableName) {
     	try {
 			Statement statement = conn.createStatement();
@@ -230,6 +270,11 @@ public class JdbcSQLiteConnection {
 		}
     }
     
+    /**
+     * Creates the table.
+     *
+     * @param tableName the table name
+     */
     public void createTable(String tableName) {
     	try {
 			Statement statement = conn.createStatement();
@@ -243,8 +288,9 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     }
+    
     /**
-     * call this after creating the database
+     * call this after creating the database.
      */
     public void openConnection() {
     	try {
@@ -261,8 +307,9 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     }
+    
     /**
-     * call this when done using the database/close program
+     * call this when done using the database/close program.
      */
     public void closeConnection() {
     	try {
@@ -272,10 +319,12 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     }
+    
     /**
-     * 
+     * Search user names.
+     *
      * @param username the name to search for in the database
-     * @return
+     * @return true, if successful
      */
     public boolean searchUserNames(String username) {
     	ResultSet rs = null;
@@ -299,7 +348,8 @@ public class JdbcSQLiteConnection {
     }
     
     /**
-     * 
+     * Gets the user info.
+     *
      * @param username the username to search the database for
      * @return a user object w/ all the data in
      */
@@ -342,8 +392,10 @@ public class JdbcSQLiteConnection {
     	//else user will be null and return null
     	return user;
     }
+    
     /**
-     * 
+     * Gets the password.
+     *
      * @param username the username to search for
      * @return return the password as a string
      */
@@ -368,8 +420,10 @@ public class JdbcSQLiteConnection {
 		}
     	return password;
     }
+    
     /**
-     * displays the contents of the table given the table name
+     * displays the contents of the table given the table name.
+     *
      * @param tableName the name of the table to display contents for
      */
     public void displayInfo(String tableName){
@@ -406,10 +460,11 @@ public class JdbcSQLiteConnection {
 			}
 
     }
+    
     /**
      *  method for creating the promotion table 
      *  only need to call this once to initially create the promotion table inside
-     *  of the "Users" Database
+     *  of the "Users" Database.
      */
     
     public void createPromotionTable() {	
@@ -422,8 +477,10 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     }
+    
     /**
-     * 
+     * Gets the promo tag.
+     *
      * @param promoName = the string name of the promotion to search for
      * @return the tag of the item the promotion applies to
      */
@@ -448,8 +505,9 @@ public class JdbcSQLiteConnection {
     }
     
     /**
-     * 
-     * @param the promotion name to search in the database for
+     * Check promo date.
+     *
+     * @param promoName the promo name
      * @return true if the current date is within the start and end date of the promotion
      */
     public boolean checkPromoDate(String promoName) {
@@ -497,14 +555,16 @@ public class JdbcSQLiteConnection {
 		}
     	return result;
     }
+    
     /**
-     * 
+     * Insert promotion.
+     *
      * @param promoName name of promotion
      * @param promoType 20%, 5%, 10%, $5, etc.
      * @param promoTag name of the item the promotion applies to
      * @param promoBeginDate start date for the promotion
      * @param promoEndDate end date for the promotion
-     * @return
+     * @return true, if successful
      */
     public boolean insertPromotion(String promoName, String promoType, 
     		String promoTag, String promoBeginDate, String promoEndDate) {
@@ -529,7 +589,7 @@ public class JdbcSQLiteConnection {
     }
     
     /**
-     * method for printing out countents of promotion table
+     * method for printing out countents of promotion table.
      */
 	public void displayPromotions() {
 		ResultSet rs = null;
@@ -558,8 +618,10 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
 	}
+    
     /**
-     * 
+     * Gets the promotion type.
+     *
      * @param promoName the name of the promotion to search for
      * @return the String representation (type) of what the promotion offers
      */
@@ -583,6 +645,12 @@ public class JdbcSQLiteConnection {
     	return result;
     }
     
+    /**
+     * Does promotion exist.
+     *
+     * @param promoName the promo name
+     * @return true, if successful
+     */
     public boolean doesPromotionExist(String promoName) {
     	boolean exists = true;
     	String search = "SELECT * FROM Promotions WHERE promoName = '" + promoName +
@@ -609,6 +677,16 @@ public class JdbcSQLiteConnection {
     	return exists;
     }
     
+    /**
+     * Update promotion.
+     *
+     * @param oldPromoName the old promo name
+     * @param promoName the promo name
+     * @param promoType the promo type
+     * @param promoTag the promo tag
+     * @param promoBeginDate the promo begin date
+     * @param promoEndDate the promo end date
+     */
     public void updatePromotion(String oldPromoName, String promoName, String promoType, 
     		String promoTag, String promoBeginDate, String promoEndDate) {
     	String update = "UPDATE Promotions SET PromoName = ?, PromoType = ?, PromoTag = ?,"
@@ -628,7 +706,8 @@ public class JdbcSQLiteConnection {
     }
     
     /**
-     * 
+     * Creates the new table.
+     *
      * @param statement the CREATE TABLE statement that is in sql form
      */
     public void createNewTable(String statement) {	
@@ -641,12 +720,16 @@ public class JdbcSQLiteConnection {
 			e.printStackTrace();
 		}
     }
+    
     /**
-     * 
+     * Insert order history.
+     *
      * @param username the username of the customer who issued the order
+     * @param price the price
      * @param items array of quantities, not in CSV format
      * @param quantities the array of quantities already in CSV format
-     * @return
+     * @param date the date
+     * @return true, if successful
      */
     public boolean insertOrderHistory(String username, String price, String[] items, String quantities, String date) {
     	boolean inserted = false; 
@@ -677,6 +760,12 @@ public class JdbcSQLiteConnection {
     	return inserted; 
     }
     
+    /**
+     * Convert array to csv.
+     *
+     * @param arr the arr
+     * @return the string
+     */
     public String convertArrayToCsv(String[] arr) {
     	String csv = "";
     	
@@ -692,6 +781,12 @@ public class JdbcSQLiteConnection {
     }
     
     
+    /**
+     * Gets the order history.
+     *
+     * @param userName the user name
+     * @return the order history
+     */
     public ArrayList<OrderHistory> getOrderHistory(String userName) {
     	String search = "SELECT * FROM OrderHistory WHERE Username = '" + userName +
     			"'";

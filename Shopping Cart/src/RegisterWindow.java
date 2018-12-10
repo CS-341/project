@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -13,35 +16,88 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RegisterWindow.
+ */
 public class RegisterWindow extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The user name. */
 	private JTextField userName;
+	
+	/** The password. */
 	private JPasswordField password;
+	
+	/** The retype pw. */
 	private JPasswordField retypePw;
+	
+	/** The street address. */
 	private JTextField streetAddress;
+	
+	/** The city. */
 	private JTextField city;
+	
+	/** The state. */
 	private JTextField state;
+	
+	/** The zip code. */
 	private JTextField zipCode;
+	
+	/** The credit card. */
 	private JTextField creditCard;
+	
+	/** The lbl retype password. */
 	private JLabel lblRetypePassword;
+	
+	/** The lbl shipping address. */
 	private JLabel lblShippingAddress;
+	
+	/** The lbl credit card number. */
 	private JLabel lblCreditCardNumber;
+	
+	/** The user name error. */
 	private JLabel userNameError;
+	
+	/** The no password error. */
 	private JLabel noPasswordError;
+	
+	/** The password retype error. */
 	private JLabel passwordRetypeError;
+	
+	/** The CC length eror. */
 	private JLabel CCLengthEror;
+	
+	/** The password matching error. */
 	private JLabel passwordMatchingError;
+	
+	/** The street address error. */
 	private JLabel streetAddressError;
+	
+	/** The city error. */
 	private JLabel cityError;
+	
+	/** The state error. */
 	private JLabel stateError;
+	
+	/** The zipcode length error. */
 	private JLabel zipcodeLengthError;
+	
+	/** The zip code integer error. */
 	private JLabel zipCodeIntegerError;
+	
+	/** The cc integer values error. */
 	private JLabel ccIntegerValuesError;
+	
+	/** The lbl xxxxxxxxxxxxxxxx. */
 	private JLabel lblXxxxxxxxxxxxxxxx;
 	
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

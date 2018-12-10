@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,10 +22,25 @@ import java.awt.Label;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Checkout.
+ */
 public class Checkout extends JFrame {
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field. */
 	private JTextField textField;
 
+	/**
+	 * Instantiates a new checkout.
+	 *
+	 * @param totalValue the total value
+	 * @param items the items
+	 * @param user the user
+	 */
 	public Checkout(double totalValue, ArrayList<Item> items, User user) {
 		getContentPane().setLayout(null);
 		if (user.userType > 0) { //user is not a guest
@@ -311,6 +329,13 @@ public class Checkout extends JFrame {
 
 	}
 	
+	/**
+	 * Check if promo used.
+	 *
+	 * @param usedPromos the used promos
+	 * @param promoName the promo name
+	 * @return true, if successful
+	 */
 	private boolean checkIfPromoUsed(ArrayList<String> usedPromos, String promoName) {
 		boolean wasUsed = false;
 		for(int i = 0; i < usedPromos.size(); i++) {
@@ -322,6 +347,12 @@ public class Checkout extends JFrame {
 		return wasUsed;
 	}
 	
+	/**
+	 * Store quantities as string.
+	 *
+	 * @param quantities the quantities
+	 * @return the string
+	 */
 	private String storeQuantitiesAsString(ArrayList<Item> quantities ) {
 		String quantitiesString = "";
 		int tempDigit;

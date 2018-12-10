@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -16,16 +19,25 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Login.
+ */
 public class Login extends JFrame {
+
+/** The items. */
 ArrayList<Item> items = ShopWindow.items;
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The content pane. */
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -43,6 +55,8 @@ ArrayList<Item> items = ShopWindow.items;
 
 	/**
 	 * Create the frame.
+	 *
+	 * @param items the items
 	 */
 	public Login(ArrayList<Item> items) {
 		

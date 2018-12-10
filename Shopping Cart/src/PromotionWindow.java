@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -15,25 +18,58 @@ import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PromotionWindow.
+ */
 public class PromotionWindow extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field. */
 	private JTextField textField;
+	
+	/** The text field 1. */
 	private JTextField textField_1;
+	
+	/** The text field 2. */
 	private JTextField textField_2;
+	
+	/** The text field 3. */
 	private JTextField textField_3;
+	
+	/** The text field 4. */
 	private JTextField textField_4;
+	
+	/** The text field 5. */
 	private JTextField textField_5;
+	
+	/** The lbl promo name. */
 	private JLabel lblPromoName;
+	
+	/** The lbl promo type. */
 	private JLabel lblPromoType;
+	
+	/** The lbl new label. */
 	private JLabel lblNewLabel;
+	
+	/** The lbl start date. */
 	private JLabel lblStartDate;
+	
+	/** The lbl end date. */
 	private JLabel lblEndDate;
+	
+	/** The is valid. */
 	private boolean isValid;
+	
+	/** The end err msg. */
 	private JLabel nameErrMsg, tagErrMsg, typeErrMsg, beginErrMsg, endErrMsg;
 	
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,6 +86,8 @@ public class PromotionWindow extends JFrame {
 
 	/**
 	 * Create the frame.
+	 *
+	 * @param user the user
 	 */
 	public PromotionWindow(User user) {
 		
@@ -294,6 +332,12 @@ public class PromotionWindow extends JFrame {
 		
 	}
 	
+	/**
+	 * Check date format.
+	 *
+	 * @param date the date
+	 * @return true, if successful
+	 */
 	private boolean checkDateFormat(String date) {
 		boolean valid = true;
 		if (date.charAt(2) != '/' && date.charAt(2) != '-') {
@@ -312,6 +356,11 @@ public class PromotionWindow extends JFrame {
 		return valid;
 	}
 	
+	/**
+	 * Check validity.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean checkValidity() {
 		isValid = true; //if promotion is valid, will stay true 
 		String promoName = "";

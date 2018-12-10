@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -15,14 +18,25 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SignInWindow.
+ */
 public class SignInWindow extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The txt user name. */
 	private JTextField txtUserName;
+	
+	/** The txt password. */
 	private JPasswordField txtPassword;
 
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

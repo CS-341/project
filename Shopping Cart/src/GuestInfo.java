@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -12,16 +15,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GuestInfo.
+ */
 public class GuestInfo extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The st address text field. */
 	private JTextField stAddressTextField;
+	
+	/** The zip code text field. */
 	private JTextField zipCodeTextField;
+	
+	/** The cc text field. */
 	private JTextField ccTextField;
 
 
 	/**
 	 * Create the frame.
+	 *
+	 * @param user the user
 	 */
 	public GuestInfo(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

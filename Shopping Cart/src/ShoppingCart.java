@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -20,14 +23,36 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ShoppingCart.
+ */
 public class ShoppingCart extends JFrame {
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The current user. */
 	public User currentUser;
+	
+	/** The items. */
 	public ArrayList<Item> items;
+	
+	/** The panel. */
 	public JPanel panel = new JPanel();
+	
+	/** The pane. */
 	public JScrollPane pane = new JScrollPane();
+	
+	/** The handler edit. */
 	public EventHandling handler, handlerEdit;
 
+	/**
+	 * Instantiates a new shopping cart.
+	 *
+	 * @param newItem the new item
+	 * @param currentUser the current user
+	 */
 	public ShoppingCart(Item newItem, User currentUser) {
 		this.currentUser = currentUser;
 		items = User.selectedItems;
@@ -65,6 +90,12 @@ public class ShoppingCart extends JFrame {
 		});
 	}
 
+	/**
+	 * Gets the total price.
+	 *
+	 * @param itemList the item list
+	 * @return the total price
+	 */
 	private double getTotalPrice(ArrayList<Item> itemList) {
 		double totalPrice = 0;
 		for (int i = 0; i < itemList.size(); i++) {
@@ -75,6 +106,13 @@ public class ShoppingCart extends JFrame {
 
 	}
 
+	/**
+	 * Show list.
+	 *
+	 * @param items1 the items 1
+	 * @param panel1 the panel 1
+	 * @param pane the pane
+	 */
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
 		panel1.removeAll();
 
@@ -172,6 +210,12 @@ public class ShoppingCart extends JFrame {
 
 	}
 
+	/**
+	 * Gets the string representation.
+	 *
+	 * @param list the list
+	 * @return the string representation
+	 */
 	// gets string representatin of keystroke
 	public String getStringRepresentation(ArrayList<Character> list) {
 
@@ -182,16 +226,34 @@ public class ShoppingCart extends JFrame {
 		return builder.toString();
 	}
 
+	/**
+	 * The Class EventHandling.
+	 */
 	class EventHandling implements ActionListener {
 
-		/**
-		* 
-		*/
+		/** The add. */
 		private boolean add;
+		
+		/** The select buttons. */
 		private ArrayList<JButton> selectButtons;
+		
+		/** The current user. */
 		public User currentUser;
+		
+		/** The item. */
 		public ArrayList<Item> item;
 
+		/**
+		 * Instantiates a new event handling.
+		 *
+		 * @param selectButtons the select buttons
+		 * @param JlabelArry the jlabel arry
+		 * @param priceArry the price arry
+		 * @param picArry the pic arry
+		 * @param currentUser the current user
+		 * @param item the item
+		 * @param add the add
+		 */
 		public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry,
 				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item,
 				boolean add) {
@@ -202,6 +264,9 @@ public class ShoppingCart extends JFrame {
 			this.add = add;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent event) {
 			if (add == false) {
 				for (int i = 0; i < selectButtons.size(); i++)

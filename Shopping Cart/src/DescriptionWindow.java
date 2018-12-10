@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -30,14 +33,28 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DescriptionWindow.
+ */
 public class DescriptionWindow extends JFrame {
+	
+	/** The item. */
 	public static Item item;
+	
+	/** The items. */
 	public ArrayList<Item> items;
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The quantity. */
 	private JTextField quantity;
 
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,8 +71,11 @@ public class DescriptionWindow extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @wbp.parser.constructor
+	 *
+	 * @param item1 the item 1
+	 * @param currentUser the current user
+	 * @param items the items
+	 * @wbp.parser.constructor 
 	 */
 
 	public DescriptionWindow(Item item1, User currentUser, ArrayList<Item> items) {
@@ -158,6 +178,13 @@ public class DescriptionWindow extends JFrame {
 		contentPane.add(btnReturnToStore);
 	}
 
+	/**
+	 * Instantiates a new description window.
+	 *
+	 * @param item1 the item 1
+	 * @param currentUser the current user
+	 * @param cart the cart
+	 */
 	public DescriptionWindow(Item item1, User currentUser, boolean cart) {
 		if (cart == true) {
 			this.item = item1;

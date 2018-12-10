@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -23,24 +26,43 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ShopWindow.
+ */
 public class ShopWindow extends JFrame {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6022393559091857909L;
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The txt search. */
 	private JTextField txtSearch;
+	
+	/** The panel. */
 	public JPanel panel = new JPanel();
+	
+	/** The pane. */
 	public JScrollPane pane = new JScrollPane();
+	
+	/** The handler. */
 	public EventHandling handler;
+	
+	/** The new user. */
 	public User newUser;
+	
+	/** The items. */
 	public static ArrayList<Item> items;
+	
+	/** The standard size. */
 	public int standardSize = 0; /* gives initial size of list */
 
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 
 	public static void main(String[] args) {
@@ -59,8 +81,9 @@ public class ShopWindow extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @param newUser
+	 *
+	 * @param newUser the new user
+	 * @param items the items
 	 */
 
 	public ShopWindow(User newUser, ArrayList<Item> items) {
@@ -299,6 +322,13 @@ public class ShopWindow extends JFrame {
 
 	}
 
+	/**
+	 * Show list.
+	 *
+	 * @param items1 the items 1
+	 * @param panel1 the panel 1
+	 * @param pane the pane
+	 */
 	public void showList(ArrayList<Item> items1, JPanel panel1, JScrollPane pane) {
 		panel1.removeAll();
 
@@ -373,21 +403,46 @@ public class ShopWindow extends JFrame {
 
 	}
 
+	/**
+	 * The Class EventHandling.
+	 */
 	class EventHandling implements ActionListener {
 
-		/**
-		* 
-		*/
+		/** The select buttons. */
 
 		private ArrayList<JButton> selectButtons;
+		
+		/** The selected items. */
 		private ArrayList<Item> selectedItems;
+		
+		/** The Jlabel arry. */
 		private ArrayList<JLabel> JlabelArry;
+		
+		/** The price arry. */
 		private ArrayList<JLabel> priceArry;
+		
+		/** The pic arry. */
 		private ArrayList<JLabel> picArry;
+		
+		/** The quantity. */
 		private ArrayList<JLabel> quantity;
+		
+		/** The current user. */
 		public User currentUser;
+		
+		/** The item. */
 		public ArrayList<Item> item;
 
+		/**
+		 * Instantiates a new event handling.
+		 *
+		 * @param selectButtons the select buttons
+		 * @param JlabelArry the jlabel arry
+		 * @param priceArry the price arry
+		 * @param picArry the pic arry
+		 * @param currentUser the current user
+		 * @param item the item
+		 */
 		public EventHandling(ArrayList<JButton> selectButtons, ArrayList<JLabel> JlabelArry,
 				ArrayList<JLabel> priceArry, ArrayList<JLabel> picArry, User currentUser, ArrayList<Item> item) {
 
@@ -400,6 +455,9 @@ public class ShopWindow extends JFrame {
 			this.item = item;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent event) {
 
 			for (int i = 0; i < selectButtons.size(); i++)
@@ -418,6 +476,11 @@ public class ShopWindow extends JFrame {
 		}
 	
 
+		/**
+		 * Gets the selected.
+		 *
+		 * @return the selected
+		 */
 		public ArrayList<Item> getSelected() {
 			return User.selectedItems;
 		}

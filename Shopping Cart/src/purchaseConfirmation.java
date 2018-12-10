@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -11,12 +14,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class purchaseConfirmation.
+ */
 public class purchaseConfirmation extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
 
 	/**
 	 * Create the frame.
+	 *
+	 * @param user the user
 	 */
 	public purchaseConfirmation(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

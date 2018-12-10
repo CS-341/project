@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -13,13 +16,25 @@ import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddItemWindow.
+ */
 public class AddItemWindow extends JFrame {
 	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field description. */
 	private JTextField textFieldDescription;
+	
+	/** The items. */
 	public  ArrayList<Item> items;
+	
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -36,7 +51,9 @@ public class AddItemWindow extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param items 
+	 *
+	 * @param user the user
+	 * @param items the items
 	 */
 	public AddItemWindow(User user, ArrayList<Item> items) {
 		this.items = items;

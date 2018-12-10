@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -26,14 +29,28 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OrderHistoryWindow.
+ */
 public class OrderHistoryWindow extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The txt order history. */
 	private JTextField txtOrderHistory;
+	
+	/** The panel 1. */
 	public JPanel panel1 = new JPanel();
+	
+	/** The pane. */
 	public JScrollPane pane = new JScrollPane();
+	
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,6 +67,9 @@ public class OrderHistoryWindow extends JFrame {
 
 	/**
 	 * Create the frame.
+	 *
+	 * @param user the user
+	 * @param onlyShowLastOrder the only show last order
 	 */
 	public OrderHistoryWindow(User user, boolean onlyShowLastOrder) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,6 +122,11 @@ public class OrderHistoryWindow extends JFrame {
 		db.closeConnection();
 	}
 	
+	/**
+	 * Show history.
+	 *
+	 * @param orders the orders
+	 */
 	private void showHistory(ArrayList<OrderHistory> orders) {
 		panel1.removeAll();
 
