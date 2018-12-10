@@ -15,7 +15,9 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  */
 public class JdbcSQLiteConnection {
-	
+	/*
+	 * Global private variables for sql statements
+	 */
   /** The create order history table. */
   private static String CREATE_ORDER_HISTORY_TABLE ="CREATE TABLE OrderHistory (" 
 		  + 						"Username TEXT PRIMARY KEY, "
@@ -32,14 +34,14 @@ public class JdbcSQLiteConnection {
 	  		+						"beginDate TEXT, "
 	  		+ 						"endDate TEXT);";
   
-  /** The admin. */
+  /** The admin user account credentials. */
   private static User admin = new User("admin", "admin", "lacrosse st", "lax", "wi", "54601", 
 			"12345678912345678");
 	
   /** The db URL. */
   private static String dbURL = "jdbc:sqlite:UsersDb.db";
   
-  /** The conn. */
+  /** The connection for the database */
   private static Connection conn;
 
   /** The create userstable. */
@@ -86,7 +88,7 @@ public class JdbcSQLiteConnection {
   		"                        Date\r\n" + 
   		"                    )";
   
-  /** The search usernames. */
+  /** The search usernames sql stmt. */
   private String SEARCH_USERNAMES = "SELECT Username FROM Users";
   
   /** The search all attrs. */

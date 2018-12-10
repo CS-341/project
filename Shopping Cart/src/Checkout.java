@@ -235,6 +235,7 @@ public class Checkout extends JFrame {
 							promoDateInvalid.setVisible(true);
 						}
 					}
+					db.closeConnection();
 				}
 			});
 		}

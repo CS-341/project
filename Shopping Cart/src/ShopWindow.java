@@ -166,7 +166,6 @@ public class ShopWindow extends JFrame {
 			btnSignOut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					newUser.userType = 0;
-				
 					Login login = new Login(ShopWindow.items);
 					login.setVisible(true);
 					dispose();
