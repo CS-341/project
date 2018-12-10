@@ -87,7 +87,6 @@ public class OrderHistoryWindow extends JFrame {
 	}
 	
 	private void showHistory(ArrayList<OrderHistory> orders) {
-		
 		bg.removeAll();
 		bg = new JPanel();
 		
@@ -98,24 +97,28 @@ public class OrderHistoryWindow extends JFrame {
 		
 		bg.setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		//contentPane.getSize();
+		
 		System.out.println(getWidth() + " " + getHeight());
-		bg.setBounds(5, 50, getWidth()-50, getHeight()-50);
-		bg.setLayout(new GridLayout(orders.size(), 5, 1, 1));
+		
+		bg.setBounds(50, 50, screenSize.width-100, screenSize.height-100);
+		GridLayout layout = new GridLayout(0,3,0,0);
+		System.out.println("numCols: " + layout.getColumns());
+		System.out.println("numRows: " + layout.getRows());
 		contentPane.add(bg);
-		
-		
-
+		bg.setLayout(layout);
+		bg.removeAll();
+		scroller.removeAll();
 		//temps for the new costa dn labels being added
 		JLabel date = new JLabel();
-		date.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
+		date.setSize(bg.getWidth()/3-5, bg.getHeight()/(orders.size()-5));
 		JLabel items = new JLabel();
-		items.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
+		items.setSize(bg.getWidth()/3-5, bg.getHeight()/(orders.size()-5));
 		JLabel totalCost = new JLabel();
 		totalCost.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
-		System.out.println("BG" + (bg.getWidth()/3-5) + " " + (bg.getHeight()/orders.size()-5));
+		System.out.println("BG" + (bg.getWidth()) + " " + (bg.getHeight()));
+		
 		for(int i = 0; i < orders.size(); i++) {
-			System.out.println(orders.get(i).items);
+			System.out.println(orders.get(i).items + " i:" + i);
 			date.setText(orders.get(i).date);
 			GridBagConstraints dateConstraint = new GridBagConstraints();
 			dateConstraint.anchor = GridBagConstraints.WEST;
@@ -127,7 +130,7 @@ public class OrderHistoryWindow extends JFrame {
 			
 			items.setText(orders.get(i).items);
 			GridBagConstraints itemsConstraint = new GridBagConstraints();
-			itemsConstraint.anchor = GridBagConstraints.EAST;
+			itemsConstraint.anchor = GridBagConstraints.CENTER;
 			itemsConstraint.insets = new Insets(0, 0, 5, 5);
 			itemsConstraint.gridx = 1;
 			itemsConstraint.gridy = i;
@@ -144,17 +147,17 @@ public class OrderHistoryWindow extends JFrame {
 			cost.add(totalCost);
 			bg.add(cost.get(i), costConstraint);
 		}
-		
+	
 		scroller = new JScrollPane(bg);
-		//scroller.setLocation(200, 0);
-		scroller.setBounds(5, 50, getWidth()-50, getHeight()-100);
-		scroller.setVisible(true);
-		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroller.setLocation(200, 0);
+		scroller.setBounds(50, 50, screenSize.width - 250, screenSize.height - 150);
+		
+		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroller);
-		contentPane.repaint();
+		//contentPane.repaint();
 		bg.revalidate();
 		bg.repaint();
 		bg.setVisible(true);
-		
+		scroller.setVisible(true);
 	}
 }

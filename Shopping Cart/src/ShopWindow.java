@@ -91,11 +91,11 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
 			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
 			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
-//			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
-//			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
-//			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
-//			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
-//			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
+			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
+			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
+			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
+			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
+			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
 //			items.add(new Item("PSU", "$49", "/images/psu.jpeg"));
 //			items.add(new Item("TV", "$1000", "/images/tv.jpeg"));
 //			items.add(new Item("Flash Drive", "$5", "/images/flashe-drive.jpeg"));
