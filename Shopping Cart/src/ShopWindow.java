@@ -132,7 +132,6 @@ public class ShopWindow extends JFrame {
 			// items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
 			standardSize = items.size();
 		} else {
-
 			JButton bttnResetList = new JButton("Refresh");
 			bttnResetList.setBounds(0, 30, 100, 25);
 			contentPane.add(bttnResetList);

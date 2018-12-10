@@ -206,6 +206,8 @@ public class PromotionWindow extends JFrame {
 				if(isValid) {
 					System.out.println("succesfully added promotion");
 					db.openConnection();
+					beginDate = formatDate(beginDate);
+					endDate = formatDate(endDate);
 					db.updatePromotion(oldPromoName, promoName, promoType, promoTag,
 							beginDate, endDate);
 					//db.displayPromotions();
@@ -286,6 +288,8 @@ public class PromotionWindow extends JFrame {
 					System.out.println("succesfully added promotion");
 					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					db.openConnection();
+					beginDate = formatDate(beginDate);
+					endDate = formatDate(endDate);
 					db.insertPromotion(promoName, promoType, promoTag, beginDate, endDate);
 					//db.displayPromotions();
 					db.closeConnection();
@@ -422,6 +426,18 @@ public class PromotionWindow extends JFrame {
 			endErrMsg.setVisible(false);
 		}
 		return isValid;
+	}
+	
+	private String formatDate(String date) {
+		String temp= "";
+		for(int i = 0; i< date.length(); i++) {
+			if(i == 2 || i == 5) {
+				temp += '-';
+			} else {
+				temp += date.charAt(i);
+			}
+		}
+		return temp;
 	}
 	
 }

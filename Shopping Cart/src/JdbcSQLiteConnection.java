@@ -59,7 +59,8 @@ public class JdbcSQLiteConnection {
   /** The insert users. */
   private String INSERT_USERS = "INSERT INTO Users (\r\n" + 
   		"                        Username,\r\n" + 
-  		"                        Password,\r\n" + 
+  		"                        Password,\r\n" +
+  		"                        Street,\r\n" +			
   		"                        City,\r\n" + 
   		"                        State,\r\n" + 
   		"                        Zipcode,\r\n" + 
