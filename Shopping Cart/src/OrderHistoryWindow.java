@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -59,6 +61,16 @@ public class OrderHistoryWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setBackground(SystemColor.menu);
+		JButton home = new JButton("Store");
+		home.setBounds(0,10,100,25);
+		contentPane.add(home);
+		home.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ShopWindow(user, ShopWindow.items).setVisible(true);
+				dispose();
+			}
+		});
+
 		JLabel title = new JLabel("Order History");
 		title.setBounds(screenSize.width/2 -85, 10, 300, 16);
 		contentPane.add(title);

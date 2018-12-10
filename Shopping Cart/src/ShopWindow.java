@@ -110,8 +110,8 @@ public class ShopWindow extends JFrame {
 			standardSize = items.size();
 		} else {
 
-			JButton bttnResetList = new JButton("Refresh List");
-			bttnResetList.setBounds(842, 55, 200, 25);
+			JButton bttnResetList = new JButton("Refresh");
+			bttnResetList.setBounds(0, 30, 100, 25);
 			contentPane.add(bttnResetList);
 			bttnResetList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -171,7 +171,7 @@ public class ShopWindow extends JFrame {
 
 		JLabel lblSearch = new JLabel("Search");
 		lblSearch.setBounds(162, 10, 49, 15);
-		contentPane.add(lblSearch);
+		//contentPane.add(lblSearch);
 
 		ArrayList<String> catList = new ArrayList<>();
 		catList.add("phone");
@@ -179,7 +179,7 @@ public class ShopWindow extends JFrame {
 		catList.add("laptop");
 		JList list = new JList(catList.toArray());
 		list.setBounds(5, 35, 62, 173);
-		contentPane.add(list);
+		//contentPane.add(list);
 
 		JButton btnCart = new JButton("Shopping Cart");
 		btnCart.setBounds(1055, 5, 150, 25);
@@ -210,7 +210,7 @@ public class ShopWindow extends JFrame {
 		txtSearch.setBounds(229, 10, 245, 19);
 		contentPane.add(txtSearch);
 		txtSearch.setColumns(10);
-		contentPane.add(btnFind);
+		//contentPane.add(btnFind);
 		JButton btnEnter = new JButton("Enter");
 
 		final ArrayList<Item> tmp = (ArrayList<Item>) items.clone();
