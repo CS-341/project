@@ -173,6 +173,19 @@ public class ShopWindow extends JFrame {
 					dispose();
 				}
 			});
+						JButton btnEditProfile= new JButton("Edit Profile");
+//			btnCart.setBounds(1055, 5, 150, 25);
+
+			btnEditProfile.setBounds(1355, 5, 150, 25);
+			contentPane.add(btnEditProfile);
+			
+			btnEditProfile.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EditProfile ep = new EditProfile(newUser);
+					ep.setVisible(true);
+					dispose();
+				}
+			});
 			JButton btnViewOrderHistory = new JButton("Purchase History");
 			btnViewOrderHistory.setBounds(707,5,135,25);
 			contentPane.add(btnViewOrderHistory);
