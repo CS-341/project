@@ -204,6 +204,7 @@ public class ShopWindow extends JFrame {
 				System.out.println(size);
 			}
 		});
+		
 		showList(items, panel, pane);
 		txtSearch = new JTextField();
 		txtSearch.setBounds(229, 10, 245, 19);
