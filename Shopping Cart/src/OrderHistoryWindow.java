@@ -26,8 +26,8 @@ public class OrderHistoryWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtOrderHistory;
-	public JPanel panel = new JPanel();
-	public JScrollPane scrollPane = new JScrollPane();
+	public JPanel bg = new JPanel();
+	public JScrollPane scroller = new JScrollPane();
 	/**
 	 * Launch the application.
 	 */
@@ -49,28 +49,30 @@ public class OrderHistoryWindow extends JFrame {
 	 */
 	public OrderHistoryWindow(User user, boolean onlyShowLastOrder) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setBounds(100, 100, screenSize.width-100, screenSize.height - 100);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel title = new JLabel("Order History");
-		title.setBounds(182, 10, 85, 16);
+		title.setBounds(screenSize.width/2 -85, 10, 85, 16);
 		contentPane.add(title);
 		
 		JLabel lblDatePurchased = new JLabel("Date Purchased");
-		lblDatePurchased.setBounds(0, 28, 450/3, 16);
+		lblDatePurchased.setBounds(0, 28, getWidth()/3, 16);
 		lblDatePurchased.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblDatePurchased);
 		
 		JLabel lblItems = new JLabel("Items");
-		lblItems.setBounds(450/3, 28, 450/3, 16);
+		lblItems.setBounds(getWidth()/3, 28, getWidth()/3, 16);
 		lblItems.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblItems);
 		
 		JLabel lblCost = new JLabel("Cost");
-		lblCost.setBounds((450/3)*2, 28, 450/3, 16);
+		lblCost.setBounds((getWidth()/3)*2, 28, getWidth()/3, 16);
 		lblCost.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblCost);
 		
@@ -80,11 +82,11 @@ public class OrderHistoryWindow extends JFrame {
 		orders = db.getOrderHistory("admin");
 		
 		//show order history on screen
-		showHistory(orders, scrollPane, panel);
+		showHistory(orders);
 		db.closeConnection();
 	}
 	
-	private void showHistory(ArrayList<OrderHistory> orders, JScrollPane scroller, JPanel bg) {
+	private void showHistory(ArrayList<OrderHistory> orders) {
 		
 		bg.removeAll();
 		bg = new JPanel();
@@ -97,17 +99,21 @@ public class OrderHistoryWindow extends JFrame {
 		bg.setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		//contentPane.getSize();
-		
-		bg.setBounds(0, 0, contentPane.getWidth()/4, contentPane.getHeight()/5);
+		System.out.println(getWidth() + " " + getHeight());
+		bg.setBounds(5, 50, getWidth()-50, getHeight()-50);
+		bg.setLayout(new GridLayout(orders.size(), 5, 1, 1));
 		contentPane.add(bg);
 		
-		bg.setLayout(new GridLayout(orders.size(), 3, 1, 1));
+		
 
 		//temps for the new costa dn labels being added
 		JLabel date = new JLabel();
+		date.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
 		JLabel items = new JLabel();
+		items.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
 		JLabel totalCost = new JLabel();
-		
+		totalCost.setSize(bg.getWidth()/3-5, bg.getHeight()/orders.size()-5);
+		System.out.println("BG" + (bg.getWidth()/3-5) + " " + (bg.getHeight()/orders.size()-5));
 		for(int i = 0; i < orders.size(); i++) {
 			System.out.println(orders.get(i).items);
 			date.setText(orders.get(i).date);
@@ -121,7 +127,7 @@ public class OrderHistoryWindow extends JFrame {
 			
 			items.setText(orders.get(i).items);
 			GridBagConstraints itemsConstraint = new GridBagConstraints();
-			itemsConstraint.anchor = GridBagConstraints.CENTER;
+			itemsConstraint.anchor = GridBagConstraints.EAST;
 			itemsConstraint.insets = new Insets(0, 0, 5, 5);
 			itemsConstraint.gridx = 1;
 			itemsConstraint.gridy = i;
@@ -140,14 +146,15 @@ public class OrderHistoryWindow extends JFrame {
 		}
 		
 		scroller = new JScrollPane(bg);
-		scroller.setLocation(200, 0);
-		scroller.setBounds(0, 50, screenSize.width/3, screenSize.height/4);
+		//scroller.setLocation(200, 0);
+		scroller.setBounds(5, 50, getWidth()-50, getHeight()-100);
+		scroller.setVisible(true);
+		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		contentPane.add(scroller);
 		contentPane.repaint();
 		bg.revalidate();
 		bg.repaint();
 		bg.setVisible(true);
-		scroller.setVisible(true);
-		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
 	}
 }
