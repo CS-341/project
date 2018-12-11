@@ -154,6 +154,7 @@ public class DescriptionWindow extends JFrame {
 				dispose();
 			}
 		});
+		/* give option to return to store */
 		JButton btnReturnToStore = new JButton("return to Store");
 		btnReturnToStore.setBounds(17, 139, 141, 25);
 		btnReturnToStore.addActionListener(new ActionListener() {

@@ -98,7 +98,7 @@ public class ShopWindow extends JFrame {
 		contentPane.setBackground(SystemColor.menu);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
+				/* items list*/
 		if (items == null) {
 			items = new ArrayList<Item>();
 			items.add(new Item("iPhone", "$1000", "/images/rsz_1rsz_iphone-x.jpg"));
@@ -132,6 +132,7 @@ public class ShopWindow extends JFrame {
 			// items.add(new Item("Xbox One", "$500", "/images/xbox.jpeg"));
 			standardSize = items.size();
 		} else {
+			/* refresh button */
 			JButton bttnResetList = new JButton("Refresh");
 			bttnResetList.setBounds(0, 30, 100, 25);
 			contentPane.add(bttnResetList);
@@ -150,7 +151,7 @@ public class ShopWindow extends JFrame {
 			lblWelomeUest.setBounds(5, 0, 108, 15);
 			contentPane.add(lblWelomeUest);
 		}
-		// TODO: insert user name
+		/* check user level for welcome msg */
 		else if (newUser.userType > 0) {
 
 			JLabel lblWelomeUest1 = new JLabel("Welome " + newUser.userName + "!");
@@ -198,7 +199,7 @@ public class ShopWindow extends JFrame {
 		}
 
 		contentPane.setLayout(null);
-
+		/* buttons not being implemented */ 
 		JLabel lblItems = new JLabel("Items");
 		lblItems.setBounds(5, 10, 39, 15);
 		contentPane.add(lblItems);
@@ -247,7 +248,7 @@ public class ShopWindow extends JFrame {
 		txtSearch.setColumns(10);
 		//contentPane.add(btnFind);
 		JButton btnEnter = new JButton("Enter");
-
+		/* search window */
 		final ArrayList<Item> tmp = (ArrayList<Item>) items.clone();
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -302,7 +303,7 @@ public class ShopWindow extends JFrame {
 		}
 
 		// register if user is guest
-		// TODO: insert register page
+		
 		if (newUser.userType == 0) {
 			JButton button = new JButton("Register");
 			button.setBounds(727, 5, 100, 25);

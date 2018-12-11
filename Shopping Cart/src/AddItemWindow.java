@@ -84,7 +84,7 @@ public class AddItemWindow extends JFrame {
 		JButton btnAddItem = new JButton("Add Item");
 		btnAddItem.setBounds(15, 70, 100, 25);
 		contentPane.add(btnAddItem);
-	
+	/* add item dyanamilly to array list in ShopWIndow */
 		btnAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textFieldDescription.getText().length() > 0 && textFieldPrice.getText().length() > 0) {
