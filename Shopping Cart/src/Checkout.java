@@ -43,6 +43,8 @@ public class Checkout extends JFrame {
 	 */
 	public Checkout(double totalValue, ArrayList<Item> items, User user) {
 		getContentPane().setLayout(null);
+		//create the database
+		JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 		if (user.userType > 0) { //user is not a guest
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,15 +141,15 @@ public class Checkout extends JFrame {
 					}
 					String quantities = storeQuantitiesAsString(User.selectedItems);
 					//add order history to db
-					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
-					db.openConnection();
+					//JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					Date date = new Date();
 					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
-					db.closeConnection();
+					//db.closeConnection();
 					
 					User.selectedItems.clear();
 					purchaseConfirmation guest = new purchaseConfirmation(user);
 					guest.setVisible(true);
+					db.closeConnection();
 					dispose();
 				}
 			});
@@ -176,7 +178,7 @@ public class Checkout extends JFrame {
 
 			btnEnterPromo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					//JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					String enteredPromo = textField.getText();
 					boolean promoExists = db.doesPromotionExist(enteredPromo);
 					boolean promoDateValid = db.checkPromoDate(enteredPromo);
@@ -235,7 +237,7 @@ public class Checkout extends JFrame {
 							promoDateInvalid.setVisible(true);
 						}
 					}
-					db.closeConnection();
+					//db.closeConnection();
 				}
 			});
 		}
@@ -299,14 +301,14 @@ public class Checkout extends JFrame {
 					}
 					String quantities = storeQuantitiesAsString(User.selectedItems);
 					//add order history to db
-					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
-					db.openConnection();
+					//JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					Date date = new Date();
 					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
-					db.closeConnection();
+					//db.closeConnection();
 					User.selectedItems.clear();
 					guest.setVisible(true);
 					dispose();
+					db.closeConnection();
 				}
 			});
 			JButton btnReturnCart = new JButton("return to cart");
@@ -317,6 +319,7 @@ public class Checkout extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new ShoppingCart(null,user).setVisible(true);
+					db.closeConnection();
 					dispose();
 					
 				}

@@ -69,7 +69,7 @@ public class OrderHistoryWindow extends JFrame {
 	 * Create the frame.
 	 *
 	 * @param user the user
-	 * @param onlyShowLastOrder the only show last order
+	 * @param onlyShowLastOrder boolean to add functionality to only show last purchase order
 	 */
 	public OrderHistoryWindow(User user, boolean onlyShowLastOrder) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,6 +81,7 @@ public class OrderHistoryWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setBackground(SystemColor.menu);
+		//home button to go back to the main menu
 		JButton home = new JButton("Store");
 		home.setBounds(0,10,100,25);
 		contentPane.add(home);
@@ -111,19 +112,19 @@ public class OrderHistoryWindow extends JFrame {
 		contentPane.add(lblCost);
 		
 		ArrayList<OrderHistory> orders = new ArrayList<>();
+		
 		//fill orders with orders from database
 		JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 		orders = db.getOrderHistory("admin");
 		
 		//show order history on screen
-		
 		showHistory(orders);
 		
 		db.closeConnection();
 	}
 	
 	/**
-	 * Show history.
+	 * Display the user's order history onto this page
 	 *
 	 * @param orders the orders
 	 */

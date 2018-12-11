@@ -116,13 +116,14 @@ public class RegisterWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterWindow() {
+		JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 499, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		//textField creations
 		userName = new JTextField();
 		userName.setBounds(160, 20, 190, 19);
 		contentPane.add(userName);
@@ -162,7 +163,7 @@ public class RegisterWindow extends JFrame {
 		creditCard.setBounds(160, 368, 190, 19);
 		contentPane.add(creditCard);
 		creditCard.setColumns(10);
-		
+		//Jlabel creations
 		JLabel lblUserName = new JLabel("Username:");
 		lblUserName.setBounds(12, 22, 160, 15);
 		contentPane.add(lblUserName);
@@ -229,7 +230,7 @@ public class RegisterWindow extends JFrame {
 		CCLengthEror.setBounds(160, 350, 339, 15);
 		contentPane.add(CCLengthEror);
 		CCLengthEror.setVisible(false);
-		
+		//error creations
 		passwordMatchingError = new JLabel("* Passwords do not match");
 		passwordMatchingError.setForeground(Color.RED);
 		passwordMatchingError.setBounds(160, 101, 213, 15);
@@ -286,18 +287,18 @@ public class RegisterWindow extends JFrame {
 		btnRegister.setBounds(373, 433, 114, 25);
 		contentPane.add(btnRegister);
 		
+		//register button clicked
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean errorExists = false;
 				
-				JdbcSQLiteConnection j = new JdbcSQLiteConnection();
-				if(j.searchUserNames(userName.getText())) {
+
+				if(dataBase.searchUserNames(userName.getText())) {
 					userNameTakenError.setVisible(true);
 				}
 				else {
 					userNameTakenError.setVisible(false);
 				}
-				j.closeConnection();
 				// If there is no username entered show message
 				if(userName.getText().length() == 0) {
 					userNameError.setVisible(true);
@@ -398,11 +399,11 @@ public class RegisterWindow extends JFrame {
 
 				if (!errorExists) {
 					//add user to data base!!!!!!!!!!!!!!!
-					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 					User newUser = new User(userName.getText(), password.getText(), streetAddress.getText(), city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
 					dataBase.addUserToDatabase(newUser);
 					ShopWindow user = new ShopWindow(newUser,ShopWindow.items);
 					user.setVisible(true);
+					dataBase.closeConnection();
 					dispose();
 				}
 

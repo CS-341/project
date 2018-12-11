@@ -185,10 +185,10 @@ public class JdbcSQLiteConnection {
 			String temp = "";
 			while(rs.next()) {
 				//column 1 in the database is the username field
-				temp = rs.getString(1);
+				temp = rs.getString(1); //temp = the username in the database
 				if (username.equalsIgnoreCase(temp)) {
 					//grab the hashed password from the database
-					hashedPass = rs.getString(2);
+					hashedPass = rs.getString(2); //password is the 2nd field
 					//may need a null check here
 				}
 			}
@@ -209,11 +209,7 @@ public class JdbcSQLiteConnection {
       String hashedPass = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
       
       //TESTING -- can delete
-      //will want to store the hashed version of the password in the database
-      
-      //System.out.println("user pass is  : " + newUser.password);
-      //System.out.println("hashed pass is: " + hashedPass);
-      //System.out.println("checking if passwords match for the user: " + 
+
       if (BCrypt.checkpw(newUser.password, hashedPass)) {
     	  newUser.password = hashedPass;
       }
@@ -231,8 +227,8 @@ public class JdbcSQLiteConnection {
     	String temp = INSERT_USERS + " VALUES ('" + userName + "', '" + userPass + "', '" + street + "', '" + city + "', '" + state +"', '" + zip + 
     			"', '" + credit + "', '" + userType + "');";
     	//remove conn line below -- call open connection immediately after creating DB
-    	conn = DriverManager.getConnection(dbURL);
-    	openConnection();
+    	//conn = DriverManager.getConnection(dbURL);
+    	//openConnection();
     	Statement statement = conn.createStatement();
       	statement.executeUpdate(temp);
       } catch (SQLException e) {
@@ -533,7 +529,7 @@ public class JdbcSQLiteConnection {
     	try {
 			st = conn.createStatement();
 			rs = st.executeQuery(search);
-			//while rs.next() loop through all results?
+			//while rs.next() loop through all results in case promotions have matching names?
 			
 			beginDate = rs.getString(1); //1st attribute  
 			endDate = rs.getString(2); //2nd attribute 
@@ -692,6 +688,7 @@ public class JdbcSQLiteConnection {
      */
     public void updatePromotion(String oldPromoName, String promoName, String promoType, 
     		String promoTag, String promoBeginDate, String promoEndDate) {
+    	//sql statement format for updating promotions
     	String update = "UPDATE Promotions SET PromoName = ?, PromoType = ?, PromoTag = ?,"
     			+ "beginDate = ?, endDate = ? WHERE PromoName = '" + oldPromoName + "'";
     	try {
@@ -766,8 +763,8 @@ public class JdbcSQLiteConnection {
     /**
      * Convert array to csv.
      *
-     * @param arr the arr
-     * @return the string
+     * @param arr the array to convert to comma separated values
+     * @return the string of values in comma separated form
      */
     public String convertArrayToCsv(String[] arr) {
     	String csv = "";

@@ -1,5 +1,5 @@
-/*
- * 
+/**
+ * @author Williams
  */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -64,7 +64,7 @@ public class PromotionWindow extends JFrame {
 	private boolean isValid;
 	
 	/** The end err msg. */
-	private JLabel nameErrMsg, tagErrMsg, typeErrMsg, beginErrMsg, endErrMsg;
+	private JLabel nameErrMsg, tagErrMsg, typeErrMsg, beginErrMsg, endErrMsg, doesNotExistMsg;
 	
 	/**
 	 * Launch the application.
@@ -90,7 +90,9 @@ public class PromotionWindow extends JFrame {
 	 * @param user the user
 	 */
 	public PromotionWindow(User user) {
-		
+		//create the database
+		JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -103,6 +105,7 @@ public class PromotionWindow extends JFrame {
 		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//go back to ShopWindow
+				db.closeConnection();
 				new ShopWindow(user, null).setVisible(true);;
 				dispose();
 			}
@@ -115,6 +118,13 @@ public class PromotionWindow extends JFrame {
 		nameErrMsg.setBounds(300, 34, 250, 26);
 		nameErrMsg.setVisible(false);
 		contentPane.add(nameErrMsg);
+
+		doesNotExistMsg = new JLabel("Promo Does Not Exist");
+		doesNotExistMsg.setForeground(Color.RED);
+		doesNotExistMsg.setBounds(300, 34, 250, 26);
+		doesNotExistMsg.setVisible(false);
+		contentPane.add(doesNotExistMsg);
+		
 		typeErrMsg = new JLabel("Invalid Promo Type");
 		typeErrMsg.setForeground(Color.RED);
 		typeErrMsg.setVisible(false);
@@ -136,6 +146,7 @@ public class PromotionWindow extends JFrame {
 		endErrMsg.setVisible(false);
 		contentPane.add(endErrMsg);
 		
+		//textFields
 		JLabel lblFillInAll = new JLabel("Fill in all fields to add a valid promotion");
 		lblFillInAll.setForeground(Color.WHITE);
 		lblFillInAll.setBounds(92, 6, 266, 16);
@@ -176,6 +187,9 @@ public class PromotionWindow extends JFrame {
 		//contentPane.add(textField_4);
 		
 		JButton btnEditPromotion = new JButton("Edit Promotion");
+		/**
+		 * can edit the promotype, tag, begin date and endDate fields but not the name field
+		 */
 		btnEditPromotion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//similar/same logic as add promo button but call updatePromo method if valid
@@ -184,7 +198,7 @@ public class PromotionWindow extends JFrame {
 				String promoTag = "";
 				String beginDate = "";
 				String endDate = "";
-				JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+				
 				
 				String oldPromoName = textField_5.getText();
 				//make a new textbox for old promo name?
@@ -201,17 +215,19 @@ public class PromotionWindow extends JFrame {
 					//display error message for not being able to find promotion
 					System.out.println("promotion " + oldPromoName + " does not exist");
 					isValid = false;
+					//display ErrorMessage
+					doesNotExistMsg.setVisible(true);
 				}
 				//if all fields were valid, add promotion
 				if(isValid) {
-					System.out.println("succesfully added promotion");
-					db.openConnection();
+					System.out.println("succesfully edited promotion " + oldPromoName);
+					//db.openConnection();
 					beginDate = formatDate(beginDate);
 					endDate = formatDate(endDate);
 					db.updatePromotion(oldPromoName, promoName, promoType, promoTag,
 							beginDate, endDate);
 					//db.displayPromotions();
-					db.closeConnection();
+					//db.closeConnection();
 				}
 			}
 		});
@@ -238,7 +254,8 @@ public class PromotionWindow extends JFrame {
 				
 				String textToCheck;
 				textToCheck = promoName;
-				//could just call method instead of this
+				doesNotExistMsg.setVisible(false);
+				//could just call checkValidity() method instead of this
 				if(promoName.equals("")|| promoName.length() <= 2) {
 					System.out.println("bad promoname");
 					isValid = false;
@@ -247,7 +264,7 @@ public class PromotionWindow extends JFrame {
 					//or make textBox red
 				} else {
 					nameErrMsg.setVisible(false);
-					//hide error msg
+					//hide error msgs
 				}
 				if(promoType.equals("") || (promoType.charAt(0)!= '%' && promoType.charAt(0)!='$')
 						|| (promoType.charAt(1) < '0' && promoType.charAt(1) > '9')) {
@@ -286,13 +303,13 @@ public class PromotionWindow extends JFrame {
 				//if all fields were valid, add promotion
 				if(isValid) {
 					System.out.println("succesfully added promotion");
-					JdbcSQLiteConnection db = new JdbcSQLiteConnection();
-					db.openConnection();
+					//JdbcSQLiteConnection db = new JdbcSQLiteConnection();
+					//db.openConnection();
 					beginDate = formatDate(beginDate);
 					endDate = formatDate(endDate);
 					db.insertPromotion(promoName, promoType, promoTag, beginDate, endDate);
 					//db.displayPromotions();
-					db.closeConnection();
+					//db.closeConnection();
 				}
 			}
 		});
@@ -382,6 +399,7 @@ public class PromotionWindow extends JFrame {
 		
 		String textToCheck;
 		textToCheck = promoName;
+		doesNotExistMsg.setVisible(false);
 		if(promoName.equals("")|| promoName.length() <= 2) {
 			System.out.println("bad promoname");
 			isValid = false;
