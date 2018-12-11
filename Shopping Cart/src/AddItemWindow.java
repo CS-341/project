@@ -90,16 +90,16 @@ public class AddItemWindow extends JFrame {
 				if (textFieldDescription.getText().length() > 0 && textFieldPrice.getText().length() > 0) {
 					
 					if (textFieldDescription.getText().equals("hp mouse")) {
-						Item item = new Item(textFieldDescription.getText(), textFieldPrice.getText(),
+						Item item = new Item(textFieldDescription.getText(), "$"+textFieldPrice.getText(),
 								"/images/hp-mouse_60x60.jpeg");
 						items.add(item);
 						
 					} else if (textFieldDescription.getText().equals("ipad")) {
-						Item item = new Item(textFieldDescription.getText(), textFieldPrice.getText(),
+						Item item = new Item(textFieldDescription.getText(), "$"+textFieldPrice.getText(),
 								"/images/ipad_60x60.jpeg");
 						items.add(item);
 					} else {
-						Item item = new Item(textFieldDescription.getText(), textFieldPrice.getText(),
+						Item item = new Item(textFieldDescription.getText(), "$"+textFieldPrice.getText(),
 								"/images/default.jpeg");
 						items.add(item);
 					}

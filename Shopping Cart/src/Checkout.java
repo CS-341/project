@@ -157,19 +157,19 @@ public class Checkout extends JFrame {
 			bttUser.setBackground(new Color(47, 79, 79));
 			bttUser.setBounds(435, 227, 154, 42);
 			contentPane.add(bttUser);
-//			JButton btnReturnCart = new JButton("return to cart");
-//			btnReturnCart.setBounds(636, 58, 300, 23);
-//			contentPane.add(btnReturnCart);
-//			btnReturnCart.addActionListener(new ActionListener() {
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					new ShoppingCart(null,user).setVisible(true);
-//					dispose();
-//					
-//				}
-//				
-//			});
+			JButton btnReturnCart = new JButton("return to cart");
+			btnReturnCart.setBounds(636, 58, 300, 23);
+			contentPane.add(btnReturnCart);
+			btnReturnCart.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new ShoppingCart(null,user).setVisible(true);
+					dispose();
+					
+				}
+				
+			});
 			JButton btnEnterPromo = new JButton("Enter Promo");
 			btnEnterPromo.setBounds(486, 58, 128, 23);
 			//add action listener and do promotion logic
@@ -303,12 +303,12 @@ public class Checkout extends JFrame {
 					//add order history to db
 					//JdbcSQLiteConnection db = new JdbcSQLiteConnection();
 					Date date = new Date();
-					db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
+					//db.insertOrderHistory(user.userName, labelTotal.getText(), itemsArr, quantities, date.toGMTString());
 					//db.closeConnection();
 					User.selectedItems.clear();
 					guest.setVisible(true);
 					dispose();
-					db.closeConnection();
+					//db.closeConnection();
 				}
 			});
 			JButton btnReturnCart = new JButton("return to cart");

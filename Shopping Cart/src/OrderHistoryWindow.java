@@ -1,6 +1,4 @@
-/*
- * 
- */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -56,8 +54,8 @@ public class OrderHistoryWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OrderHistoryWindow frame = new OrderHistoryWindow(null, false);
-					frame.setVisible(true);
+				//	OrderHistoryWindow frame = new OrderHistoryWindow(null, false);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -115,7 +113,7 @@ public class OrderHistoryWindow extends JFrame {
 		
 		//fill orders with orders from database
 		JdbcSQLiteConnection db = new JdbcSQLiteConnection();
-		orders = db.getOrderHistory("admin");
+		orders = db.getOrderHistory(user.userName);
 		
 		//show order history on screen
 		showHistory(orders);

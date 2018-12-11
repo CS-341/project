@@ -538,15 +538,24 @@ public class JdbcSQLiteConnection {
 			LocalDate startDate = LocalDate.parse(beginDate, formatter); 
 			LocalDate endOfPromo = LocalDate.parse(endDate, formatter);
 			LocalDate currentDate = java.time.LocalDate.now();
+			
 			//TEST
-			currentStringDate = currentDate.toString();
-			System.out.println("current date is: " + currentDate);
+			currentStringDate = currentDate.format(formatter).toString();
+			System.out.println("current date is: " + currentStringDate);
 			//DELETE TEST
 			
 			//check if the promo date is valid
-			if(currentDate.isBefore(endOfPromo) && currentDate.isAfter(startDate)) {
+			if(currentDate.isBefore(endOfPromo) && currentDate.isAfter(startDate) || (currentDate.isEqual(startDate))) {
 				System.out.println("DEBUG: Date for promotion is valid");
 				result = true;
+			}
+			else {
+				if(!currentDate.isBefore(endOfPromo)) {
+					System.out.println("DEBUG: current date is after end of promotion");
+				}
+				else {
+					System.out.println("DEBUG: current date is before start of promotion");
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

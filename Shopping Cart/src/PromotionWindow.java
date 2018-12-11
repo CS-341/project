@@ -106,7 +106,7 @@ public class PromotionWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//go back to ShopWindow
 				db.closeConnection();
-				new ShopWindow(user, null).setVisible(true);;
+				new ShopWindow(user, ShopWindow.items).setVisible(true);;
 				dispose();
 			}
 		});
