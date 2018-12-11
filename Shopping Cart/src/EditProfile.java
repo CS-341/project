@@ -325,9 +325,10 @@ public class EditProfile extends JFrame {
 					//add user to data base!!!!!!!!!!!!!!!
 					JdbcSQLiteConnection dataBase = new JdbcSQLiteConnection();
 					User newUser = new User(lblName.getText(), password.getText(), streetAddress.getText(),city.getText(), state.getText(), zipCode.getText(), creditCard.getText());
-					dataBase.addUserToDatabase(newUser);
+					dataBase.updateUserInfo(user.userName, user.street, user.city, user.state, user.zipCode, user.creditCard);
 					ShopWindow user = new ShopWindow(newUser,null);
 					user.setVisible(true);
+					dataBase.closeConnection();
 					dispose();
 				}
 
