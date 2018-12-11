@@ -165,6 +165,7 @@ public class Checkout extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new ShoppingCart(null,user).setVisible(true);
+					db.closeConnection();
 					dispose();
 					
 				}

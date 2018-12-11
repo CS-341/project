@@ -227,7 +227,7 @@ public class PromotionWindow extends JFrame {
 					db.updatePromotion(oldPromoName, promoName, promoType, promoTag,
 							beginDate, endDate);
 					//db.displayPromotions();
-					//db.closeConnection();
+					db.closeConnection();
 				}
 			}
 		});
@@ -309,7 +309,7 @@ public class PromotionWindow extends JFrame {
 					endDate = formatDate(endDate);
 					db.insertPromotion(promoName, promoType, promoTag, beginDate, endDate);
 					//db.displayPromotions();
-					//db.closeConnection();
+					db.closeConnection();
 				}
 			}
 		});
