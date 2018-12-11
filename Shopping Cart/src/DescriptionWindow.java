@@ -1,3 +1,4 @@
+
 /*
  * 
  */
@@ -38,16 +39,16 @@ import javax.swing.JButton;
  * The Class DescriptionWindow.
  */
 public class DescriptionWindow extends JFrame {
-	
+
 	/** The item. */
 	public static Item item;
-	
+
 	/** The items. */
 	public ArrayList<Item> items;
-	
+
 	/** The content pane. */
 	private JPanel contentPane;
-	
+
 	/** The quantity. */
 	private JTextField quantity;
 
@@ -60,7 +61,7 @@ public class DescriptionWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DescriptionWindow frame = new DescriptionWindow(item, new User(),null);
+					DescriptionWindow frame = new DescriptionWindow(item, new User(), null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,15 +73,17 @@ public class DescriptionWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 *
-	 * @param item1 the item 1
+	 * @param item1       the item 1
 	 * @param currentUser the current user
-	 * @param items the items
-	 * @wbp.parser.constructor 
+	 * @param items       the items
+	 * @wbp.parser.constructor
 	 */
 
 	public DescriptionWindow(Item item1, User currentUser, ArrayList<Item> items) {
 		this.item = item1;
 		this.items = items;
+		// Give welcome mesg if guest
+
 		// System.out.println(item.filePath);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,6 +108,18 @@ public class DescriptionWindow extends JFrame {
 		lblNewLabel.setBounds(12, 12, 130, 77);
 		contentPane.add(lblNewLabel);
 		JButton btnAdd = new JButton("Add");
+		if (currentUser.userType == 0) {
+			JLabel lblWelomeUest = new JLabel("Welome Guest!");
+			lblWelomeUest.setBounds(5, 0, 108, 15);
+			contentPane.add(lblWelomeUest);
+		}
+		// TODO: insert user name
+		else if (currentUser.userType > 0) {
+
+			JLabel lblWelomeUest1 = new JLabel("Welome " + currentUser.userName + "!");
+			lblWelomeUest1.setBounds(5, 0, 200, 15);
+			contentPane.add(lblWelomeUest1);
+		}
 		btnAdd.setBounds(149, 96, 61, 25);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,27 +163,27 @@ public class DescriptionWindow extends JFrame {
 				dispose();
 			}
 		});
-		
-		if(currentUser.userType == 2) {
+
+		if (currentUser.userType == 2) {
 			JButton btnRemoveItem = new JButton("Remove Ihis Item");
 			btnRemoveItem.setBounds(175, 139, 160, 25);
 			contentPane.add(btnRemoveItem);
-			btnRemoveItem.addActionListener(new ActionListener(){
+			btnRemoveItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					for(int i = 0; i < items.size(); i++) {
-						if(items.get(i).name.equals(item.name)) {
+					for (int i = 0; i < items.size(); i++) {
+						if (items.get(i).name.equals(item.name)) {
 							items.remove(i);
-						break;
+							break;
 						}
 					}
-					
-					new ShopWindow(currentUser,items).setVisible(true);
+
+					new ShopWindow(currentUser, items).setVisible(true);
 					dispose();
 				}
-			
+
 			});
 		}
-		
+
 		contentPane.setLayout(null);
 
 		contentPane.add(lblDescription);
@@ -181,9 +196,9 @@ public class DescriptionWindow extends JFrame {
 	/**
 	 * Instantiates a new description window.
 	 *
-	 * @param item1 the item 1
+	 * @param item1       the item 1
 	 * @param currentUser the current user
-	 * @param cart the cart
+	 * @param cart        the cart
 	 */
 	public DescriptionWindow(Item item1, User currentUser, boolean cart) {
 		if (cart == true) {
@@ -273,7 +288,7 @@ public class DescriptionWindow extends JFrame {
 			btnRemove.setBounds(149, 96, 80, 25);
 			btnRemove.addActionListener(new ActionListener() {
 
-	public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
 					int quantityValue = Integer.parseInt(quantity.getText());
 					System.out.println(item.amount);
 					item.amount += quantityValue; /*
@@ -304,4 +319,5 @@ public class DescriptionWindow extends JFrame {
 			contentPane.add(btnRemove);
 			contentPane.add(btnReturnToCart);
 		}
-}}
+	}
+}

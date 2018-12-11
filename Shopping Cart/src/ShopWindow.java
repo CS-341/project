@@ -89,7 +89,7 @@ public class ShopWindow extends JFrame {
 	public ShopWindow(User newUser, ArrayList<Item> items) {
 		setVisible(true);
 		this.newUser = newUser;
-		this.items = ShopWindow.items;
+		//this.items = items;
 		setBackground(Color.WHITE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,20 +105,20 @@ public class ShopWindow extends JFrame {
 			items.add(new Item("acer monitor", "$399", "/images/acer-monitor_60x60.jpeg"));
 			items.add(new Item("corisair keyboard", "$99", "/images/corisair-key_60x60.jpeg"));
 			items.add(new Item("hp mouse", "$15", "/images/hp-mouse_60x60.jpeg"));
-			items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
-			 items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
-			 items.add(new Item("Logitech keyboard", "$99",
-			 "/images/logitech-key_60x60.jpeg"));
-			 items.add(new Item("Razer Mouse", "$79",
-			 "/images/logitech-mouse_60x60.jpeg"));
-			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
-			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
-			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
-			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
-			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
-			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
-			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
-			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
+//			items.add(new Item("ipad", "$499", "/images/ipad_60x60.jpeg"));
+//			 items.add(new Item("kogan keyboard", "$59", "/images/kogan-key_60x60.jpeg"));
+//			 items.add(new Item("Logitech keyboard", "$99",
+//			 "/images/logitech-key_60x60.jpeg"));
+//			 items.add(new Item("Razer Mouse", "$79",
+//			 "/images/logitech-mouse_60x60.jpeg"));
+//			items.add(new Item("ram", "$29", "/images/ram_60x60.jpeg"));
+//			items.add(new Item("Razer Headset", "$49", "/images/razer-headset_60x60.jpeg"));
+//			items.add(new Item("Alexa", "$49", "/images/alexa.jpeg"));
+//			items.add(new Item("Battery", "$9", "/images/bat.jpeg"));
+//			items.add(new Item("DMM", "$5", "/images/dmm.jpeg"));
+//			items.add(new Item("Google Home", "$99", "/images/google-home.jpeg"));
+//			items.add(new Item("GPU", "$500", "/images/gpu.jpeg"));
+//			items.add(new Item("JBL Speaker", "$79", "/images/jbl-speaker.jpeg"));
 //			items.add(new Item("PSU", "$49", "/images/psu.jpeg"));
 //			items.add(new Item("TV", "$1000", "/images/tv.jpeg"));
 //			items.add(new Item("Flash Drive", "$5", "/images/flashe-drive.jpeg"));
@@ -137,13 +137,13 @@ public class ShopWindow extends JFrame {
 			contentPane.add(bttnResetList);
 			bttnResetList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ShopWindow(newUser, null).setVisible(true);
+					new ShopWindow(newUser,ShopWindow.items).setVisible(true);
 					dispose();
 				}
 			});
 
 		}
-
+		
 		// Give welcome mesg if guest
 		if (newUser.userType == 0) {
 			JLabel lblWelomeUest = new JLabel("Welome Guest!");
@@ -214,7 +214,8 @@ public class ShopWindow extends JFrame {
 		JList list = new JList(catList.toArray());
 		list.setBounds(5, 35, 62, 173);
 		//contentPane.add(list);
-
+		if(items.size() > 1)
+			ShopWindow.items = (ArrayList<Item>) items.clone();
 		JButton btnCart = new JButton("Shopping Cart");
 		btnCart.setBounds(1055, 5, 150, 25);
 		contentPane.add(btnCart);
@@ -281,7 +282,7 @@ public class ShopWindow extends JFrame {
 				}
 			});
 		}
-		ShopWindow.items = (ArrayList<Item>) items.clone();
+		
 		
 		btnEnter.setBounds(497, 5, 100, 25);
 		contentPane.add(btnEnter);
