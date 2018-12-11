@@ -824,7 +824,34 @@ public class JdbcSQLiteConnection {
 		}
     	return result;
     }
-    
+    /**
+     * Update user info.
+     *
+     * @param username the user's username
+     * @param street the user's street
+     * @param city the user's city
+     * @param state the user's state
+     * @param zip the user's zip
+     * @param cc the user's cc
+     */
+    public void updateUserInfo(String username, String street, 
+    		String city, String state, String zip, String cc) {
+    	//sql statement format for updating promotions
+    	String update = "UPDATE Users SET Username = ?, Street = ?, City = ?,"
+    			+ "State = ?, Zipcode = ?, Creditcard = ? WHERE Username = '" + username + "'";
+    	try {
+			PreparedStatement stmt = conn.prepareStatement(update);
+			stmt.setString(1, username);
+			stmt.setString(2, street);
+			stmt.setString(3, city);
+			stmt.setString(4, state);
+			stmt.setString(5, zip);
+			stmt.setString(6,  cc);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }
-
 
